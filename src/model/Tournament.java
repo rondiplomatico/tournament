@@ -2,6 +2,7 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +24,7 @@ import model.enums.TournamentType;
 import org.hibernate.annotations.CollectionOfElements;
 import org.hibernate.annotations.IndexColumn;
 
+import planning.model.PlayTime;
 import planning.model.RoundSetting;
 import planning.model.TournamentPlan;
 
@@ -100,6 +102,14 @@ public class Tournament implements Serializable {
 	private int eH = 18;
 	/** Starthour */
 	private int sH = 9;
+
+	/**
+	 * Alternative: Specify a list of playing times, which will be used up by
+	 * the TimeManager if set for scheduling the play times.
+	 */
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<PlayTime> playtimes;
+
 	// Multiplayer als Standard
 	private TournamentType type = TournamentType.MultiPlayer;
 	// Punkte für Sieg
@@ -124,6 +134,7 @@ public class Tournament implements Serializable {
 		referees = new ArrayList<User>();
 		leaders = new ArrayList<User>();
 		roundSettings = new ArrayList<RoundSetting>();
+		playtimes = new ArrayList<PlayTime>();
 		type = TournamentType.MultiPlayer;
 	}
 
@@ -349,6 +360,19 @@ public class Tournament implements Serializable {
 		sH = value;
 	}
 
+	public void addPlayTime(Date begin, Date end) {
+		if (playtimes.size() > 0
+				&& playtimes.get(playtimes.size() - 1).getEnd().after(begin)) {
+			throw new IllegalArgumentException(
+					"Cannot add a new play time which starts earlier than the end of the last!");
+		}
+		playtimes.add(new PlayTime(begin, end));
+	}
+
+	public List<PlayTime> getPlayTimes() {
+		return Collections.unmodifiableList(playtimes);
+	}
+
 	/**
 	 * Setzt die Nachmeldegebühr
 	 * 
@@ -436,7 +460,7 @@ public class Tournament implements Serializable {
 	 * @return
 	 */
 	public List<User> getReferees() {
-		return getReferees((Team)null);
+		return getReferees((Team) null);
 	}
 
 	/**

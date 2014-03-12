@@ -11,6 +11,7 @@ import model.Tournament;
 import model.User;
 import model.enums.TournamentState;
 import planning.control.PlanningManager;
+import planning.control.TimeManager.NoPlayTimeException;
 import planning.control.mapping.Mapping;
 import planning.control.score.ScoreTransfer;
 import planning.model.RoundSetting;
@@ -42,8 +43,9 @@ public class Testing {
 
 	/**
 	 * @param args
+	 * @throws NoPlayTimeException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws NoPlayTimeException {
 		pm = new PlanningManager();
 		testMultigroup();
 		// testLiga();
@@ -66,9 +68,10 @@ public class Testing {
 	}
 
     /**
+     * @throws NoPlayTimeException 
      *
      */
-    public static void testMultigroup() {
+    public static void testMultigroup() throws NoPlayTimeException {
 		t = new Tournament("SV Adler Weltraumliga", 0, 100, "Alle können mitmachen! :-)", 15, new Date());
 		t.setFields(5);
 		t.setFields(new String[] { "Haupthalle", "Leichtbauh.", "LeoCampus 1", "HBS", "Sentr. Höhe" });
@@ -85,15 +88,16 @@ public class Testing {
 
 		TournamentPlan tp = pm.generateTournamentPlan(t, true);
 
-		pm.schedule(tp, new Date());
+		pm.schedule(tp);
 
 		new TournamentPlanView(tp, u);
 	}
 
     /**
+     * @throws NoPlayTimeException 
      *
      */
-    public static void testLiga() {
+    public static void testLiga() throws NoPlayTimeException {
 		t = new Tournament("SV Adler Weltraumliga", 0, 100, "Alle können mitmachen! :-)", 15, new Date());
 		t.setFields(new String[] { "Haupth.", "Leichtbauh.", "Leo 1" });
 
@@ -105,7 +109,7 @@ public class Testing {
 
 		TournamentPlan tp = pm.generateTournamentPlan(t, false);
 
-		pm.schedule(tp, new Date());
+		pm.schedule(tp);
 
 		// pm.printSchedule(tp);
 

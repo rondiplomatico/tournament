@@ -18,6 +18,7 @@ import model.enums.TournamentState;
 import model.enums.TournamentType;
 import planning.control.PlanningManager;
 import planning.control.ResultManager;
+import planning.control.TimeManager.NoPlayTimeException;
 import planning.control.mapping.Mapping;
 import planning.control.score.ScoreTransfer;
 import planning.model.Match;
@@ -46,6 +47,7 @@ public class SampleData {
 	 * 
 	 * @param nr
 	 * @return Liste mit allen Turniertypen
+	 * @throws NoPlayTimeException
 	 */
 	public static List<Tournament> allTypes(int nr) {
 		List<Tournament> res = new ArrayList<Tournament>();
@@ -53,7 +55,9 @@ public class SampleData {
 			for (TournamentState lts : TournamentState.values()) {
 				tt = ltt;
 				ts = lts;
-				Tournament t = new Tournament(tt + " - " + ts + " Nr."+(nr+1), rnd(500), rnd(20) + 6, "Jeder kann was", 30, new Date());
+				Tournament t = new Tournament(tt + " - " + ts + " Nr."
+						+ (nr + 1), rnd(500), rnd(20) + 6, "Jeder kann was",
+						30, new Date());
 				t.setType(tt);
 				t.setState(ts);
 				t.setRequiredPlayersPerTeam(rnd(5) + 2);
@@ -64,39 +68,69 @@ public class SampleData {
 				t.addReferee(referee);
 
 				if (ts == TournamentState.signupClosed) {
-					t.getRoundSettings().add(new RoundSetting("Vorrunde", RoundType.GruppenRunde, rnd(4) + 2, rnd(30), new StartoffTransition()));
-					t.getRoundSettings().add(new RoundSetting("Finale", RoundType.KORunde, 0, rnd(60), new Transition(rnd(3) + 2, rndST(), rndM(), rnd(60))));
+					t.getRoundSettings().add(
+							new RoundSetting("Vorrunde",
+									RoundType.GruppenRunde, rnd(4) + 2,
+									rnd(30), new StartoffTransition()));
+					t.getRoundSettings().add(
+							new RoundSetting("Finale", RoundType.KORunde, 0,
+									rnd(60), new Transition(rnd(3) + 2,
+											rndST(), rndM(), rnd(60))));
 				}
 				if (ts == TournamentState.running) {
 					t.setState(TournamentState.signupClosed);
 
-					t.getRoundSettings().add(new RoundSetting("Vorrunde", RoundType.GruppenRunde, rnd(4) + 2, 0, new StartoffTransition()));
-					t.getRoundSettings().add(new RoundSetting("Hauptrunde", RoundType.GruppenRunde, rnd(3) + 2, 0, new Transition(rnd(3) + 3, rndST(), rndM(), 30)));
-					t.getRoundSettings().add(new RoundSetting("Finale", RoundType.KORunde, 0, rnd(60), new Transition(rnd(3) + 2, rndST(), rndM(), rnd(60))));
+					t.getRoundSettings().add(
+							new RoundSetting("Vorrunde",
+									RoundType.GruppenRunde, rnd(4) + 2, 0,
+									new StartoffTransition()));
+					t.getRoundSettings().add(
+							new RoundSetting("Hauptrunde",
+									RoundType.GruppenRunde, rnd(3) + 2, 0,
+									new Transition(rnd(3) + 3, rndST(), rndM(),
+											30)));
+					t.getRoundSettings().add(
+							new RoundSetting("Finale", RoundType.KORunde, 0,
+									rnd(60), new Transition(rnd(3) + 2,
+											rndST(), rndM(), rnd(60))));
 
 					PlanningManager pm = new PlanningManager();
-					pm.acceptPlanAndStart(t);
-					ResultManager rm = new ResultManager(null);
-					List<Match> matches = pm.getSchedule(t.getTournamentPlan());
-					for (int x = 0; x < matches.size() / 2; x++) {
-						rm.setResult(matches.get(x), rnd(10), rnd(10));
+					if (pm.acceptPlanAndStart(t)) {
+						ResultManager rm = new ResultManager(null);
+						List<Match> matches = pm.getSchedule(t
+								.getTournamentPlan());
+						for (int x = 0; x < matches.size() / 2; x++) {
+							rm.setResult(matches.get(x), rnd(10), rnd(10));
+						}
 					}
 				}
 				if (ts == TournamentState.finished) {
 					t.setState(TournamentState.signupClosed);
 
-					t.getRoundSettings().add(new RoundSetting("Vorrunde", RoundType.GruppenRunde, rnd(4) + 2, 0, new StartoffTransition()));
-					t.getRoundSettings().add(new RoundSetting("Hauptrunde", RoundType.GruppenRunde, rnd(3) + 2, 0, new Transition(rnd(3) + 3, rndST(), rndM(), 30)));
-					t.getRoundSettings().add(new RoundSetting("Finale", RoundType.KORunde, 0, rnd(60), new Transition(rnd(3) + 2, rndST(), rndM(), rnd(60))));
+					t.getRoundSettings().add(
+							new RoundSetting("Vorrunde",
+									RoundType.GruppenRunde, rnd(4) + 2, 0,
+									new StartoffTransition()));
+					t.getRoundSettings().add(
+							new RoundSetting("Hauptrunde",
+									RoundType.GruppenRunde, rnd(3) + 2, 0,
+									new Transition(rnd(3) + 3, rndST(), rndM(),
+											30)));
+					t.getRoundSettings().add(
+							new RoundSetting("Finale", RoundType.KORunde, 0,
+									rnd(60), new Transition(rnd(3) + 2,
+											rndST(), rndM(), rnd(60))));
 
 					PlanningManager pm = new PlanningManager();
-					pm.acceptPlanAndStart(t);
-					ResultManager rm = new ResultManager(null);
-					List<Match> matches = pm.getSchedule(t.getTournamentPlan());
-					for (int x = 0; x < matches.size(); x++) {
-						rm.setResult(matches.get(x), rnd(10), rnd(10));
+					if (pm.acceptPlanAndStart(t)) {
+						ResultManager rm = new ResultManager(null);
+						List<Match> matches = pm.getSchedule(t
+								.getTournamentPlan());
+						for (int x = 0; x < matches.size(); x++) {
+							rm.setResult(matches.get(x), rnd(10), rnd(10));
+						}
+						TournamentManager.getInstance().finishTournament(t);
 					}
-					TournamentManager.getInstance().finishTournament(t);
 				}
 				res.add(t);
 			}
@@ -104,50 +138,59 @@ public class SampleData {
 		return res;
 	}
 
-    /**
-     *
-     * @return zufälliger scoretransfer
-     */
-    public static ScoreTransfer rndST() {
+	/**
+	 * 
+	 * @return zufälliger scoretransfer
+	 */
+	public static ScoreTransfer rndST() {
 		return ScoreTransfer.values()[rnd(ScoreTransfer.values().length)];
 	}
 
-    /**
-     *
-     * @return zufälliges mapping
-     */
-    public static Mapping rndM() {
+	/**
+	 * 
+	 * @return zufälliges mapping
+	 */
+	public static Mapping rndM() {
 		return Mapping.values()[rnd(Mapping.values().length)];
 	}
 
-    /**
-     *
-     * @param max
-     * @return zufallszahl
-     */
-    public static int rnd(int max) {
+	/**
+	 * 
+	 * @param max
+	 * @return zufallszahl
+	 */
+	public static int rnd(int max) {
 		return (int) (Math.random() * max);
 	}
 
-    /**
-     * 
-     * @return Weltraumliga
-     */
-    public static Tournament Weltraum() {
-		Tournament t = new Tournament("SV Adler Weltraumliga", (float) 49.99, 50, "Spiel mit! Da ist jeder gut.", 30, new Date());
+	/**
+	 * 
+	 * @return Weltraumliga
+	 */
+	public static Tournament Weltraum() {
+		Tournament t = new Tournament("SV Adler Weltraumliga", (float) 49.99,
+				50, "Spiel mit! Da ist jeder gut.", 30, new Date());
 		t.setType(TournamentType.MultiPlayer);
 		t.setState(TournamentState.signupClosed);
 		t.setSportKind("Handball");
 		t.setExpireDate(new Date());
 
-		t.getRoundSettings().add(new RoundSetting("Vorrunde", RoundType.GruppenRunde, 4, 0, new StartoffTransition()));
-		t.getRoundSettings().add(new RoundSetting("Hauptrunde", RoundType.GruppenRunde, 2, 0, new Transition(4, ScoreTransfer.Special1, Mapping.CrossMapper, 30)));
-		t.getRoundSettings().add(new RoundSetting("Finale", RoundType.KORunde, 0, 60, new Transition(4, ScoreTransfer.NoScores, Mapping.CrossMapper, 60)));
+		t.getRoundSettings().add(
+				new RoundSetting("Vorrunde", RoundType.GruppenRunde, 4, 0,
+						new StartoffTransition()));
+		t.getRoundSettings().add(
+				new RoundSetting("Hauptrunde", RoundType.GruppenRunde, 2, 0,
+						new Transition(4, ScoreTransfer.Special1,
+								Mapping.CrossMapper, 30)));
+		t.getRoundSettings().add(
+				new RoundSetting("Finale", RoundType.KORunde, 0, 60,
+						new Transition(4, ScoreTransfer.NoScores,
+								Mapping.CrossMapper, 60)));
 
 		fill(t);
 
 		return t;
-    }
+	}
 
 	private static String[] rndFields() {
 		Collections.shuffle(fields);
@@ -181,11 +224,10 @@ public class SampleData {
 	private static void addRandomTeams(Tournament t) {
 		if (ts != TournamentState.canceled && ts != TournamentState.created) {
 			Collections.shuffle(users);
-			int idx=0;
+			int idx = 0;
 			for (int x = 0; x < t.getMaxParticipatingTeams(); x++) {
 
 				Team team = new Team("RandomTeam " + (x + 1));
-				
 
 				int players = tt == TournamentType.SinglePlayer ? 1 : rnd(5)
 						+ t.getRequiredPlayersPerTeam();
@@ -194,7 +236,8 @@ public class SampleData {
 					/*
 					 * Die meisten Spieler voranmelden, aber nicht alle
 					 */
-					if (t.getState() != TournamentState.published && Math.random() > .2) {
+					if (t.getState() != TournamentState.published
+							&& Math.random() > .2) {
 						team.getConfirmedPlayers().add(users.get(uidx));
 					}
 					idx %= users.size();
@@ -225,18 +268,21 @@ public class SampleData {
 		}
 	}
 
-    /**
-     *
-     * @return erfolgreiches Leeren
-     */
-    public static boolean clearDB() {
-		if (!persist) return true;
+	/**
+	 * 
+	 * @return erfolgreiches Leeren
+	 */
+	public static boolean clearDB() {
+		if (!persist)
+			return true;
 		try {
 			// The newInstance() call is a work around for some
 			// broken Java implementations
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/tournament?user=tournament_usr&password=schwabencup");
-			//Connection conn = DriverManager.getConnection("jdbc:mysql://www.danielwirtz.de/sopra?user=sopra_usr&password=sopra0809");
+			Connection conn = DriverManager
+					.getConnection("jdbc:mysql://localhost/tournament?user=tournament_usr&password=schwabencup");
+			// Connection conn =
+			// DriverManager.getConnection("jdbc:mysql://www.danielwirtz.de/sopra?user=sopra_usr&password=sopra0809");
 			Statement s = conn.createStatement();
 			s.execute("SET foreign_key_checks = 0");
 			ResultSet rs = s.executeQuery("show tables");
@@ -247,8 +293,7 @@ public class SampleData {
 			}
 			s.execute("SET foreign_key_checks = 1");
 			s.close();
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			ex.printStackTrace();
 			return false;
 		}
@@ -261,11 +306,12 @@ public class SampleData {
 	 * Erstellt drei Benutzer: sportler, referee und manager mit dem Passwort
 	 * 'test' jeweils und den Rechten, die dem Namen entsprechen, sowie 6
 	 * Turniere die alle 6 unterschiedliche Zustände eines Turniers abdecken.
-     *
-     * @param args
-     */
+	 * 
+	 * @param args
+	 * @throws NoPlayTimeException
+	 */
 	public static void main(String[] args) {
-		//persist = false;
+		// persist = false;
 		if (true) {
 			initUsers();
 
@@ -277,14 +323,14 @@ public class SampleData {
 			fields.add("Sentr. Höhe");
 
 			List<Tournament> trns = new ArrayList<Tournament>();
-			
+
 			// 5 Sätze aller Turnierarten erzeugen
 			for (int i = 0; i < 5; i++) {
 				trns.addAll(allTypes(i));
 			}
-			
+
 			trns.add(Weltraum());
-			//trns.add(Boese());
+			// trns.add(Boese());
 
 			// Speichern
 			if (persist) {
@@ -298,6 +344,6 @@ public class SampleData {
 				}
 				em.getTransaction().commit();
 			}
-        }
+		}
 	}
 }

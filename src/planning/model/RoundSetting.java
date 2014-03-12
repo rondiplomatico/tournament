@@ -16,38 +16,40 @@ import planning.model.rounds.RoundType;
 
 /**
  * @author Daniel Wirtz
- *
+ * 
  */
 @Entity
 public class RoundSetting implements Serializable {
-	
+
 	private static final long serialVersionUID = 6707806489971745840L;
 
 	@SuppressWarnings("unused")
 	@Id
 	@GeneratedValue
 	private int id;
-	
+
 	private RoundType type;
 	private String name;
-	
+
 	// Aus IGroupRound
-	private int numGroups=1;
-	
+	private int numGroups = 1;
+
 	// IMultiphaseRound
-	private int pauseBetweenPhases=0;
-	
+	private int pauseBetweenPhases = 0;
+
+	private int gameTime = Integer.MIN_VALUE;
+
 	// Übergang aus voriger Runde
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL)
 	private Transition inTransition;
-	
+
 	/**
 	 * JPA-Benötigt
 	 */
 	protected RoundSetting() {
 		inTransition = new Transition();
 	}
-	
+
 	/**
 	 * Verwendung in der GUI
 	 * 
@@ -59,7 +61,7 @@ public class RoundSetting implements Serializable {
 		this.name = name;
 		this.type = type;
 	}
-	
+
 	/**
 	 * Verwendung in Testing.java
 	 * 
@@ -69,11 +71,28 @@ public class RoundSetting implements Serializable {
 	 * @param phasePause
 	 * @param inTransition
 	 */
-	public RoundSetting(String name, RoundType type, int numGroups, int phasePause, Transition inTransition) {
+	public RoundSetting(String name, RoundType type, int numGroups,
+			int phasePause, Transition inTransition) {
+		this(name, type, numGroups, phasePause, inTransition, Integer.MIN_VALUE);
+	}
+
+	/**
+	 * Verwendung in Testing.java
+	 * 
+	 * @param name
+	 * @param type
+	 * @param numGroups
+	 * @param phasePause
+	 * @param inTransition
+	 * @param gameTime
+	 */
+	public RoundSetting(String name, RoundType type, int numGroups,
+			int phasePause, Transition inTransition, int gameTime) {
 		this(name, type);
 		this.numGroups = numGroups;
 		this.pauseBetweenPhases = phasePause;
 		this.inTransition = inTransition;
+		this.gameTime = gameTime;
 	}
 
 	/**
@@ -96,6 +115,10 @@ public class RoundSetting implements Serializable {
 	public int getNumGroups() {
 		return numGroups;
 	}
+	
+	public int getGameTime() {
+		return gameTime;
+	}
 
 	/**
 	 * @return the pauseBetweenPhases
@@ -110,7 +133,7 @@ public class RoundSetting implements Serializable {
 	public Transition getInTransition() {
 		return inTransition;
 	}
-	
+
 	/**
 	 * 
 	 * @param value
@@ -120,39 +143,44 @@ public class RoundSetting implements Serializable {
 	}
 
 	/**
-	 * @param type the type to set
+	 * @param type
+	 *            the type to set
 	 */
 	public void setType(RoundType type) {
 		this.type = type;
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
 	/**
-	 * @param numGroups the numGroups to set
+	 * @param numGroups
+	 *            the numGroups to set
 	 */
 	public void setNumGroups(int numGroups) {
 		this.numGroups = numGroups;
 	}
 
 	/**
-	 * @param pauseBetweenPhases the pauseBetweenPhases to set
+	 * @param pauseBetweenPhases
+	 *            the pauseBetweenPhases to set
 	 */
 	public void setPauseBetweenPhases(int pauseBetweenPhases) {
 		this.pauseBetweenPhases = pauseBetweenPhases;
 	}
-	
+
 	/**
 	 * Darstellung in Rundenliste (GUI)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return name + " ("+type+")";
+		return name + " (" + type + ")";
 	}
 }

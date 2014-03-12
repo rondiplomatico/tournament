@@ -76,10 +76,10 @@ public abstract class Round implements Serializable {
 	@GeneratedValue
 	private long id;
 
-    /**
+	/**
      *
      */
-    @JoinColumn(name = "round_id")
+	@JoinColumn(name = "round_id")
 	@IndexColumn(name = "phaseOrder")
 	@OneToMany(cascade = CascadeType.ALL)
 	protected List<Phase> phases;
@@ -91,10 +91,12 @@ public abstract class Round implements Serializable {
 	/** Der Name der Runde */
 	protected String name;
 
-    /**
+	protected int gameTime = Integer.MIN_VALUE;
+
+	/**
      *
      */
-    @OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL)
 	protected Transition inTransition;
 
 	/**
@@ -123,7 +125,8 @@ public abstract class Round implements Serializable {
 	 */
 	public boolean isFinished() {
 		for (Phase p : phases) {
-			if (!p.isFinished()) return false;
+			if (!p.isFinished())
+				return false;
 		}
 		return true;
 	}
@@ -144,11 +147,13 @@ public abstract class Round implements Serializable {
 		return phases;
 	}
 
-	/*
-	 * public void addPhase(Phase p) {
-	 * 
-	 * phases.add(p); }
-	 */
+	public int getGameTime() {
+		return gameTime;
+	}
+
+	public void setGameTime(int value) {
+		gameTime = value;
+	}
 
 	/**
 	 * Erstellt eine Runde mit allen inneren Phasen.<br>

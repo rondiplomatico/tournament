@@ -101,17 +101,20 @@ public class TournamentPlanViewPanel extends JLayeredPane {
 		// Iteration über die Runden des Turniers
 		for (Round actRound : t.getRounds()) {
 			// Rundenlabel erstellen
-			createRoundLabel(actRound.getName());
+			createRoundLabel(actRound.getName() + " (" + actRound.getGameTime()
+					+ "min pro Spiel)");
 			// Iteration über die Phasen
 			for (Phase actPhase : actRound.getPhases()) {
+				String name = actPhase.getName() + " ("
+						+ actRound.getGameTime() + "min pro Spiel)";
 				// Phasenlabels erstellen
 				// Letzte runde
 				if (actPhase.getOutTransition() != null) {
-					createPhaseLabel(actPhase.getName(), actPhase
-							.getOutTransition().getPauseMinutes());
+					createPhaseLabel(name, actPhase.getOutTransition()
+							.getPauseMinutes());
 				} // Sonstige Runden
 				else {
-					createPhaseLabel(actPhase.getName(), actPhase
+					createPhaseLabel(name, actPhase
 							.getInTransition().getPauseMinutes());
 				}
 				// Panels erstellen

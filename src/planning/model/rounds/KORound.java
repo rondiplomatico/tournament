@@ -157,6 +157,9 @@ public class KORound extends Round implements IFinalRound, IMultiphaseRound {
 				if (next.getGroups().size() > 1) {
 					next.getGroups().get(1).setLongName("Spiel um Platz 3");
 				}
+				// Swap groups to have game for 3rd place scheduled first!
+				next.getGroups().add(next.getGroups().get(0));
+				next.getGroups().remove(0);
 			}
 
 			phases.add(next);

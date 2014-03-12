@@ -6,17 +6,16 @@ package planning.control;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.swing.JOptionPane;
 
 import model.Team;
 import model.Tournament;
 import model.User;
+import planning.control.TimeManager.NoPlayTimeException;
 import planning.control.mapping.IMappingGroup;
 import planning.model.Group;
 import planning.model.Match;
@@ -48,14 +47,26 @@ public class PlanningManager {
 	 * 
 	 * @param t
 	 *            Turnier
+	 * @throws NoPlayTimeException
 	 */
-	public void acceptPlanAndStart(Tournament t) {
+	public boolean acceptPlanAndStart(Tournament t) {
 		// Plan generieren
 		TournamentPlan tp = generateTournamentPlan(t, true);
+
 		// Zeitablauf erstellen
-		schedule(tp, t.getStartDate());
+		try {
+			schedule(tp);
+		} catch (NoPlayTimeException e) {
+			JOptionPane
+					.showMessageDialog(
+							null,
+							"Cannot schedule this tournament plan: Too little time for all games (See PlayTimes)");
+			return false;
+		}
+
 		// Plan ins Turnier eintragen
 		t.setTournamentPlan(tp);
+
 		// Turnier starten
 		TournamentManager.getInstance().startTournament(t);
 
@@ -70,6 +81,7 @@ public class PlanningManager {
 		 * t.getRoundSettings().remove(rs); // Aus DB löschen if
 		 * (em.contains(rs)) em.remove(rs); } em.getTransaction().commit();
 		 */
+		return true;
 	}
 
 	/**
@@ -189,6 +201,10 @@ public class PlanningManager {
 						.getPauseBetweenPhases());
 			}
 			r.setInTransition(rs.getInTransition());
+			// Use game duration from round, if set, otherwise the default from
+			// the tournament
+			int gt = rs.getGameTime();
+			r.setGameTime(gt == Integer.MIN_VALUE ? t.getGameDuration() : gt);
 
 			// Evtl. voriger Runde die OutTransition setzen.
 			if (prev != null && prev instanceof IGroupRound) {
@@ -286,6 +302,10 @@ public class PlanningManager {
 					.build(this, ((IGroupRound) plan.getRounds().get(idx - 1)));
 		}
 
+		// Schiedsrichter für die erste Runde festlegen; der rest wird
+		// "on the fly" berechnet
+		assignReferees(plan.getRounds().get(0).getPhases().get(0));
+
 		return plan;
 	}
 
@@ -377,17 +397,18 @@ public class PlanningManager {
 	 *            Turnier
 	 * @param startDateTime
 	 *            Startzeitpunkt
+	 * @throws NoPlayTimeException
 	 * 
 	 * @pre Es gibt mindestens ein Spielfeld
 	 * @pre Es gibt mindestens einen Schiedsrichter
 	 * 
 	 * @post Ein vollständiger Zeitplan fürs gesamte Turnier wurde erstellt.
 	 */
-	public void schedule(TournamentPlan t, Date startDateTime) {
-		assert (t.getTournament().getNumFields() > 0) : "schedule:Keine Spielfelder!";
+	public void schedule(TournamentPlan t) throws NoPlayTimeException {
+		assert (t.getTournament().getNumFields() > 0) : "schedule: Keine Spielfelder!";
 		assert (t.getTournament().getReferees().size() > 0) : "schedule: Keine Schiedsrichter in Turnier "
 				+ t.getTournament();
-		Date curTime = startDateTime;
+		TimeManager tm = new TimeManager(t.getTournament());
 
 		/*
 		 * Bestimmen der Anzahl der wirklich benutzbaren Felder. Hängt ab von
@@ -408,13 +429,9 @@ public class PlanningManager {
 
 			// Alle Phasen durchgehen
 			for (Phase p : r.getPhases()) {
-				curTime = schedule(t, p, curTime, totalUseFields);
+				schedule(t, p, tm, totalUseFields);
 			}
 		}
-
-		// Schiedsrichter für die erste Runde festlegen; der rest wird
-		// "on the fly" berechnet
-		assignReferees(t.getRounds().get(0).getPhases().get(0));
 	}
 
 	/**
@@ -426,10 +443,12 @@ public class PlanningManager {
 	 * innerhalb einer Gruppe schon möglichst gerecht verteilt sind, das nicht
 	 * z.B. Match 1 Team1 vs. Team2 ist und dann Match 2 Team1 vs. Team3 usw.
 	 * 
+	 * @throws NoPlayTimeException
+	 * 
 	 * 
 	 */
-	private Date schedule(TournamentPlan t, Phase p, Date startTime,
-			int totalUseFields) {
+	private void schedule(TournamentPlan t, Phase p, TimeManager tm,
+			int totalUseFields) throws NoPlayTimeException {
 		// Hält den aktuellen Index des grade verplanten Matches pro Gruppe
 		int[] gmidx = new int[p.getGroups().size()];
 		// Zeigt an, ob alle Matches einer Gruppe verplant wurden.
@@ -440,8 +459,6 @@ public class PlanningManager {
 		int fieldIdx = 0;
 
 		Group curGr = null;
-		// Kalender zur Zeitenverwaltung
-		GregorianCalendar cal = new GregorianCalendar();
 
 		// Init
 		int maxSimultaneousMatches = 0;
@@ -459,10 +476,8 @@ public class PlanningManager {
 							+ ": Es werden nicht alle Spielfelder genutzt.");
 		}
 
-		// Mit Endzeit der vorigen Phase initialisieren
-		cal.setTime(startTime);
-		// Wartezeit zwischen den Phasen aufaddieren
-		cal.add(Calendar.MINUTE, p.getInTransition().getPauseMinutes());
+		// Wartezeit zwischen den Phasen berücksichtigen
+		tm.consumeTime(p.getInTransition().getPauseMinutes());
 
 		// Evtl. vorher eingefügte Matches rausnehmen
 		p.getSchedule().clear();
@@ -477,7 +492,7 @@ public class PlanningManager {
 				// Match holen
 				Match target = curGr.getMatches().get(gmidx[groupIdx]);
 
-				target.setScheduleData(cal.getTime(), fieldIdx);
+				target.setScheduleData(tm.getCurrentTime(), fieldIdx);
 				p.getSchedule().add(target);
 
 				// Feldnummer erhöhen
@@ -490,7 +505,7 @@ public class PlanningManager {
 				 * werden.
 				 */
 				if (fieldIdx == 0) {
-					setNextPlayTime(t.getTournament(), cal);
+					tm.consumeTime(p.getRound().getGameTime());
 				}
 
 				// Merken, das das Match aus der Gruppe schon verplant
@@ -519,9 +534,7 @@ public class PlanningManager {
 
 		// Noch eine Spieldauer draufrechnen, da bisher mit Startzeiten
 		// gerechnet wurde
-		setNextPlayTime(t.getTournament(), cal);
-		p.setScheduledEndDateTime(cal.getTime());
-		return cal.getTime();
+//		p.setScheduledEndDateTime(tm.getCurrentTime());
 	}
 
 	private void assignReferees(Phase p) {
@@ -604,22 +617,6 @@ public class PlanningManager {
 			if (!b)
 				return false;
 		return true;
-	}
-
-	/**
-	 * Interne Methode um die Erhöhung der aktuellen Begegnungszeit zu
-	 * übernehmen.
-	 * 
-	 * @param cal
-	 */
-	private void setNextPlayTime(Tournament t, GregorianCalendar cal) {
-		cal.add(GregorianCalendar.MINUTE, t.getGameDuration());
-		if (cal.get(Calendar.HOUR_OF_DAY) > t.getEndHour()) {
-			// Einen Tag später weitermachen, zur StartHour()
-			cal.set(Calendar.DAY_OF_YEAR, cal.get(Calendar.DAY_OF_YEAR) + 1);
-			cal.set(Calendar.HOUR_OF_DAY, t.getStartHour());
-			cal.set(Calendar.MINUTE, 0);
-		}
 	}
 
 	/**
