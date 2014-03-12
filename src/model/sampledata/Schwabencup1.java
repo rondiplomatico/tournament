@@ -2,12 +2,10 @@ package model.sampledata;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 
-import control.MainApplication;
 import model.Team;
 import model.Tournament;
 import model.User;
@@ -19,6 +17,7 @@ import planning.model.RoundSetting;
 import planning.model.StartoffTransition;
 import planning.model.Transition;
 import planning.model.rounds.RoundType;
+import control.MainApplication;
 
 public class Schwabencup1 {
 

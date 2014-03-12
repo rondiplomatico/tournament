@@ -4,10 +4,13 @@
  */
 package planning.control;
 
+import model.Team;
 import planning.model.Match;
 import planning.model.Score;
 import planning.model.TeamSlot;
 import planning.model.TeamStats;
+import planning.view.TournamentPlanView;
+import control.TournamentManager;
 
 /**
  * 
@@ -19,10 +22,18 @@ import planning.model.TeamStats;
  */
 public class ResultManager {
 
+	private TournamentPlanView view;
+
+	public ResultManager(TournamentPlanView planview) {
+		this.view = planview;
+	}
+
 	/**
 	 * Erlaubt es das Ergebnis der Begegnung einzutragen oder zu ändern. Dabei
 	 * müssen beide Werte größer gleich null sein.
-	 * @param m Match
+	 * 
+	 * @param m
+	 *            Match
 	 * 
 	 * @param home_goals
 	 *            Tore der Heimmannschaft
@@ -43,6 +54,43 @@ public class ResultManager {
 		updateStats(m.getGuestTeam());
 		// ggf. die Gruppe finalisieren
 		new GroupManager().matchResultUpdated(m.getGroup());
+		// Frameinhalt neu laden falls gruppe fertig ist
+		if (m.getGroup().isFinished() && view != null) {
+			view.reloadMatchPanel();
+		}
+	}
+
+	/**
+	 * Markiert alle Spiele des Slots als 1:0 verloren.
+	 * 
+	 * Ist der Gegner ebenfalls disqualifiziert, so wird das Spiel unentschieden
+	 * eingetragen.
+	 * 
+	 * 
+	 * @see TournamentManager#disqualify(model.Tournament, Team)
+	 * @param ts
+	 *            TeamSlot des disqualifizierten Teams
+	 */
+	public void markAllMatchesLost(TeamSlot ts) {
+		for (Match m : ts.getGroup().getMatches()) {
+			if (m.participating(ts)) {
+				if (m.getHomeTeam().equals(ts)) {
+					if (m.getGuestTeam().getTeam() != null
+							&& m.getGuestTeam().getTeam().isDisqualified()) {
+						setResult(m, 0, 0);
+					} else {
+						setResult(m, 0, 1);
+					}
+				} else {
+					if (m.getHomeTeam().getTeam() != null
+							&& m.getHomeTeam().getTeam().isDisqualified()) {
+						setResult(m, 0, 0);
+					} else {
+						setResult(m, 1, 0);
+					}
+				}
+			}
+		}
 	}
 
 	/**
@@ -71,7 +119,8 @@ public class ResultManager {
 					if (!m.hasWinner()) {
 						remis++;
 					} else {
-						if (m.getWinner().equals(ts)) won++;
+						if (m.getWinner().equals(ts))
+							won++;
 					}
 					dg += m.getGoals(m.opponent(ts));
 					goals += m.getGoals(ts);
@@ -90,11 +139,11 @@ public class ResultManager {
 		sc.setPointsMinus(dp);
 
 		// Gespielte Spiele
-		ts.getStats().setField(TeamStats.GAMES, played + "/"
-				+ (ts.getGroup().getSlots().size() - 1));
+		ts.getStats().setField(TeamStats.GAMES,
+				played + "/" + (ts.getGroup().getSlots().size() - 1));
 		// Gewonnen / Unentsch. / Verloren
-		ts.getStats().setField(TeamStats.STAT, won + "/" + remis + "/"
-				+ (played - won - remis));
+		ts.getStats().setField(TeamStats.STAT,
+				won + "/" + remis + "/" + (played - won - remis));
 		ts.getStats().setField(TeamStats.NAME, ts.getName());
 	}
 }

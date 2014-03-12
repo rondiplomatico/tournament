@@ -76,7 +76,7 @@ public class SampleData {
 
 					PlanningManager pm = new PlanningManager();
 					pm.acceptPlanAndStart(t);
-					ResultManager rm = new ResultManager();
+					ResultManager rm = new ResultManager(null);
 					List<Match> matches = pm.getSchedule(t.getTournamentPlan());
 					for (int x = 0; x < matches.size() / 2; x++) {
 						rm.setResult(matches.get(x), rnd(10), rnd(10));
@@ -91,7 +91,7 @@ public class SampleData {
 
 					PlanningManager pm = new PlanningManager();
 					pm.acceptPlanAndStart(t);
-					ResultManager rm = new ResultManager();
+					ResultManager rm = new ResultManager(null);
 					List<Match> matches = pm.getSchedule(t.getTournamentPlan());
 					for (int x = 0; x < matches.size(); x++) {
 						rm.setResult(matches.get(x), rnd(10), rnd(10));

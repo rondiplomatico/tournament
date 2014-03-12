@@ -108,7 +108,7 @@ public class TeamSlot implements Comparable<TeamSlot>, Serializable {
 	public void setTeam(Team team, Score initialScore) {
 		this.innerTeam = team;
 		this.initialScore = initialScore;
-		new ResultManager().updateStats(this);
+		new ResultManager(null).updateStats(this);
 	}
 	
 	/**

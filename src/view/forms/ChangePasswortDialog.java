@@ -5,12 +5,15 @@
  */
 package view.forms;
 
-import control.UserManager;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import model.User;
+
 import org.jdesktop.application.Action;
+
 import tools.SimpleSHA1;
+import control.UserManager;
 
 /**
  * Dialog zum Ändern des Passwortes von einem Benutzer.

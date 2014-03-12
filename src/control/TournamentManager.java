@@ -12,7 +12,7 @@ import model.Tournament;
 import model.User;
 import model.enums.TournamentState;
 import model.enums.TournamentType;
-import planning.control.GroupManager;
+import planning.control.ResultManager;
 import planning.model.Group;
 import planning.model.Phase;
 import planning.model.TeamSlot;
@@ -87,7 +87,7 @@ public final class TournamentManager {
                                     ts.getInitialScore().setGoalsPlus(0);
                                     ts.getInitialScore().setPointsMinus(0);
                                     ts.getInitialScore().setPointsPlus(0);
-                                    new GroupManager().markAllMatchesLost(ts);
+                                    new ResultManager(null).markAllMatchesLost(ts);
                                     return;
                                 }
                             }

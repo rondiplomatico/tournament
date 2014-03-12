@@ -14,7 +14,6 @@ import planning.model.Group;
 import planning.model.Match;
 import planning.model.Score;
 import planning.model.TeamSlot;
-import control.TournamentManager;
 
 /**
  * 05.03.2009
@@ -39,8 +38,9 @@ public class GroupManager {
 	 * 
 	 * @post Alle unter den zum Zeitpunkt des Aufrufs eingetragenen Teams
 	 *       auszutragenden Matches dieser Runde sind berechnet.
-	 *   
-	 * @param g Gruppe
+	 * 
+	 * @param g
+	 *            Gruppe
 	 */
 	public void calculateMatches(Group g) {
 		g.getMatches().clear();
@@ -51,7 +51,8 @@ public class GroupManager {
 		for (int st = 0; st < (even ? n - 1 : n); st++) {
 			int left = 0;
 			int right = n - 1;
-			if (!even) right--;
+			if (!even)
+				right--;
 			// Matches zuweisen
 			while (left < right) {
 				g.getMatches().add(new Match(g, hlp.get(left), hlp.get(right)));
@@ -71,7 +72,8 @@ public class GroupManager {
 	 * 
 	 * @pre Die outTransition der Phase ist gesetzt.
 	 * 
-	 * @param g Gruppe
+	 * @param g
+	 *            Gruppe
 	 */
 	public void generateTransitionSlots(Group g) {
 		g.getProceedingSlots().clear();
@@ -93,8 +95,9 @@ public class GroupManager {
 				// Gruppennamen.
 				String name = (x + 1)
 						+ ". "
-						+ (g.getPhase().getGroups().size() > 1 ? g.getPhase().getName()
-								+ " " + g.getShortName() : g.getPhase().getName());
+						+ (g.getPhase().getGroups().size() > 1 ? g.getPhase()
+								.getName() + " " + g.getShortName() : g
+								.getPhase().getName());
 				g.getProceedingSlots().add(new TeamSlot(name, g.getColor()));
 			}
 		}
@@ -109,7 +112,8 @@ public class GroupManager {
 	 * 
 	 * @see TeamSlot#compareTo(TeamSlot)
 	 * 
-	 * @param inGroup Zielgruppe
+	 * @param inGroup
+	 *            Zielgruppe
 	 */
 	public void matchResultUpdated(Group inGroup) {
 		Collections.sort(inGroup.getSlots());
@@ -118,44 +122,46 @@ public class GroupManager {
 		 * Sind alle Begegnungen gespielt, die Gruppe finalisieren.
 		 */
 		for (Match m : inGroup.getMatches()) {
-			if (!m.isFinished()) return;
+			if (!m.isFinished())
+				return;
 		}
 		finalizeGroup(inGroup);
-		new PlanningManager().assignReferees(inGroup); 
+		new PlanningManager().assignReferees(inGroup);
 	}
 
-	/**
-	 * Markiert alle Spiele des Slots als 1:0 verloren.
-	 * 
-	 * Ist der Gegner ebenfalls disqualifiziert, so wird das Spiel unentschieden
-	 * eingetragen.
-	 * 
-	 * 
-	 * @see TournamentManager#disqualify(model.Tournament, Team)
-	 * @param ts TeamSlot des disqualifizierten Teams
-	 */
-	public void markAllMatchesLost(TeamSlot ts) {
-		ResultManager rm = new ResultManager();
-		for (Match m : ts.getGroup().getMatches()) {
-			if (m.participating(ts)) {
-				if (m.getHomeTeam().equals(ts)) {
-					if (m.getGuestTeam().getTeam() != null
-							&& m.getGuestTeam().getTeam().isDisqualified()) {
-						rm.setResult(m, 0, 0);
-					} else {
-						rm.setResult(m, 0, 1);
-					}
-				} else {
-					if (m.getHomeTeam().getTeam() != null
-							&& m.getHomeTeam().getTeam().isDisqualified()) {
-						rm.setResult(m, 0, 0);
-					} else {
-						rm.setResult(m, 1, 0);
-					}
-				}
-			}
-		}
-	}
+	// /**
+	// * Markiert alle Spiele des Slots als 1:0 verloren.
+	// *
+	// * Ist der Gegner ebenfalls disqualifiziert, so wird das Spiel
+	// unentschieden
+	// * eingetragen.
+	// *
+	// *
+	// * @see TournamentManager#disqualify(model.Tournament, Team)
+	// * @param ts TeamSlot des disqualifizierten Teams
+	// */
+	// public void markAllMatchesLost(TeamSlot ts) {
+	// ResultManager rm = new ResultManager();
+	// for (Match m : ts.getGroup().getMatches()) {
+	// if (m.participating(ts)) {
+	// if (m.getHomeTeam().equals(ts)) {
+	// if (m.getGuestTeam().getTeam() != null
+	// && m.getGuestTeam().getTeam().isDisqualified()) {
+	// rm.setResult(m, 0, 0);
+	// } else {
+	// rm.setResult(m, 0, 1);
+	// }
+	// } else {
+	// if (m.getHomeTeam().getTeam() != null
+	// && m.getHomeTeam().getTeam().isDisqualified()) {
+	// rm.setResult(m, 0, 0);
+	// } else {
+	// rm.setResult(m, 1, 0);
+	// }
+	// }
+	// }
+	// }
+	// }
 
 	/**
 	 * Sind alle Matches gespielt, können die Teams in den proceeding-TeamSlots
@@ -180,7 +186,12 @@ public class GroupManager {
 				if (idx < g.getSlots().size()) {
 					Team team = g.getSlots().get(idx).getTeam();
 					if (!team.isDisqualified()) {
-						ts.setTeam(team, g.getPhase().getOutTransition().getScores(g.getSlots().get(idx), g.getMatches(), g.getSlots()));
+						ts.setTeam(
+								team,
+								g.getPhase()
+										.getOutTransition()
+										.getScores(g.getSlots().get(idx),
+												g.getMatches(), g.getSlots()));
 					} else
 						disq.add(team);
 				} else {
@@ -205,7 +216,7 @@ public class GroupManager {
 					ts.setTeam(ghost, new Score());
 					// Alle Begegnungen in der nächsten Runde schonmal für die
 					// Geisterteams als verloren eintragen.
-					markAllMatchesLost(ts);
+					new ResultManager(null).markAllMatchesLost(ts);
 					disq.remove(ghost);
 				}
 				idx++;

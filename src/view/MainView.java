@@ -1,6 +1,5 @@
 package view;
 
-import view.forms.ChangePasswortDialog;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
@@ -35,6 +34,7 @@ import org.jdesktop.observablecollections.ObservableCollections;
 import planning.view.TournamentPlanView;
 import tools.PDFFilter;
 import tools.TournamentPDF;
+import view.forms.ChangePasswortDialog;
 import view.forms.ChooseLeadersForm;
 import view.forms.ConfirmSignUpForm;
 import view.forms.CreateTournamentPlanForm;
