@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <Properties>
+    <Property name="name" type="java.lang.String" value="Form" noResource="true"/>
+  </Properties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="2"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Component id="lblHeader" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="lblInputTournamentName" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="panelTurnierDaten" max="32767" attributes="0"/>
+                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                      <Component id="playerPanel" min="-2" pref="188" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblHeader" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblInputTournamentName" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="playerPanel" alignment="1" max="32767" attributes="0"/>
+                  <Component id="panelTurnierDaten" alignment="1" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Container class="javax.swing.JPanel" name="panelTurnierDaten">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+            <TitledBorder title="Turnierdaten">
+              <Property name="titleX" resourceKey="panelTurnierDaten.border.title"/>
+            </TitledBorder>
+          </Border>
+        </Property>
+        <Property name="name" type="java.lang.String" value="panelTurnierDaten" noResource="true"/>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="lblInputParticipationRequirements" alignment="0" pref="281" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="jLabel2" alignment="0" max="32767" attributes="1"/>
+                              <Component id="lblTournamentState" alignment="0" max="32767" attributes="1"/>
+                              <Component id="lblLateSignUpFee" alignment="0" max="32767" attributes="1"/>
+                              <Component id="lblFee" alignment="0" max="32767" attributes="1"/>
+                              <Component id="lblRequiredPlayersPerTeam" alignment="0" max="32767" attributes="1"/>
+                              <Component id="lblMaxPlayers" alignment="0" max="32767" attributes="1"/>
+                              <Component id="lblStartDate" alignment="0" max="32767" attributes="1"/>
+                              <Component id="lblEndSignUpPeriod" alignment="0" max="32767" attributes="1"/>
+                              <Component id="jLabel1" alignment="0" max="32767" attributes="1"/>
+                              <Component id="lblSporttype" alignment="0" max="32767" attributes="1"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="lblInputSportType" alignment="0" pref="84" max="32767" attributes="0"/>
+                              <Component id="lblInputTournamentState" pref="84" max="32767" attributes="0"/>
+                              <Component id="lblInputEndSignUpPeriod" alignment="0" pref="84" max="32767" attributes="0"/>
+                              <Component id="lblInputStartDate" alignment="0" pref="84" max="32767" attributes="0"/>
+                              <Component id="lblInputPlayersNum" alignment="0" pref="84" max="32767" attributes="0"/>
+                              <Component id="lblInputRequiredPlayersPerTeam" alignment="0" pref="84" max="32767" attributes="0"/>
+                              <Component id="lblInputFee" alignment="0" pref="84" max="32767" attributes="0"/>
+                              <Component id="lblInputLateSignUpFee" alignment="0" pref="84" max="32767" attributes="0"/>
+                              <Component id="lblInputGameDuration" alignment="0" pref="84" max="32767" attributes="0"/>
+                              <Component id="lblInputType" alignment="0" pref="84" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Component id="lblParticipationRequirements" alignment="1" pref="281" max="32767" attributes="1"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="lblSporttype" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblInputSportType" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblInputType" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblInputGameDuration" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="lblStartDate" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblInputStartDate" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="lblEndSignUpPeriod" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblInputEndSignUpPeriod" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="lblMaxPlayers" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblInputPlayersNum" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="lblRequiredPlayersPerTeam" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblInputRequiredPlayersPerTeam" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="lblFee" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblInputFee" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="lblLateSignUpFee" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblInputLateSignUpFee" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="lblTournamentState" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblInputTournamentState" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="lblParticipationRequirements" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="lblInputParticipationRequirements" pref="124" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="lblSporttype">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="lblSporttype.text"/>
+            <Property name="name" type="java.lang.String" value="lblSporttype" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblStartDate">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="lblStartDate.text"/>
+            <Property name="name" type="java.lang.String" value="lblStartDate" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblEndSignUpPeriod">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="lblEndSignUpPeriod.text"/>
+            <Property name="name" type="java.lang.String" value="lblEndSignUpPeriod" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblMaxPlayers">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="lblMaxPlayers.text"/>
+            <Property name="name" type="java.lang.String" value="lblMaxPlayers" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblFee">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="lblFee.text"/>
+            <Property name="name" type="java.lang.String" value="lblFee" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblLateSignUpFee">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="lblLateSignUpFee.text"/>
+            <Property name="name" type="java.lang.String" value="lblLateSignUpFee" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblParticipationRequirements">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="lblParticipationRequirements.text"/>
+            <Property name="name" type="java.lang.String" value="lblParticipationRequirements" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblInputParticipationRequirements">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="lblInputParticipationRequirements.text"/>
+            <Property name="verticalAlignment" type="int" value="1"/>
+            <Property name="name" type="java.lang.String" value="lblInputParticipationRequirements" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblInputSportType">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="lblInputSportType.text"/>
+            <Property name="name" type="java.lang.String" value="lblInputSportType" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblInputStartDate">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="lblInputStartDate.text"/>
+            <Property name="name" type="java.lang.String" value="lblInputStartDate" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblInputEndSignUpPeriod">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="lblInputEndSignUpPeriod.text"/>
+            <Property name="name" type="java.lang.String" value="lblInputEndSignUpPeriod" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblInputPlayersNum">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="lblInputPlayersNum.text"/>
+            <Property name="name" type="java.lang.String" value="lblInputPlayersNum" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblInputFee">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="lblInputFee.text"/>
+            <Property name="name" type="java.lang.String" value="lblInputFee" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblInputLateSignUpFee">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="lblInputLateSignUpFee.text"/>
+            <Property name="name" type="java.lang.String" value="lblInputLateSignUpFee" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblTournamentState">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="lblTournamentState.text"/>
+            <Property name="name" type="java.lang.String" value="lblTournamentState" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblInputTournamentState">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="lblInputTournamentState.text"/>
+            <Property name="name" type="java.lang.String" value="lblInputTournamentState" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblRequiredPlayersPerTeam">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="lblRequiredPlayersPerTeam.text"/>
+            <Property name="name" type="java.lang.String" value="lblRequiredPlayersPerTeam" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblInputRequiredPlayersPerTeam">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="lblInputRequiredPlayersPerTeam.text"/>
+            <Property name="name" type="java.lang.String" value="lblInputRequiredPlayersPerTeam" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel1">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="jLabel1.text"/>
+            <Property name="name" type="java.lang.String" value="jLabel1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel2">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="jLabel2.text"/>
+            <Property name="name" type="java.lang.String" value="jLabel2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblInputType">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="lblInputType.text"/>
+            <Property name="name" type="java.lang.String" value="lblInputType" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblInputGameDuration">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="lblInputGameDuration.text"/>
+            <Property name="name" type="java.lang.String" value="lblInputGameDuration" noResource="true"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Component class="javax.swing.JLabel" name="lblHeader">
+      <Properties>
+        <Property name="font" type="java.awt.Font" noResource="true" editor="org.netbeans.modules.form.editors2.FontEditor">
+          <FontInfo relative="true">
+            <Font bold="true" component="lblHeader" property="font" relativeSize="true" size="3"/>
+          </FontInfo>
+        </Property>
+        <Property name="text" type="java.lang.String" resourceKey="lblHeader.text"/>
+        <Property name="name" type="java.lang.String" value="lblHeader" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblInputTournamentName">
+      <Properties>
+        <Property name="font" type="java.awt.Font" noResource="true" editor="org.netbeans.modules.form.editors2.FontEditor">
+          <FontInfo relative="true">
+            <Font bold="true" component="lblInputTournamentName" italic="true" property="font" relativeSize="true" size="3"/>
+          </FontInfo>
+        </Property>
+        <Property name="text" type="java.lang.String" resourceKey="lblInputTournamentName.text"/>
+        <Property name="name" type="java.lang.String" value="lblInputTournamentName" noResource="true"/>
+      </Properties>
+    </Component>
+    <Container class="javax.swing.JPanel" name="playerPanel">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+            <TitledBorder title="Teilnehmer/Mannschaften-Liste:">
+              <Property name="titleX" resourceKey="playerPanel.border.title"/>
+            </TitledBorder>
+          </Border>
+        </Property>
+        <Property name="name" type="java.lang.String" value="playerPanel" noResource="true"/>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="0" pref="176" max="32767" attributes="0"/>
+              <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" min="-2" pref="159" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="0" pref="353" max="32767" attributes="0"/>
+              <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jScrollPane1" pref="342" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="jScrollPane1" noResource="true"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+          </AuxValues>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JList" name="playerListView">
+              <Properties>
+                <Property name="name" type="java.lang.String" value="playerListView" noResource="true"/>
+              </Properties>
+              <BindingProperties>
+                <BindingProperty name="elements" source="Form" sourcePath="${playerList}" target="playerListView" targetPath="elements" updateStrategy="0" immediately="false">
+                  <BindingParameter name="DISPLAY" value="${name}"/>
+                </BindingProperty>
+              </BindingProperties>
+            </Component>
+          </SubComponents>
+        </Container>
+      </SubComponents>
+    </Container>
+  </SubComponents>
+</Form>

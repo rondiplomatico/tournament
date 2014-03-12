@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+    <persistence-unit name="db" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <class>model.User</class>
+        <class>model.Tournament</class>
+        <class>model.Team</class>
+        <class>planning.model.Group</class>
+        <class>planning.model.Match</class>
+        <class>planning.model.Phase</class>
+        <class>planning.model.TeamSlot</class>
+        <class>planning.model.TeamStats</class>
+        <class>planning.model.Transition</class>
+        <class>planning.model.rounds.FinalSingleGroupRound</class>
+        <class>planning.model.rounds.StandardGroupRound</class>
+        <class>planning.model.rounds.Round</class>
+        <class>planning.model.rounds.KORound</class>
+        <class>planning.model.rounds.LeagueRound</class>
+        <class>planning.model.StartoffTransition</class>
+        <class>planning.model.rounds.FirstSecondLegRound</class>
+        <class>planning.model.RoundSetting</class>
+        <class>planning.model.TournamentPlan</class>
+        <properties>
+            <property name="hibernate.connection.username" value="tournament_usr"/>
+            <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
+            <property name="hibernate.connection.password" value="schwabencup"/>
+            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/tournament"/>
+            <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
+            <property name="hibernate.show_sql" value="false"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+        </properties>
+    </persistence-unit>
+</persistence>
+<!--
+<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/sopra"/>
+<property name="hibernate.connection.url" value="jdbc:mysql://www.danielwirtz.de:3306/sopra"/>
+<property name="hibernate.connection.url" value="jdbc:mysql://www.danielwirtz.de:3306/sopra_iter2"/>
+-->
