@@ -116,52 +116,16 @@ public class GroupManager {
 	 *            Zielgruppe
 	 */
 	public void matchResultUpdated(Group inGroup) {
+		// Update the order of team(slots)
 		Collections.sort(inGroup.getSlots());
-
 		/*
 		 * Sind alle Begegnungen gespielt, die Gruppe finalisieren.
 		 */
-		for (Match m : inGroup.getMatches()) {
-			if (!m.isFinished())
-				return;
+		if (inGroup.isFinished()) {
+			updateProceedingSlots(inGroup);
+			updateReferees(inGroup);
 		}
-		finalizeGroup(inGroup);
-		new PlanningManager().assignReferees(inGroup);
 	}
-
-	// /**
-	// * Markiert alle Spiele des Slots als 1:0 verloren.
-	// *
-	// * Ist der Gegner ebenfalls disqualifiziert, so wird das Spiel
-	// unentschieden
-	// * eingetragen.
-	// *
-	// *
-	// * @see TournamentManager#disqualify(model.Tournament, Team)
-	// * @param ts TeamSlot des disqualifizierten Teams
-	// */
-	// public void markAllMatchesLost(TeamSlot ts) {
-	// ResultManager rm = new ResultManager();
-	// for (Match m : ts.getGroup().getMatches()) {
-	// if (m.participating(ts)) {
-	// if (m.getHomeTeam().equals(ts)) {
-	// if (m.getGuestTeam().getTeam() != null
-	// && m.getGuestTeam().getTeam().isDisqualified()) {
-	// rm.setResult(m, 0, 0);
-	// } else {
-	// rm.setResult(m, 0, 1);
-	// }
-	// } else {
-	// if (m.getHomeTeam().getTeam() != null
-	// && m.getHomeTeam().getTeam().isDisqualified()) {
-	// rm.setResult(m, 0, 0);
-	// } else {
-	// rm.setResult(m, 1, 0);
-	// }
-	// }
-	// }
-	// }
-	// }
 
 	/**
 	 * Sind alle Matches gespielt, können die Teams in den proceeding-TeamSlots
@@ -175,7 +139,7 @@ public class GroupManager {
 	 * Ist eine Mannschaft disqualifiziert, wird sie unabhängig von ihrer
 	 * aktuellen Position in der Gruppe nicht berücksichtigt.
 	 */
-	private void finalizeGroup(Group g) {
+	private void updateProceedingSlots(Group g) {
 		List<Team> disq = new ArrayList<Team>();
 
 		// Überhaupt nur etwas tun, falls es weiterkommende Teams gibt. Ist dies
@@ -222,7 +186,24 @@ public class GroupManager {
 				idx++;
 			}
 		}
-		g.setFinished();
+	}
+
+	/**
+	 * Updates the referee assignment of all groups where proceeding slots of
+	 * this group are located.
+	 * 
+	 * @param g
+	 */
+	private void updateReferees(Group g) {
+		List<Group> done = new ArrayList<Group>();
+		PlanningManager pm = new PlanningManager();
+		for (TeamSlot ts : g.getProceedingSlots()) {
+			// Done double assign stuff (performance)
+			if (!done.contains(ts.getGroup())) {
+				pm.assignReferees(ts.getGroup());
+				done.add(ts.getGroup());
+			}
+		}
 	}
 
 }

@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -19,7 +18,6 @@ import planning.control.ResultManager;
 import planning.model.Group;
 import planning.model.Phase;
 import planning.model.TournamentPlan;
-import planning.model.Transition;
 import planning.model.rounds.Round;
 
 /**
@@ -100,18 +98,12 @@ public class TournamentPlanViewPanel extends JLayeredPane {
 		rm = new ResultManager(frame);
 		// Status einer Phase
 		boolean phaseStat = true;
-		// Interator für die Runden,Phase
-		ListIterator<Round> lround = t.getRounds().listIterator();
-		ListIterator<Phase> lphase;
 		// Iteration über die Runden des Turniers
-		while (lround.hasNext()) {
-			Round actRound = lround.next();
+		for (Round actRound : t.getRounds()) {
 			// Rundenlabel erstellen
 			createRoundLabel(actRound.getName());
 			// Iteration über die Phasen
-			lphase = actRound.getPhases().listIterator();
-			while (lphase.hasNext()) {
-				Phase actPhase = lphase.next();
+			for (Phase actPhase : actRound.getPhases()) {
 				// Phasenlabels erstellen
 				// Letzte runde
 				if (actPhase.getOutTransition() != null) {
@@ -123,8 +115,7 @@ public class TournamentPlanViewPanel extends JLayeredPane {
 							.getInTransition().getPauseMinutes());
 				}
 				// Panels erstellen
-				createPanel(match, actPhase.getGroups().listIterator(),
-						phaseStat, actPhase.getOutTransition());
+				createPanel(match, actPhase, phaseStat);
 				// Phasenstatus speichern
 				teamViewVisiblePhases.add(phaseStat);
 				// Aktuelle Phase ist beendet oder letzte -> nächste nicht
@@ -162,30 +153,28 @@ public class TournamentPlanViewPanel extends JLayeredPane {
 	 * @param Transition
 	 *            Übergang zwischen Phasen
 	 */
-	private void createPanel(boolean ansicht, ListIterator<Group> lGroup,
-			boolean stat, Transition proc) {
+	private void createPanel(boolean ansicht, Phase p, boolean stat) {
 		// Arraylist der Gruppen einer Phase
 		List<Object> tmp = new ArrayList<Object>();
 		// Iteration über die Gruppen einer Phase
-		while (lGroup.hasNext()) {
-			// aktuelle Phase
-			Group actGroup = lGroup.next();
+		for (Group actGroup : p.getGroups()) {
 			// Matchansicht
 			if (ansicht) {
-				// Turnier ist abgeschlosen -> keine Änderung möglich (null als user übergeben)
+				// Turnier ist abgeschlosen -> keine Änderung möglich (null als
+				// user übergeben)
 				User u = actTourn.getTournament().getState() == TournamentState.finished ? null
 						: actUser;
 				tmp.add(new MatchPanel(actGroup, rm, actTourn.getTournament()
 						.getFieldNames(), u, actTourn.getTournament()
 						.getReferees(), actTourn.getTournament().getLeaders(),
 						stat));
-			} // Teamansicht
-			else {
+				// Teamansicht
+			} else {
 				TeamPanel teamP;
 				// Transition ist nicht leer -> Normale Runde
-				if (proc != null) {
-					teamP = new TeamPanel(actGroup,
-							proc.getNumProceedantsPerGroup(), actFrame, true);
+				if (p.getOutTransition() != null) {
+					teamP = new TeamPanel(actGroup, p.getOutTransition()
+							.getNumProceedantsPerGroup(), actFrame, true);
 				} // Finale Phase -> nur der erste wird als weiter kommend
 					// markiert
 				else {

@@ -576,7 +576,7 @@ public class PlanningManager {
 			List<User> refs = t.getReferees(target.getHomeTeam().getTeam(),
 					true);
 			Collections.shuffle(refs);
-			ref = t.getReferees().get(0);
+			ref = refs.get(0);
 			int idx = 1;
 			while (target.getGuestTeam().getTeam() != null
 					&& target.getGuestTeam().getTeam().getPlayers()

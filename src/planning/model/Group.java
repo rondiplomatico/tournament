@@ -38,7 +38,6 @@ public class Group implements Serializable, IMappingGroup {
 
 	private static final long serialVersionUID = 2537294750381004704L;
 
-	@SuppressWarnings("unused")
 	@Id
 	@GeneratedValue
 	private long id;
@@ -55,7 +54,6 @@ public class Group implements Serializable, IMappingGroup {
 	private List<Match> matches = null;
 
 	private String name, shortName;
-	private boolean isFinished = false;
 	private Color color = null;
 
 	@ManyToOne(cascade=CascadeType.PERSIST)
@@ -117,13 +115,6 @@ public class Group implements Serializable, IMappingGroup {
 	}
 
 	/**
-	 * Markiert eine Runde als beendet
-	 */
-	public void setFinished() {
-		isFinished = true;
-	}
-
-	/**
 	 * Gibt die Begegnungen der Gruppe in der geplanten Reihenfolge (sofern das
 	 * Scheduling schon durchgeführt wurde) als unveränderbare Liste zurück.
 	 * 
@@ -159,7 +150,12 @@ public class Group implements Serializable, IMappingGroup {
 	 * @return true falls alle Begegnungen beendet sind, false sonst.
 	 */
 	public boolean isFinished() {
-		return isFinished || teamslots.size() < 2;
+		if (teamslots.size() < 2) return true;
+		for (Match m : getMatches()) {
+			if (!m.isFinished())
+				return false;
+		}
+		return true;
 	}
 
 	/**

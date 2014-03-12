@@ -7,7 +7,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.ListIterator;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -148,14 +147,10 @@ public class MatchPanel extends JPanel {
 		gbLayout.ipady = 5;
 		gbLayout.insets = new Insets(0, 0, 0, 0);
 		add(new JSeparator(), gbLayout);
-		// Iterator für die Begegnungen
-		ListIterator<Match> imatch = actGroup.getMatches().listIterator();
 		// laufvariable
 		int i = 0;
 		// Iteration über die Spielpaarungen(Teamslot)
-		while (imatch.hasNext()) {
-			// aktuelle Begegnung
-			Match actMatch = imatch.next();
+		for (Match actMatch : actGroup.getMatches()) {
 			// Label der Begegnungen Team1 - Team2
 			gbLayout.gridx = 0;
 			gbLayout.gridy = i + 2;
