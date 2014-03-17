@@ -16,6 +16,7 @@ import model.Tournament;
 import model.User;
 import model.enums.TournamentState;
 import model.enums.TournamentType;
+import planning.control.PlanningException;
 import planning.control.PlanningManager;
 import planning.control.ResultManager;
 import planning.control.TimeManager.NoPlayTimeException;
@@ -49,7 +50,7 @@ public class SampleData {
 	 * @return Liste mit allen Turniertypen
 	 * @throws NoPlayTimeException
 	 */
-	public static List<Tournament> allTypes(int nr) {
+	public static List<Tournament> allTypes(int nr) throws PlanningException {
 		List<Tournament> res = new ArrayList<Tournament>();
 		for (TournamentType ltt : TournamentType.values()) {
 			for (TournamentState lts : TournamentState.values()) {
@@ -308,9 +309,10 @@ public class SampleData {
 	 * Turniere die alle 6 unterschiedliche Zustände eines Turniers abdecken.
 	 * 
 	 * @param args
+	 * @throws PlanningException 
 	 * @throws NoPlayTimeException
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws PlanningException {
 		// persist = false;
 		if (true) {
 			initUsers();

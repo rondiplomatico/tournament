@@ -9,6 +9,7 @@ import java.util.List;
 import javax.persistence.Entity;
 
 import model.Tournament;
+import planning.control.PlanningException;
 import planning.control.PlanningManager;
 import planning.control.mapping.Mapping;
 import planning.control.score.ScoreTransfer;
@@ -62,11 +63,12 @@ public class LeagueRound extends Round implements IFinalRound, IMultiphaseRound 
 	 * Erstellt die Ligarunde.
 	 * 
 	 * Es gibt zwei Phasen (Hin-Rück), und die letzte ist zugleich die letzte Phase des Turniers.
+	 * @throws PlanningException 
 	 * 
 	 * @see planning.model.rounds.Round#build(planning.control.PlanningManager, planning.model.rounds.IGroupRound)
 	 */
 	@Override
-	public void build(PlanningManager pm, IGroupRound round) {
+	public void build(PlanningManager pm, IGroupRound round) throws PlanningException {
 		phases.clear();
 		// Hinrunde
 		Phase hin = new Phase(this, 1, "Hinrunde");

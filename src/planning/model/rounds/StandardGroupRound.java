@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
 import model.Tournament;
+import planning.control.PlanningException;
 import planning.control.PlanningManager;
 import planning.model.Group;
 import planning.model.Phase;
@@ -71,11 +72,12 @@ public class StandardGroupRound extends Round implements IGroupRound {
 
 	/**
 	 * Erstellt die GruppenRunde. Sie enthält nur eine Phase.
+	 * @throws PlanningException 
 	 * 
 	 * @see planning.model.rounds.Round#build(PlanningManager, IGroupRound)
 	 */
 	@Override
-	public void build(PlanningManager pm, IGroupRound round) {
+	public void build(PlanningManager pm, IGroupRound round) throws PlanningException {
 		phases.clear();
 		Phase p = new Phase(this, numGroups, getName());
 		phases.add(p);

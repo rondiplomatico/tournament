@@ -38,6 +38,7 @@ public class RoundSetting implements Serializable {
 	private int pauseBetweenPhases = 0;
 
 	private int gameTime = Integer.MIN_VALUE;
+	protected boolean pairwiseMatching = false;
 
 	// Übergang aus voriger Runde
 	@OneToOne(cascade = CascadeType.ALL)
@@ -118,6 +119,14 @@ public class RoundSetting implements Serializable {
 	
 	public int getGameTime() {
 		return gameTime;
+	}
+	
+	public boolean getPairwiseMatching() {
+		return pairwiseMatching;
+	}
+
+	public void setPairwiseMatching(boolean value) {
+		pairwiseMatching = value;
 	}
 
 	/**

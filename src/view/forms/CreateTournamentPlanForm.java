@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 
 import model.Team;
 import model.Tournament;
+import planning.control.PlanningException;
 import planning.control.PlanningManager;
 import planning.control.TimeManager.NoPlayTimeException;
 import planning.control.mapping.Mapping;
@@ -69,13 +70,17 @@ public class CreateTournamentPlanForm extends ContentPanel {
 	 * @param onlyConfirmed
 	 */
 	private void previewPlan(boolean onlyConfirmed) {
-		TournamentPlan tp = pm.generateTournamentPlan(t, onlyConfirmed);
+		TournamentPlan tp = null;
 		try {
+			tp = pm.generateTournamentPlan(t, onlyConfirmed);
 			pm.schedule(tp);
 		} catch (NoPlayTimeException e) {
 			JOptionPane
 					.showMessageDialog(null,
 							"Cannot schedule this plan: Too little time given (see PlayTimes)");
+		} catch (PlanningException e) {
+			JOptionPane.showMessageDialog(null,
+					"Planning error:" + e.getMessage());
 		}
 
 		// pm.printSchedule(tp);

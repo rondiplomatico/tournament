@@ -9,6 +9,7 @@ import java.util.List;
 import javax.persistence.Entity;
 
 import model.Tournament;
+import planning.control.PlanningException;
 import planning.control.PlanningManager;
 import planning.control.mapping.Mapping;
 import planning.control.score.ScoreTransfer;
@@ -77,11 +78,12 @@ public class FirstSecondLegRound extends StandardGroupRound implements
 	 * 
 	 * Erstellt die Runde mit zwei Phasen, und übernimmt im Übergang alle Punkte
 	 * der Vorrunde mit in die Rückrunde.
+	 * @throws PlanningException 
 	 * 
 	 * @see planning.model.rounds.Round#build(PlanningManager, IGroupRound)
 	 */
 	@Override
-	public void build(PlanningManager pm, IGroupRound round) {
+	public void build(PlanningManager pm, IGroupRound round) throws PlanningException {
 		phases.clear();
 		// Hinrunde
 		Phase hin = new Phase(this, numGroups, "Hinrunde");

@@ -52,15 +52,9 @@ public class ResultUpdateListener implements ChangeListener, FocusListener {
 	 * @return boolean Ergebnisse wurde geändert
 	 */
 	private boolean changed() {
-		if ((Integer) home.getValue() == match.getGoals(match.getHomeTeam())) {
-			return false;
-		} else if ((Integer) home.getValue() == match.getGoals(match
-				.getGuestTeam())) {
-			return false;
-		} else {
-			return true;
-		}
-
+		return (Integer) home.getValue() != match.getGoals(match.getHomeTeam())
+				|| (Integer) guest.getValue() != match.getGoals(match
+						.getGuestTeam());
 	}
 
 	private void updateResult() {

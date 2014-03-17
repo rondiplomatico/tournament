@@ -41,10 +41,37 @@ public class GroupManager {
 	 * 
 	 * @param g
 	 *            Gruppe
+	 * @throws PlanningException 
 	 */
-	public void calculateMatches(Group g) {
+	public void calculateMatches(Group g) throws PlanningException {
 		g.getMatches().clear();
 
+		if (g.getPhase().getRound().getPairwiseMatching()) {
+			computeMatchesPairwise(g);
+		} else {
+			computeMatchesAllvsAll(g);
+		}
+	}
+
+	private void computeMatchesPairwise(Group g) throws PlanningException {
+		if (g.getSlots().size() % 2 != 0) {
+			throw new PlanningException(
+					"Pairwise match assignment requires an even number of teams in group "
+							+ g.getLongName());
+		}
+		TeamSlot tmp;
+		int half = g.getSlots().size()/2;
+		for (int k = half; k < g.getSlots().size(); k+=2) {
+			tmp = g.getSlots().get(k);
+			g.getSlots().remove(k);
+			g.getSlots().add(k+1, tmp);
+		}
+		for (int k = 0; k < half; k++) {
+			g.getMatches().add(new Match(g, g.getSlots().get(k), g.getSlots().get(k+half)));
+		}
+	}
+
+	private void computeMatchesAllvsAll(Group g) {
 		LinkedList<TeamSlot> hlp = new LinkedList<TeamSlot>(g.getSlots());
 		int n = g.getSlots().size();
 		boolean even = n % 2 == 0;
@@ -123,7 +150,7 @@ public class GroupManager {
 		 */
 		if (inGroup.isFinished()) {
 			updateProceedingSlots(inGroup);
-			updateReferees(inGroup);
+			updateFollowingGroups(inGroup);
 		}
 	}
 
@@ -194,13 +221,20 @@ public class GroupManager {
 	 * 
 	 * @param g
 	 */
-	private void updateReferees(Group g) {
+	private void updateFollowingGroups(Group g) {
 		List<Group> done = new ArrayList<Group>();
 		PlanningManager pm = new PlanningManager();
 		for (TeamSlot ts : g.getProceedingSlots()) {
 			// Done double assign stuff (performance)
 			if (!done.contains(ts.getGroup())) {
+				// Assign refs
 				pm.assignReferees(ts.getGroup());
+				// Sort group according to current score
+				Collections.sort(ts.getGroup().getSlots());
+				// Also process this group if it is finished
+				if (ts.getGroup().isFinished()) {
+					updateFollowingGroups(ts.getGroup());
+				}
 				done.add(ts.getGroup());
 			}
 		}

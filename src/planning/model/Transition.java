@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
+import planning.control.PlanningException;
 import planning.control.mapping.IGroupMapper;
 import planning.control.mapping.IMappingGroup;
 import planning.control.mapping.Mapping;
@@ -150,12 +151,13 @@ public class Transition implements Serializable, IGroupMapper, IScoreCalculator 
 	 * Benutzt die interne Strategie fürs Mapping. Wird an dieser Stelle
 	 * zentralisiert, damit z.B. die StartoffTransition die Methode selber
 	 * überschreiben kann.
+	 * @throws PlanningException 
 	 * 
 	 * @see planning.control.mapping.IGroupMapper#map(java.util.List,
 	 *      java.util.List)
 	 */
 	@Override
-	public void map(List<IMappingGroup> source, List<IMappingGroup> target) {
+	public void map(List<IMappingGroup> source, List<IMappingGroup> target) throws PlanningException {
 		map.getInstance().map(source, target);
 	}
 

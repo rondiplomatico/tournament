@@ -10,6 +10,7 @@ import java.util.List;
 import javax.persistence.Entity;
 
 import model.Tournament;
+import planning.control.PlanningException;
 import planning.control.PlanningManager;
 import planning.control.mapping.Mapping;
 import planning.control.score.ScoreTransfer;
@@ -80,10 +81,12 @@ public class KORound extends Round implements IFinalRound, IMultiphaseRound {
 	 * automatisch weiter.
 	 * 
 	 * @param groupSource
+	 * @throws PlanningException
 	 * @see Round#build(PlanningManager, IGroupRound)
 	 */
 	@Override
-	public void build(PlanningManager pm, IGroupRound groupSource) {
+	public void build(PlanningManager pm, IGroupRound groupSource)
+			throws PlanningException {
 		phases.clear();
 		// Anzahl der Teams bestimmen
 		int totalTeams = 0;
@@ -97,13 +100,16 @@ public class KORound extends Round implements IFinalRound, IMultiphaseRound {
 		int totalPhases = (int) Math.ceil(Math.log(totalTeams) / Math.log(2));
 
 		// Gleiche Transition für alle
-		Transition t = new Transition(1, ScoreTransfer.NoScores, Mapping.CrossMapper, pauseMinutes);
+		Transition t = new Transition(1, ScoreTransfer.NoScores,
+				Mapping.CrossMapper, pauseMinutes);
 		// Für den letzten Übergang, um das Spiel um Platz 3 zu erzeugen
-		Transition last = new Transition(2, ScoreTransfer.NoScores, Mapping.CrossMapper, pauseMinutes);
+		Transition last = new Transition(2, ScoreTransfer.NoScores,
+				Mapping.CrossMapper, pauseMinutes);
 
 		// Erste Phase erhält die Gruppentransition und die sourceGroups
 		int currentNumGroups = (int) Math.ceil(totalTeams / 2.0);
-		Phase next = new Phase(this, currentNumGroups, getCaption(0, totalPhases));
+		Phase next = new Phase(this, currentNumGroups, getCaption(0,
+				totalPhases));
 		next.setInTransition(inTransition);
 		next.setOutTransition(totalPhases == 2 ? last : t);
 		pm.buildPhase(next, groupSource.getGroups());
@@ -129,7 +135,8 @@ public class KORound extends Round implements IFinalRound, IMultiphaseRound {
 			}
 			// Normalfall
 			if (!finalRoundWith3rdGame) {
-				next = new Phase(this, currentNumGroups, getCaption(phaseIdx, totalPhases));
+				next = new Phase(this, currentNumGroups, getCaption(phaseIdx,
+						totalPhases));
 				next.setInTransition(t);
 
 				// Die Finalrunde hat zwei Gruppen, Finale & Spiel um Platz 3
@@ -161,9 +168,19 @@ public class KORound extends Round implements IFinalRound, IMultiphaseRound {
 				next.getGroups().add(next.getGroups().get(0));
 				next.getGroups().remove(0);
 			}
-
 			phases.add(next);
 		}
+		/*
+		 * Noch "schöne" Namen für die Finalrunden
+		 */
+		// for (int pidx = 0; pidx < phases.size() - 1; pidx++) {
+		// Phase p = phases.get(pidx);
+		// for (int k = 1; k <= p.getGroups().size(); k++) {
+		// p.getGroups().get(k - 1)
+		// .setLongName(getCaption(pidx, totalPhases) + " " + k);
+		// }
+		// }
+
 	}
 
 	private String getCaption(int phaseIdx, int totalPhases) {

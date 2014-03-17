@@ -23,6 +23,7 @@ import model.Tournament;
 
 import org.hibernate.annotations.IndexColumn;
 
+import planning.control.PlanningException;
 import planning.control.PlanningManager;
 import planning.model.Phase;
 import planning.model.Transition;
@@ -92,6 +93,7 @@ public abstract class Round implements Serializable {
 	protected String name;
 
 	protected int gameTime = Integer.MIN_VALUE;
+	protected boolean pairwiseMatching = false;
 
 	/**
      *
@@ -155,6 +157,14 @@ public abstract class Round implements Serializable {
 		gameTime = value;
 	}
 
+	public boolean getPairwiseMatching() {
+		return pairwiseMatching;
+	}
+
+	public void setPairwiseMatching(boolean value) {
+		pairwiseMatching = value;
+	}
+
 	/**
 	 * Erstellt eine Runde mit allen inneren Phasen.<br>
 	 * <br>
@@ -170,7 +180,7 @@ public abstract class Round implements Serializable {
 	 * @param round
 	 *            Quellrunde
 	 */
-	public abstract void build(PlanningManager pm, IGroupRound round);
+	public abstract void build(PlanningManager pm, IGroupRound round) throws PlanningException;
 
 	/**
 	 * 

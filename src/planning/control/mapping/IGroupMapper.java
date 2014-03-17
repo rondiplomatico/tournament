@@ -3,6 +3,8 @@ package planning.control.mapping;
 import java.io.Serializable;
 import java.util.List;
 
+import planning.control.PlanningException;
+
 /**
  * 
  * Stellt das Interface der Strategy-Methode map dar. Diese ermöglicht die
@@ -33,5 +35,5 @@ public interface IGroupMapper extends Serializable {
 	 * @param target
 	 * 
 	 */
-	public void map(List<IMappingGroup> source, List<IMappingGroup> target);
+	public void map(List<IMappingGroup> source, List<IMappingGroup> target) throws PlanningException;
 }

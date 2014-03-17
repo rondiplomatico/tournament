@@ -9,6 +9,7 @@ import java.util.List;
 import javax.persistence.Entity;
 
 import model.Tournament;
+import planning.control.PlanningException;
 import planning.control.PlanningManager;
 import planning.model.Phase;
 import planning.model.TeamSlot;
@@ -56,11 +57,12 @@ public class FinalSingleGroupRound extends Round implements IFinalRound {
 	 * Erstellt die Runde.
 	 * 
 	 * Es gibt eine Phase mit einer Gruppe.
+	 * @throws PlanningException 
 	 * 
 	 * @see planning.model.rounds.Round#build(planning.control.PlanningManager, planning.model.rounds.IGroupRound)
 	 */
 	@Override
-	public void build(PlanningManager pm, IGroupRound round) {
+	public void build(PlanningManager pm, IGroupRound round) throws PlanningException {
 		phases.clear();
 		Phase p = new Phase(this, 1, getName());
 		phases.add(p);

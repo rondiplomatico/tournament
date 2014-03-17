@@ -2,7 +2,8 @@ package planning.control.mapping;
 
 /**
  * 
- * Enthält alle IGroupMapper-Implementationen inkluvise Beschreibungen für die GUI.
+ * Enthält alle IGroupMapper-Implementationen inkluvise Beschreibungen für die
+ * GUI.
  * 
  * @author Daniel Wirtz
  * 
@@ -11,18 +12,29 @@ public enum Mapping {
 	/**
 	 * Über Kreuz
 	 */
-	CrossMapper, 
+	CrossMapper,
 	/**
 	 * Zufälliges Mapping
 	 */
-	RandomMapper, 
+	RandomMapper,
 	/**
 	 * Direktes Kopieren, soweit möglich
 	 */
-	StraightMapper;
+	StraightMapper,
+
+	/**
+	 * Combines two (or more) groups together
+	 */
+	CombineMapper,
+
+	/**
+	 * Maps the proceedants of two groups crosswise over a 2-rank distance
+	 */
+	TwoToPairwise;
 
 	/**
 	 * Gibt eine kurze Beschreibung des Mapping-Typs aus.
+	 * 
 	 * @return Beschreibung
 	 */
 	public String getDescription() {
@@ -54,6 +66,13 @@ public enum Mapping {
 					+ "Es wird weiterleitung über Kreuz für alle Gruppen durchgeführt<br>"
 					+ "(Direktes Mapping macht dann keinen Sinn)";
 			break;
+		case CombineMapper:
+			res += "Kombiniert je zwei Gruppen in eine Zielgruppe";
+			break;
+
+		case TwoToPairwise:
+			res += "Kombiniert zwei Gruppen über Kreuz, jedoch mit 2 Ranglistenplätzen Abstand. Also 1-3, 2-4 etc";
+			break;
 		}
 		return res + "</html>";
 	}
@@ -71,6 +90,10 @@ public enum Mapping {
 			return "Direkt";
 		case RandomMapper:
 			return "Zufällig";
+		case CombineMapper:
+			return "Kombination";
+		case TwoToPairwise:
+			return "2 zu paarweise";
 		}
 		return null;
 	}
@@ -88,9 +111,15 @@ public enum Mapping {
 		case RandomMapper:
 			return new RandomMapper();
 
+		case CombineMapper:
+			return new CombineMapper();
+
 		case StraightMapper:
 			return new StraightMapper();
-		}
+		
+		case TwoToPairwise:
+			return new TwoToPairwiseMapper();
+		}	
 		return null;
 	}
 }

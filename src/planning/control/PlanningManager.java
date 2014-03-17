@@ -41,17 +41,27 @@ import control.TournamentManager;
  * 
  */
 public class PlanningManager {
+	
+	private char curGroup = 'A';
 
 	/**
 	 * Akzeptiert einen Turnierplan und startet das Turnier
 	 * 
 	 * @param t
 	 *            Turnier
+	 * @throws
 	 * @throws NoPlayTimeException
 	 */
 	public boolean acceptPlanAndStart(Tournament t) {
 		// Plan generieren
-		TournamentPlan tp = generateTournamentPlan(t, true);
+		TournamentPlan tp = null;
+		try {
+			tp = generateTournamentPlan(t, true);
+		} catch (PlanningException pe) {
+			JOptionPane.showMessageDialog(null,
+					"Tournament cannot be planned: " + pe.getMessage());
+			return false;
+		}
 
 		// Zeitablauf erstellen
 		try {
@@ -182,12 +192,14 @@ public class PlanningManager {
 	 *            Nur schon bestätigte Teams werden bei der Generierung
 	 *            berücksichtigt.
 	 * @return Generierten Turnierplan
+	 * @throws PlanningException
 	 */
 	public TournamentPlan generateTournamentPlan(Tournament t,
-			boolean onlyConfirmed) {
+			boolean onlyConfirmed) throws PlanningException {
 		assert (t.getRoundSettings().size() > 0);
 
 		TournamentPlan plan = new TournamentPlan(t);
+		curGroup = 'A';
 
 		// Runden gemäß Einstellungen einbauen
 		Round prev = null;
@@ -201,6 +213,7 @@ public class PlanningManager {
 						.getPauseBetweenPhases());
 			}
 			r.setInTransition(rs.getInTransition());
+			r.setPairwiseMatching(rs.getPairwiseMatching());
 			// Use game duration from round, if set, otherwise the default from
 			// the tournament
 			int gt = rs.getGameTime();
@@ -328,16 +341,17 @@ public class PlanningManager {
 	 * @param p
 	 *            Phase
 	 * @param sourceGroups
+	 * @throws PlanningException
 	 */
-	public void buildPhase(Phase p, List<Group> sourceGroups) {
+	public void buildPhase(Phase p, List<Group> sourceGroups)
+			throws PlanningException {
 		GroupManager gm = new GroupManager();
 
 		// Gruppen erstellen und hinzufügen
-		char c = 'A';
 		for (int i = 0; i < p.getNumGroups(); i++) {
-			Group g = new Group(p, "Gruppe " + c, c + "");
+			Group g = new Group(p, "Gruppe " + curGroup, curGroup + "");
 			p.getGroups().add(g);
-			c++;
+			curGroup++;
 		}
 
 		/**
@@ -534,7 +548,7 @@ public class PlanningManager {
 
 		// Noch eine Spieldauer draufrechnen, da bisher mit Startzeiten
 		// gerechnet wurde
-//		p.setScheduledEndDateTime(tm.getCurrentTime());
+		// p.setScheduledEndDateTime(tm.getCurrentTime());
 	}
 
 	private void assignReferees(Phase p) {
