@@ -23,7 +23,7 @@ public class AllScoreTransfer implements IScoreCalculator {
 	 */
 	@Override
 	public Score getScores(TeamSlot forTeamSlot, List<Match> groupMatches, List<TeamSlot> ranking) {
-		return forTeamSlot.getStats().getScores();
+		return forTeamSlot.Score;
 	}
 
 }

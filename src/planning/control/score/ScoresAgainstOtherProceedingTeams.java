@@ -23,10 +23,11 @@ public class ScoresAgainstOtherProceedingTeams implements IScoreCalculator {
 	 *      java.util.List, java.util.List)
 	 */
 	@Override
-	public Score getScores(TeamSlot forTeamSlot, List<Match> groupMatches, List<TeamSlot> ranking) {
+	public Score getScores(TeamSlot forTeamSlot, List<Match> groupMatches,
+			List<TeamSlot> ranking) {
 		// return new Score(0,0);
 		int numProc = forTeamSlot.getGroup().getActualNumProceedants();
-		int ptsp = 0, ptsm = 0, glsp = 0, glsm = 0;
+		int ptsp = 0, ptsm = 0, glsp = 0, glsm = 0, won = 0, remis = 0, lost = 0, g1, g2;
 		for (int x = 0; x < numProc; x++) {
 			TeamSlot ts = ranking.get(x);
 			// Nicht die Punkte gegen sich selbst.
@@ -35,13 +36,21 @@ public class ScoresAgainstOtherProceedingTeams implements IScoreCalculator {
 					if (m.isFinished() && m.participating(ts)) {
 						ptsp += m.getPoints(forTeamSlot);
 						ptsm += m.getPoints(ts);
-						glsp += m.getGoals(forTeamSlot);
-						glsm += m.getGoals(ts);
+						g1 = m.getGoals(forTeamSlot);
+						g2 = m.getGoals(ts);
+						glsp += g1;
+						glsm += g2;
+						if (g1 > g2) {
+							won++;
+						} else if (g1 < g2) {
+							lost++;
+						} else
+							remis++;
 					}
 				}
 			}
 		}
-		return new Score(ptsp, ptsm, glsp, glsm);
+		return new Score(ptsp, ptsm, glsp, glsm, won, remis, lost);
 	}
 
 }

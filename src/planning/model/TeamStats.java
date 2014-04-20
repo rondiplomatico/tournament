@@ -2,7 +2,6 @@ package planning.model;
 
 import java.io.Serializable;
 
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.swing.SwingConstants;
@@ -14,7 +13,7 @@ import javax.swing.SwingConstants;
  *         zu Ihrer Anzeige
  * 
  */
-@Entity
+//@Entity
 public class TeamStats implements Serializable {
 
 	private static final long serialVersionUID = -8685011514472893666L;
@@ -76,10 +75,25 @@ public class TeamStats implements Serializable {
 	private String[] fields = new String[HEADS.length]; // Daten der Mannschaft
 
 	/**
-	 * 
+	 * JPA-Default constructor. Do not use.
 	 */
-	public TeamStats() {
+	protected TeamStats() {
 		scores = new Score();
+	}
+	
+	/**
+	 * Creates a TeamStats object using the given score.
+	 * @param score
+	 */
+	public TeamStats(TeamSlot ts) {
+		scores = ts.Score;
+		// Gespielte Spiele
+		setField(GAMES,
+				scores.totalGames() + "/" + (ts.getGroup().getSlots().size() - 1));
+		// Gewonnen / Unentsch. / Verloren
+		setField(STAT,
+				scores.won + "/" + scores.remis + "/" + scores.lost);
+		setField(TeamStats.NAME, ts.getName());
 	}
 
 	/**
@@ -113,9 +127,9 @@ public class TeamStats implements Serializable {
 	 */
 	public String getContent(int x) {
 		if (x == GOALS) {
-			return scores.getGoals() + ":" + scores.getCounterGoals();
+			return scores.goals_plus + ":" + scores.goals_minus;
 		} else if (x == POINTS) {
-			return scores.getPointsPlus() + ":" + scores.getPointsMinus();
+			return scores.points_plus + ":" + scores.points_minus;
 		}
 		return this.fields[x];
 	}
@@ -159,7 +173,7 @@ public class TeamStats implements Serializable {
 	 * 
 	 * @return Scores
 	 */
-	public Score getScores() {
-		return scores;
-	}
+//	public Score getScores() {
+//		return scores;
+//	}
 }

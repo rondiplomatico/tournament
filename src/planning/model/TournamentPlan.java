@@ -6,6 +6,7 @@ package planning.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -14,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PostLoad;
 
 import model.Tournament;
 
@@ -57,6 +59,21 @@ public class TournamentPlan implements Serializable {
 	public TournamentPlan(Tournament t) {
 		this();
 		this.tournament = t;
+	}
+	
+	
+	/**
+	 * Makes sure the groups are all sorted correctly after being loaded from the database 
+	 */
+	@PostLoad
+	private void postLoad() {
+		for (Round r : rounds) {
+			for (Phase p: r.getPhases()) {
+				for (Group g: p.getGroups()) {
+					Collections.sort(g.getSlots());
+				}
+			}
+		}
 	}
 
 	/**

@@ -12,7 +12,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 import model.Team;
 import planning.control.ResultManager;
@@ -45,27 +44,41 @@ public class TeamSlot implements Comparable<TeamSlot>, Serializable {
 	
 	private Color color;
 
-	@OneToOne(cascade=CascadeType.ALL)
-	private TeamStats stats;
-
 	private String preName = null;
 
     @ManyToOne(cascade=CascadeType.PERSIST)
 	private Group containingGroup = null;
+    
+    // The score associated with the TeamSlot
+    public Score Score;
 
     /** Nach JPA-Spezifikation Standard-Konstruktor ohne Parameter. */
     protected TeamSlot() {
+    	Score = new Score();
     }
 
 	/**
 	 * Erzeugt einen neuen TeamSlot mit vorläufigem Namen.
 	 * 
+	 * a)
+	 * anzahl 0,1,1+3,1+3+9 => d_n = \sum k=0 n k^3 		(n=0..)
+	 * seitenlänge: s_n = (1/2)^n 		(n=1..)
+	 * h_0 = sqrt(3/4) = sqrt(1^2 - (1/2)^2)
+	 * höhe: h_n = h_0 * (1/2)^n = h_0 * s_n		(n=1..)
+	 * flächeninhalt: a_n = .5 s_n * h_n = .5 * h_0 * s_n^2 = .5 * h_0 * (1/2)^2n
+	 * 
+	 * b) 
+	 * \sum k=0 n k^3 * 3 * s_k = \sum_k=0^n k^3 * 3 * (1/2)^k
+	 * 
+	 * c)
+	 * \sum k=0 n k^3 * a_n = \sum k=0 n k^3 * .5 * h_0 * (1/2)^2k
+	 * 
 	 * @param preliminaryName
 	 * @param color
 	 */
 	public TeamSlot(String preliminaryName, Color color) {
+		this();
 		preName = preliminaryName;
-		stats = new TeamStats();
 		initialScore = new Score();
 		this.color = color;
 	}
@@ -130,18 +143,6 @@ public class TeamSlot implements Comparable<TeamSlot>, Serializable {
 	}
 
 	/**
-	 * Berechnet die detaillierten Stats für einen Teamslot.
-	 * 
-	 * Der Grund warum nicht nach jedem Match einfach nur die Änderung
-	 * eingetragen wird und man sich so einige rechenarbeit spart ist
-	 * 
-	 * @return Stats
-	 */
-	public TeamStats getStats() {
-		return stats;
-	}
-
-	/**
 	 * Legt die den Slot enthaltende Gruppe fest.
 	 * 
 	 * Designmäßig könnte die übergabe auch im Konstruktor geschehen; allerdings
@@ -172,19 +173,18 @@ public class TeamSlot implements Comparable<TeamSlot>, Serializable {
 	 */
 	@Override
 	public int compareTo(TeamSlot o) {
-		Score l = stats.getScores();
-		Score r = o.stats.getScores();
-		if (l.getPointsPlus() == r.getPointsPlus()) {
+		if (Score.points_plus == o.Score.points_plus) {
 			/*
 			 * Kann auch mit der Tordifferenz keine Entscheidung herbeigeführt
 			 * werden, so entscheidet der (Pseudo-) Zufall.
 			 */
-			if (l.getGoals() == r.getGoals()) {
-				return (Math.random() > .5) ? -1 : 1;
+			if (Score.goals_plus == o.Score.goals_plus) {
+				// Ansonsten: Wer hat weniger gegentore
+				return o.Score.goals_minus - Score.goals_minus; //;(Math.random() > .5) ? -1 : 1;
 			} else
-				return l.getGoals() > r.getGoals() ? -1 : 1;
+				return Score.goals_plus > o.Score.goals_plus ? -1 : 1;
 		} else
-			return l.getPointsPlus() > r.getPointsPlus() ? -1 : 1;
+			return Score.points_plus > o.Score.points_plus ? -1 : 1;
 	}
 
 }

@@ -41,7 +41,7 @@ public class GroupManager {
 	 * 
 	 * @param g
 	 *            Gruppe
-	 * @throws PlanningException 
+	 * @throws PlanningException
 	 */
 	public void calculateMatches(Group g) throws PlanningException {
 		g.getMatches().clear();
@@ -60,14 +60,16 @@ public class GroupManager {
 							+ g.getLongName());
 		}
 		TeamSlot tmp;
-		int half = g.getSlots().size()/2;
-		for (int k = half; k < g.getSlots().size(); k+=2) {
+		int half = g.getSlots().size() / 2;
+		for (int k = half; k < g.getSlots().size(); k += 2) {
 			tmp = g.getSlots().get(k);
 			g.getSlots().remove(k);
-			g.getSlots().add(k+1, tmp);
+			g.getSlots().add(k + 1, tmp);
 		}
 		for (int k = 0; k < half; k++) {
-			g.getMatches().add(new Match(g, g.getSlots().get(k), g.getSlots().get(k+half)));
+			g.getMatches().add(
+					new Match(g, g.getSlots().get(k), g.getSlots()
+							.get(k + half)));
 		}
 	}
 
@@ -120,11 +122,14 @@ public class GroupManager {
 			for (int x = 0; x < g.getActualNumProceedants(); x++) {
 				// Gibts nur eine Gruppe, den Phasennamen verwenden. Sonst den
 				// Gruppennamen.
-				String name = (x + 1)
-						+ ". "
-						+ (g.getPhase().getGroups().size() > 1 ? g.getPhase()
-								.getName() + " " + g.getShortName() : g
-								.getPhase().getName());
+				// String name = (x + 1)
+				// + ". "
+				// + (g.getPhase().getGroups().size() > 1 ? g.getPhase()
+				// .getName() + " " + g.getShortName() : g
+				// .getPhase().getName());
+				String lbl = g.getPhase().getGroups().size() > 1 ? "Gruppe" : g
+						.getPhase().getName();
+				String name = (x + 1) + ". " + lbl + " " + g.getShortName();
 				g.getProceedingSlots().add(new TeamSlot(name, g.getColor()));
 			}
 		}

@@ -167,7 +167,7 @@ public class TeamPanel extends JPanel{
         //Iteration über die Slots einer Gruppe
         while(lSlots.hasNext()){
             //Aktueller Stat
-            TeamStats actStats = lSlots.next().getStats();
+            TeamStats actStats = new TeamStats(lSlots.next()); 
             //Standard Farbe&Stil der Schrift der Reihe
             Font lineFont = new Font("Verdana", Font.PLAIN, 12);
             Color lineColor = Color.RED;

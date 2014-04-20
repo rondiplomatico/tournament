@@ -30,7 +30,13 @@ public enum Mapping {
 	/**
 	 * Maps the proceedants of two groups crosswise over a 2-rank distance
 	 */
-	TwoToPairwise;
+	TwoToPairwise,
+
+	/**
+	 * Works the same as the cross mapper, but changes mapping/distribution
+	 * direction every two source groups
+	 */
+	AlternatingCrossMapper;
 
 	/**
 	 * Gibt eine kurze Beschreibung des Mapping-Typs aus.
@@ -72,6 +78,10 @@ public enum Mapping {
 
 		case TwoToPairwise:
 			res += "Kombiniert zwei Gruppen über Kreuz, jedoch mit 2 Ranglistenplätzen Abstand. Also 1-3, 2-4 etc";
+			break;
+		case AlternatingCrossMapper:
+			res += "Arbeitet wie der CrossMapper.<br>"
+					+ "Als Erweiterung wird die Durchlaufrichtung innerhalb jeder weiteren Quellgruppe umgedreht.";
 			break;
 		}
 		return res + "</html>";
@@ -116,10 +126,12 @@ public enum Mapping {
 
 		case StraightMapper:
 			return new StraightMapper();
-		
+
 		case TwoToPairwise:
 			return new TwoToPairwiseMapper();
-		}	
+		case AlternatingCrossMapper:
+			return new AlternatingCrossMapper();
+		}
 		return null;
 	}
 }

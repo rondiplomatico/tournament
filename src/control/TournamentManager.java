@@ -83,10 +83,10 @@ public final class TournamentManager {
                         for (Group g : p.getGroups()) {
                             for (TeamSlot ts : g.getSlots()) {
                                 if (team.equals(ts.getTeam())) {
-                                    ts.getInitialScore().setGoalsMinus(0);
-                                    ts.getInitialScore().setGoalsPlus(0);
-                                    ts.getInitialScore().setPointsMinus(0);
-                                    ts.getInitialScore().setPointsPlus(0);
+                                    ts.getInitialScore().goals_minus = 0;
+                                    ts.getInitialScore().goals_plus = 0;
+                                    ts.getInitialScore().points_minus = 0;
+                                    ts.getInitialScore().points_plus = 0;
                                     new ResultManager(null).markAllMatchesLost(ts);
                                     return;
                                 }
