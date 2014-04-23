@@ -5,6 +5,7 @@ package planning.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -140,6 +141,15 @@ public class Phase implements Serializable {
 	 */
 	public Round getRound() {
 		return round;
+	}
+	
+	public List<Match> getMatches() {
+		List<Match> res = new ArrayList<Match>();
+		for (Group g : groups) {
+			res.addAll(g.getMatches());
+		}
+		Collections.sort(res);
+		return res;
 	}
 
 	/**

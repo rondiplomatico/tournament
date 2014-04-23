@@ -315,10 +315,6 @@ public class PlanningManager {
 					.build(this, ((IGroupRound) plan.getRounds().get(idx - 1)));
 		}
 
-		// Schiedsrichter für die erste Runde festlegen; der rest wird
-		// "on the fly" berechnet
-		assignReferees(plan.getRounds().get(0).getPhases().get(0));
-
 		return plan;
 	}
 
@@ -446,6 +442,11 @@ public class PlanningManager {
 				schedule(t, p, tm, totalUseFields);
 			}
 		}
+		
+		// Schiedsrichter für die erste Runde festlegen; der rest wird
+		// "on the fly" berechnet
+		RefereeManager rm = new RefereeManager();
+		rm.assignRefereesLinear(t.getRounds().get(0).getPhases().get(0));
 	}
 
 	/**
@@ -551,74 +552,7 @@ public class PlanningManager {
 		// p.setScheduledEndDateTime(tm.getCurrentTime());
 	}
 
-	private void assignReferees(Phase p) {
-		for (Group g : p.getGroups()) {
-			assignReferees(g);
-		}
-	}
-
-	public void assignReferees(Group g) {
-		for (int midx = 0; midx < g.getMatches().size(); midx++) {
-			findRefereeForMatch(g, midx);
-		}
-	}
-
-	private void findRefereeForMatch(Group curGr, int matchidx) {
-		User ref = null;
-		Tournament t = curGr.getPhase().getRound().getTournament();
-		Match target = curGr.getMatches().get(matchidx);
-		// Ref aus vorigem spiel nur möglich wenns mehr als ein spiel hat in der
-		// phase
-		if (curGr.getMatches().size() > 1) {
-			// Voriges Match holen, beim ersten das letzte
-			Match prev = matchidx > 0 ? curGr.getMatches().get(matchidx - 1)
-					: curGr.getMatches().get(curGr.getMatches().size() - 1);
-			// Versuch 1: Heimteam des vorigen Spiels
-			Team team = prev.getHomeTeam().getTeam();
-			if (team == target.getHomeTeam().getTeam()
-					|| team == target.getGuestTeam().getTeam()) {
-				// Spielt das vorige Heimteam jetzt wieder, das Gastteam
-				// probieren
-				team = prev.getGuestTeam().getTeam();
-				if (team == target.getHomeTeam().getTeam()
-						|| team == target.getGuestTeam().getTeam()) {
-					// Spielt auch das Gastteam (warum auch immer), kann so kein
-					// Schiri gewählt werden
-					team = null;
-				}
-			}
-			// Ist ein mögliches Team gefunden, schau ob es dort Schiris hat
-			if (team != null) {
-				List<User> prevrefs = t.getReferees(team);
-				if (prevrefs.size() > 0) {
-					// Nimm irgend einen
-					Collections.shuffle(prevrefs);
-					ref = prevrefs.get(0);
-				}
-			}
-		}
-		// Kein ref gefunden in beiden (verschiedenen) vorteams: nimm irgend
-		// einen.
-		if (ref == null) {
-			List<User> refs = t.getReferees(target.getHomeTeam().getTeam(),
-					true);
-			Collections.shuffle(refs);
-			ref = refs.get(0);
-			int idx = 1;
-			while (target.getGuestTeam().getTeam() != null
-					&& target.getGuestTeam().getTeam().getPlayers()
-							.contains(ref) && idx < t.getReferees().size()) {
-				ref = t.getReferees().get(idx++);
-			}
-			if (idx == t.getReferees().size()) {
-				throw new RuntimeException(
-						"Kein Schiedsrichter verfügbar, der nicht in einem der spielenden Teams in Match "
-								+ target.toString() + " ist");
-			}
-		}
-		assert (ref != null);
-		target.setReferee(ref);
-	}
+	
 
 	/**
 	 * Gibt true zurück, gdw. alle Einträge true sind.

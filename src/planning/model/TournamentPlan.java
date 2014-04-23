@@ -54,22 +54,24 @@ public class TournamentPlan implements Serializable {
 
 	/**
 	 * Erstellt einen neuen Plan
-	 * @param t Turnier
+	 * 
+	 * @param t
+	 *            Turnier
 	 */
 	public TournamentPlan(Tournament t) {
 		this();
 		this.tournament = t;
 	}
-	
-	
+
 	/**
-	 * Makes sure the groups are all sorted correctly after being loaded from the database 
+	 * Makes sure the groups are all sorted correctly after being loaded from
+	 * the database
 	 */
 	@PostLoad
 	private void postLoad() {
 		for (Round r : rounds) {
-			for (Phase p: r.getPhases()) {
-				for (Group g: p.getGroups()) {
+			for (Phase p : r.getPhases()) {
+				for (Group g : p.getGroups()) {
 					Collections.sort(g.getSlots());
 				}
 			}
@@ -92,7 +94,8 @@ public class TournamentPlan implements Serializable {
 	 */
 	public boolean allMatchesFinished() {
 		for (Round r : rounds) {
-			if (!r.isFinished()) return false;
+			if (!r.isFinished())
+				return false;
 		}
 		return true;
 	}
@@ -127,6 +130,7 @@ public class TournamentPlan implements Serializable {
 	 */
 	public void addRound(Round r) {
 		assert (!hasFinalRound());
+		r.plan = this;
 		rounds.add(r);
 	}
 
@@ -138,7 +142,22 @@ public class TournamentPlan implements Serializable {
 	}
 
 	/**
+	 * Returns a tournaments match list, sorted by scheduled time
+	 * 
+	 * @return
+	 */
+	public List<Match> getMatchList() {
+		List<Match> res = new ArrayList<Match>();
+		for (Round r : rounds) {
+			res.addAll(r.getMatches());
+		}
+		Collections.sort(res);
+		return res;
+	}
+
+	/**
 	 * Schöne Darstellung
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

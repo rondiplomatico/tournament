@@ -22,6 +22,8 @@ import planning.model.TeamSlot;
  * 
  */
 public class GroupManager {
+	
+	private RefereeManager rm = new RefereeManager();
 
 	/**
 	 * Berechnet die Begegnungen für eine Gruppe. Ein erneuter Aufruf löscht
@@ -156,6 +158,7 @@ public class GroupManager {
 		if (inGroup.isFinished()) {
 			updateProceedingSlots(inGroup);
 			updateFollowingGroups(inGroup);
+			rm.checkAndAssignNextPhase(inGroup.getPhase());
 		}
 	}
 
@@ -228,12 +231,12 @@ public class GroupManager {
 	 */
 	private void updateFollowingGroups(Group g) {
 		List<Group> done = new ArrayList<Group>();
-		PlanningManager pm = new PlanningManager();
+//		RefereeManager rm = new RefereeManager();
 		for (TeamSlot ts : g.getProceedingSlots()) {
 			// Done double assign stuff (performance)
 			if (!done.contains(ts.getGroup())) {
-				// Assign refs
-				pm.assignReferees(ts.getGroup());
+//				// Assign refs
+//				rm.assignReferees(ts.getGroup());
 				// Sort group according to current score
 				Collections.sort(ts.getGroup().getSlots());
 				// Also process this group if it is finished

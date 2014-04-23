@@ -6,6 +6,7 @@ package planning.model.rounds;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -25,7 +26,9 @@ import org.hibernate.annotations.IndexColumn;
 
 import planning.control.PlanningException;
 import planning.control.PlanningManager;
+import planning.model.Match;
 import planning.model.Phase;
+import planning.model.TournamentPlan;
 import planning.model.Transition;
 
 /**
@@ -72,7 +75,6 @@ public abstract class Round implements Serializable {
 
 	private static final long serialVersionUID = -476503157298509036L;
 
-	@SuppressWarnings("unused")
 	@Id
 	@GeneratedValue
 	private long id;
@@ -100,6 +102,9 @@ public abstract class Round implements Serializable {
      */
 	@OneToOne(cascade = CascadeType.ALL)
 	protected Transition inTransition;
+
+	@ManyToOne
+	public TournamentPlan plan;
 
 	/**
 	 * Erstellt eine leere Runde.
@@ -143,10 +148,27 @@ public abstract class Round implements Serializable {
 
 	/**
 	 * 
+	 * @return Turnier das die Runde enthält
+	 */
+	public TournamentPlan getPlan() {
+		return plan;
+	}
+
+	/**
+	 * 
 	 * @return Die Phasen der Runden
 	 */
 	public List<Phase> getPhases() {
 		return phases;
+	}
+
+	public List<Match> getMatches() {
+		List<Match> res = new ArrayList<Match>();
+		for (Phase p : phases) {
+			res.addAll(p.getMatches());
+		}
+		Collections.sort(res);
+		return res;
 	}
 
 	public int getGameTime() {
@@ -180,7 +202,8 @@ public abstract class Round implements Serializable {
 	 * @param round
 	 *            Quellrunde
 	 */
-	public abstract void build(PlanningManager pm, IGroupRound round) throws PlanningException;
+	public abstract void build(PlanningManager pm, IGroupRound round)
+			throws PlanningException;
 
 	/**
 	 * 
