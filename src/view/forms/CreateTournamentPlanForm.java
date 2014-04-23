@@ -22,6 +22,7 @@ import planning.model.TournamentPlan;
 import planning.model.Transition;
 import planning.model.rounds.RoundType;
 import planning.view.TournamentPlanView;
+import printing.HTMLGenerator;
 import view.ContentPanel;
 import control.MainApplication;
 
@@ -83,7 +84,10 @@ public class CreateTournamentPlanForm extends ContentPanel {
 					"Planning error:" + e.getMessage());
 		}
 
-		// pm.printSchedule(tp);
+		//pm.printSchedule(tp);
+		HTMLGenerator g = new HTMLGenerator();
+		//System.out.println(g.generate(tp));
+		g.genAndOpen(tp);
 		new TournamentPlanView(tp, null);
 	}
 

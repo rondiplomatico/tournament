@@ -114,7 +114,7 @@ public class Schwabencup1 {
 	private static void Version1(Tournament t) {
 		t.addPlayTime(new Date(2014, 4, 27, 9, 00), new Date(2014, 4, 27, 13,
 				00));
-		t.addPlayTime(new Date(2014, 4, 27, 14, 15), new Date(2014, 4, 27, 17,
+		t.addPlayTime(new Date(2014, 4, 27, 14, 00), new Date(2014, 4, 27, 17,
 				30));
 		t.addPlayTime(new Date(2014, 4, 28, 9, 00), new Date(2014, 4, 28, 14,
 				00));
@@ -170,8 +170,8 @@ public class Schwabencup1 {
 	private static void Version3(Tournament t) {
 		t.addPlayTime(new Date(2014, 4, 27, 9, 00), new Date(2014, 4, 27, 13,
 				00));
-		t.addPlayTime(new Date(2014, 4, 27, 14, 00), new Date(2014, 4, 27, 17,
-				30));
+		t.addPlayTime(new Date(2014, 4, 27, 14, 15), new Date(2014, 4, 27, 17,
+				45));
 		t.addPlayTime(new Date(2014, 4, 28, 10, 00), new Date(2014, 4, 28, 14,
 				00));
 		t.getRoundSettings().add(

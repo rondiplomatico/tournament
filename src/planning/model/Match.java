@@ -74,9 +74,13 @@ public class Match implements Comparable<Match>, Serializable {
 
 	/**
 	 * Erzeugt eine Begegnung
-	 * @param containingGroup enthaltende Gruppe
-	 * @param home Heimteam
-	 * @param guest Gastteam
+	 * 
+	 * @param containingGroup
+	 *            enthaltende Gruppe
+	 * @param home
+	 *            Heimteam
+	 * @param guest
+	 *            Gastteam
 	 */
 	public Match(Group containingGroup, TeamSlot home, TeamSlot guest) {
 		this();
@@ -87,17 +91,22 @@ public class Match implements Comparable<Match>, Serializable {
 
 	/**
 	 * Setzt die Informationen für die Zeitplanung ein
-	 * @param time Zeitpunkt
-	 * @param fieldNumber Feldnummer
-	 * @param referee Schiedsrichter:User
+	 * 
+	 * @param time
+	 *            Zeitpunkt
+	 * @param fieldNumber
+	 *            Feldnummer
+	 * @param referee
+	 *            Schiedsrichter:User
 	 */
 	public void setScheduleData(Date time, int fieldNumber) {
 		this.startTime = time;
 		this.fieldNumber = fieldNumber;
 	}
-	
+
 	/**
 	 * Setzt einen User als Schiedsrichter
+	 * 
 	 * @param ref
 	 */
 	public void setReferee(User ref) {
@@ -165,7 +174,8 @@ public class Match implements Comparable<Match>, Serializable {
 	 */
 	public int getGoals(TeamSlot ts) {
 
-		return ts.equals(home) ? goals_home : ts.equals(guest) ? goals_guest : -1;
+		return ts.equals(home) ? goals_home : ts.equals(guest) ? goals_guest
+				: -1;
 	}
 
 	/**
@@ -189,14 +199,17 @@ public class Match implements Comparable<Match>, Serializable {
 			if (hasWinner()) {
 				// Gewonnen
 				if (getWinner().equals(ts)) {
-					return containingGroup.getPhase().getRound().getTournament().pointsForVictory();
+					return containingGroup.getPhase().getRound()
+							.getTournament().pointsForVictory();
 					// Verloren
 				} else {
-					return containingGroup.getPhase().getRound().getTournament().pointsForLoss();
+					return containingGroup.getPhase().getRound()
+							.getTournament().pointsForLoss();
 				}
 				// Unentschieden
 			} else {
-				return containingGroup.getPhase().getRound().getTournament().pointsForRemis();
+				return containingGroup.getPhase().getRound().getTournament()
+						.pointsForRemis();
 			}
 		} else
 			return 0;
@@ -234,8 +247,11 @@ public class Match implements Comparable<Match>, Serializable {
 
 	/**
 	 * Bequemlichkeitsmethode
-	 * @param goals_home Heimtore
-	 * @param goals_guest Gasttore
+	 * 
+	 * @param goals_home
+	 *            Heimtore
+	 * @param goals_guest
+	 *            Gasttore
 	 */
 	public void setResult(int goals_home, int goals_guest) {
 		this.goals_home = goals_home;
@@ -245,7 +261,8 @@ public class Match implements Comparable<Match>, Serializable {
 	/**
 	 * Stellt fest ob ein gegebener TeamSlot im Match beteiligt ist.
 	 * 
-	 * @param ts TeamSlot
+	 * @param ts
+	 *            TeamSlot
 	 * @return true, falls <b>ts</b> am Match teilnimmt, false sonst
 	 */
 	public boolean participating(TeamSlot ts) {
@@ -256,8 +273,10 @@ public class Match implements Comparable<Match>, Serializable {
 	 * Prüft ob eine der Mannschaften des gegebenen Matches am aktuellen Match
 	 * beteiligt ist.
 	 * 
-	 * @param m Match
-	 * @return true, falls einer der Teilnehmer aus <b>m</b> an diesem Match teilnimmt.
+	 * @param m
+	 *            Match
+	 * @return true, falls einer der Teilnehmer aus <b>m</b> an diesem Match
+	 *         teilnimmt.
 	 */
 	public boolean containsParticipant(Match m) {
 		return participating(m.guest) || participating(m.home);
@@ -268,10 +287,12 @@ public class Match implements Comparable<Match>, Serializable {
 	 * zurück, falls der TeamSlot nicht an diesem Match beteiligt ist.
 	 * 
 	 * @param ofTeamSlot
-	 * @return TeamSlot Gegner, <b>null</b> falls <b>ofTeamSlot</b> nicht am Match beteiligt ist
+	 * @return TeamSlot Gegner, <b>null</b> falls <b>ofTeamSlot</b> nicht am
+	 *         Match beteiligt ist
 	 */
 	public TeamSlot opponent(TeamSlot ofTeamSlot) {
-		return ofTeamSlot.equals(home) ? guest : ofTeamSlot.equals(guest) ? home : null;
+		return ofTeamSlot.equals(home) ? guest
+				: ofTeamSlot.equals(guest) ? home : null;
 	}
 
 	/**
@@ -287,14 +308,16 @@ public class Match implements Comparable<Match>, Serializable {
 				+ ": ["
 				+ f.format(startTime)
 				+ ", "
-				+ getGroup().getPhase().getRound().getTournament().getFieldNames()[fieldNumber]
+				+ getGroup().getPhase().getRound().getTournament()
+						.getFieldNames()[fieldNumber]
 				+ ", "
-				+ referee.getName()
+				+ ((referee != null) ? referee.getName() : "TBA")
 				+ "] "
 				+ home
 				+ " gegen "
 				+ guest
-				+ (isFinished() ? " - (" + goals_home + ":" + goals_guest + ")" : "");
+				+ (isFinished() ? " - (" + goals_home + ":" + goals_guest + ")"
+						: "");
 	}
 
 	/**
@@ -307,6 +330,14 @@ public class Match implements Comparable<Match>, Serializable {
 	@Override
 	public int compareTo(Match o) {
 		return startTime.compareTo(o.startTime);
+	}
+
+	public String getScoreString() {
+		if (isFinished()) {
+			return goals_home + ":" + goals_guest;
+		} else {
+			return "-:-";
+		}
 	}
 
 }
