@@ -237,6 +237,11 @@ public class Match implements Comparable<Match>, Serializable {
 		return goals_home > goals_guest ? home : guest;
 	}
 
+	public TeamSlot getLoser() {
+		assert (hasWinner());
+		return goals_home > goals_guest ? guest : home;
+	}
+
 	/**
 	 * 
 	 * @return enthaltende Gruppe

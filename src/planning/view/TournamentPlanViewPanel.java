@@ -50,7 +50,7 @@ public class TournamentPlanViewPanel extends JLayeredPane {
 	// Abstand zwischen einzelnen Gruppe
 	private static int GROUPSPACE = 40;
 	// Farben der Ebenen
-	private static Color backFirst = Color.WHITE, backSecound = Color.ORANGE; // Farben
+	private static Color backFirst = new Color(255, 204, 0), backSecound = new Color(148, 193, 28); // Farben
 																				// der
 																				// Ebenen
 	// eingeloggter User

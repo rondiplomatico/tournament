@@ -27,16 +27,16 @@ public class Schwabencup1 {
 	public static void main(String[] args) {
 		SampleData.clearDB();
 
-		Tournament t = Schwabencup1(1);
-		Tournament t2 = Schwabencup1(2);
+		// Tournament t = Schwabencup1(1);
+		// Tournament t2 = Schwabencup1(2);
 		Tournament t3 = Schwabencup1(3);
 
 		User manager = new User("manager", "test");
 		manager.isManager(true);
 		List<User> l = new ArrayList<User>();
 		l.add(manager);
-		t.setLeaders(l);
-		t2.setLeaders(l);
+		// t.setLeaders(l);
+		// t2.setLeaders(l);
 		t3.setLeaders(l);
 		users.add(manager);
 
@@ -45,8 +45,8 @@ public class Schwabencup1 {
 		for (User u : users) {
 			em.persist(u);
 		}
-		em.persist(t);
-		em.persist(t2);
+		// em.persist(t);
+		// em.persist(t2);
 		em.persist(t3);
 		em.getTransaction().commit();
 	}
@@ -57,12 +57,11 @@ public class Schwabencup1 {
 	 */
 	public static Tournament Schwabencup1(int version) {
 		int gameTime = 15;
-		int gameTimeFinals = 20;
 
 		Calendar c = Calendar.getInstance();
 		c.set(2014, 4, 26);
-		Tournament t = new Tournament("1. Stuttgarter Schwabencup [v" + version
-				+ "]", (float) 15.0, 200, "Foll subbr!", gameTime, c.getTime());
+		Tournament t = new Tournament("1. Stuttgarter Schwabencup",
+				(float) 15.0, 200, "Foll subbr!", gameTime, c.getTime());
 		t.setRequiredPlayersPerTeam(10);
 		t.setType(TournamentType.MultiPlayer);
 		t.setState(TournamentState.signupClosed);

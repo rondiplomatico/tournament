@@ -85,9 +85,6 @@ public class CreateTournamentPlanForm extends ContentPanel {
 		}
 
 		//pm.printSchedule(tp);
-		HTMLGenerator g = new HTMLGenerator();
-		//System.out.println(g.generate(tp));
-		g.genAndOpen(tp);
 		new TournamentPlanView(tp, null);
 	}
 

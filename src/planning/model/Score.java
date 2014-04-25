@@ -59,6 +59,14 @@ public class Score implements Serializable {
 	public int totalGames() {
 		return won + remis + lost;
 	}
+	
+	public String getGoalStr() {
+		return goals_plus + ":" + goals_minus;
+	}
+	
+	public String getPointsStr() {
+		return points_plus + ":" + points_minus;
+	}
 
 //	/**
 //	 * 

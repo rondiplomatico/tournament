@@ -8,6 +8,7 @@ package view;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import javax.swing.JButton;
 import javax.swing.border.TitledBorder;
 
 import model.Team;
@@ -85,6 +86,12 @@ public class TournamentView extends ContentPanel {
         lblInputSportType.setText(t.getSportKind());
         lblInputParticipationRequirements.setText(t.getParticipationCond());
         lblInputTournamentState.setText(t.getState().toString());
+        
+        /**
+         * Extras for HTML generation
+         */
+        JButton b = new JButton("Spielplan");
+        
 
         revalidate();
     }
