@@ -41,12 +41,12 @@ public class HTMLGenerator {
 	private String getHead() {
 		return "<html>"
 				+ "<meta charset=\"utf-8\" />"
-				+ "<head><link type=\"text/css\" rel=\"stylesheet\" href=\"cup.css\"/></head>"
+				+ "<head><link type=\"text/css\" rel=\"stylesheet\" href=\"cup2.css\"/></head>"
 				+ "<body>";
 	}
 
 	private String getFoot() {
-		return "</body></html>";
+		return "<br><br><br></body></html>";
 	}
 
 	private String getPlanHTML(TournamentPlan t) {
