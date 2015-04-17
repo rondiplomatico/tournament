@@ -30,7 +30,7 @@ public class RefereeManager {
 				return;
 			}
 			// Otherwise..
-			for (int k = 0; k < matches.size() - 1; k++) {
+			for (int k = 0; k < matches.size(); k++) {
 				Match m = matches.get(k);
 				User ref = findRefForPrevMatch(m, prev);
 				if (ref != null) {

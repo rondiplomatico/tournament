@@ -59,7 +59,7 @@ public class Schwabencup1 {
 		int gameTime = 15;
 
 		Calendar c = Calendar.getInstance();
-		c.set(2014, 4, 26);
+		c.set(2014, 3, 25);
 		Tournament t = new Tournament("1. Stuttgarter Schwabencup",
 				(float) 15.0, 200, "Foll subbr!", gameTime, c.getTime());
 		t.setRequiredPlayersPerTeam(10);
@@ -67,7 +67,7 @@ public class Schwabencup1 {
 		t.setState(TournamentState.signupClosed);
 		t.setSportKind("Handball");
 
-		c.set(2014, 4, 28);
+		c.set(2014, 3, 27);
 		t.setExpireDate(c.getTime());
 
 		t.setStartHour(9);
@@ -75,17 +75,17 @@ public class Schwabencup1 {
 
 		t.setFields(new String[] { "Allmandring" });
 
-		switch (version) {
-		case 1:
-			Version1(t);
-			break;
-		case 2:
-			Version2(t);
-			break;
-		case 3:
+//		switch (version) {
+//		case 1:
+//			Version1(t);
+//			break;
+//		case 2:
+//			Version2(t);
+//			break;
+//		case 3:
 			Version3(t);
-			break;
-		}
+//			break;
+//		}
 
 		addTeam(t, "Stuttgart I");
 		addTeam(t, "Mainz I");
@@ -110,56 +110,56 @@ public class Schwabencup1 {
 		return t;
 	}
 
-	private static void Version1(Tournament t) {
-		t.addPlayTime(new Date(2014, 4, 27, 9, 00), new Date(2014, 4, 27, 13,
-				00));
-		t.addPlayTime(new Date(2014, 4, 27, 14, 00), new Date(2014, 4, 27, 17,
-				30));
-		t.addPlayTime(new Date(2014, 4, 28, 9, 00), new Date(2014, 4, 28, 14,
-				00));
-
-		t.getRoundSettings()
-				.add(new RoundSetting("Positionierungsrunde",
-						RoundType.GruppenRunde, 4, 0, new StartoffTransition()));
-		RoundSetting rs = new RoundSetting("Zwischenrunde",
-				RoundType.GruppenRunde, 2, 0, new Transition(4,
-						ScoreTransfer.AllScores, Mapping.CombineMapper, 0));
-		rs.setPairwiseMatching(true);
-		t.getRoundSettings().add(rs);
-		t.getRoundSettings().add(
-				new RoundSetting("Finalrunden", RoundType.KORunde, 0, 10,
-						new Transition(4, ScoreTransfer.NoScores,
-								Mapping.TwoToPairwise, 20), 20));
-	}
-
-	private static void Version2(Tournament t) {
-		t.addPlayTime(new Date(2014, 4, 27, 9, 00), new Date(2014, 4, 27, 13,
-				00));
-		t.addPlayTime(new Date(2014, 4, 27, 14, 00), new Date(2014, 4, 27, 17,
-				30));
-		t.addPlayTime(new Date(2014, 4, 28, 9, 00), new Date(2014, 4, 28, 14,
-				00));
-		t.getRoundSettings().add(
-				new RoundSetting("Vollends durch'nand", RoundType.GruppenRunde,
-						4, 0, new StartoffTransition()));
-
-		RoundSetting rs = new RoundSetting("Nu wirds gmischd",
-				RoundType.GruppenRunde, 2, 0, new Transition(4,
-						ScoreTransfer.AllScores, Mapping.CombineMapper, 0));
-		rs.setPairwiseMatching(true);
-		t.getRoundSettings().add(rs);
-
-		rs = new RoundSetting("Spreu vom Weiza trenna", RoundType.GruppenRunde,
-				2, 0, new Transition(8, ScoreTransfer.AllScores,
-						Mapping.CrossMapper, 0));
-		rs.setPairwiseMatching(true);
-		t.getRoundSettings().add(rs);
-
-		t.getRoundSettings().add(
-				new RoundSetting("Schlachd um dr Cup", RoundType.KORunde, 0,
-						10, new Transition(4, ScoreTransfer.NoScores,
-								Mapping.AlternatingCrossMapper, 0), 15));
-	}
+//	private static void Version1(Tournament t) {
+//		t.addPlayTime(new Date(2014, 4, 26, 9, 00), new Date(2014, 4, 26, 13,
+//				00));
+//		t.addPlayTime(new Date(2014, 4, 26, 14, 00), new Date(2014, 4, 26, 17,
+//				30));
+//		t.addPlayTime(new Date(2014, 4, 27, 9, 00), new Date(2014, 4, 27, 14,
+//				00));
+//
+//		t.getRoundSettings()
+//				.add(new RoundSetting("Positionierungsrunde",
+//						RoundType.GruppenRunde, 4, 0, new StartoffTransition()));
+//		RoundSetting rs = new RoundSetting("Zwischenrunde",
+//				RoundType.GruppenRunde, 2, 0, new Transition(4,
+//						ScoreTransfer.AllScores, Mapping.CombineMapper, 0));
+//		rs.setPairwiseMatching(true);
+//		t.getRoundSettings().add(rs);
+//		t.getRoundSettings().add(
+//				new RoundSetting("Finalrunden", RoundType.KORunde, 0, 10,
+//						new Transition(4, ScoreTransfer.NoScores,
+//								Mapping.TwoToPairwise, 20), 20));
+//	}
+//
+//	private static void Version2(Tournament t) {
+//		t.addPlayTime(new Date(2014, 4, 27, 9, 00), new Date(2014, 4, 27, 13,
+//				00));
+//		t.addPlayTime(new Date(2014, 4, 27, 14, 00), new Date(2014, 4, 27, 17,
+//				30));
+//		t.addPlayTime(new Date(2014, 4, 28, 9, 00), new Date(2014, 4, 28, 14,
+//				00));
+//		t.getRoundSettings().add(
+//				new RoundSetting("Vollends durch'nand", RoundType.GruppenRunde,
+//						4, 0, new StartoffTransition()));
+//
+//		RoundSetting rs = new RoundSetting("Nu wirds gmischd",
+//				RoundType.GruppenRunde, 2, 0, new Transition(4,
+//						ScoreTransfer.AllScores, Mapping.CombineMapper, 0));
+//		rs.setPairwiseMatching(true);
+//		t.getRoundSettings().add(rs);
+//
+//		rs = new RoundSetting("Spreu vom Weiza trenna", RoundType.GruppenRunde,
+//				2, 0, new Transition(8, ScoreTransfer.AllScores,
+//						Mapping.CrossMapper, 0));
+//		rs.setPairwiseMatching(true);
+//		t.getRoundSettings().add(rs);
+//
+//		t.getRoundSettings().add(
+//				new RoundSetting("Schlachd um dr Cup", RoundType.KORunde, 0,
+//						10, new Transition(4, ScoreTransfer.NoScores,
+//								Mapping.AlternatingCrossMapper, 0), 15));
+//	}
 
 	/**
 	 * 15 teams
@@ -167,11 +167,11 @@ public class Schwabencup1 {
 	 * @param t
 	 */
 	private static void Version3(Tournament t) {
-		t.addPlayTime(new Date(2014, 4, 27, 9, 00), new Date(2014, 4, 27, 13,
-				00));
-		t.addPlayTime(new Date(2014, 4, 27, 14, 15), new Date(2014, 4, 27, 17,
+		t.addPlayTime(new Date(2014, 3, 26, 9, 15), new Date(2014, 3, 26, 13,
+				15));
+		t.addPlayTime(new Date(2014, 3, 26, 14, 15), new Date(2014, 3, 26, 17,
 				45));
-		t.addPlayTime(new Date(2014, 4, 28, 10, 00), new Date(2014, 4, 28, 14,
+		t.addPlayTime(new Date(2014, 3, 27, 10, 00), new Date(2014, 3, 27, 14,
 				00));
 		t.getRoundSettings().add(
 				new RoundSetting("Vollends durch'nand", RoundType.GruppenRunde,
