@@ -22,7 +22,6 @@ import planning.model.TournamentPlan;
 import planning.model.Transition;
 import planning.model.rounds.RoundType;
 import planning.view.TournamentPlanView;
-import printing.HTMLGenerator;
 import view.ContentPanel;
 import control.MainApplication;
 

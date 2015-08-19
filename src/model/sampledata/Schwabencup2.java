@@ -12,11 +12,8 @@ import model.Tournament;
 import model.User;
 import model.enums.TournamentState;
 import model.enums.TournamentType;
-import planning.control.mapping.Mapping;
-import planning.control.score.ScoreTransfer;
 import planning.model.RoundSetting;
 import planning.model.StartoffTransition;
-import planning.model.Transition;
 import planning.model.rounds.RoundType;
 import control.MainApplication;
 
@@ -73,23 +70,13 @@ public class Schwabencup2 {
 
 		t.setFields(new String[] { "Allmandring" });
 
-//		switch (version) {
-//		case 1:
-//			Version1(t);
-//			break;
-//		case 2:
-//			Version2(t);
-//			break;
-//		case 3:
-			Version3(t);
-//			break;
-//		}
+		Version3(t);
 		
 		addTeam(t, "Stuttgart I");
 		addTeam(t, "Stuttgart II");
 		addTeam(t, "Stuttgart Oldies");
 		
-		addTeam(t, "Essen");
+		addTeam(t, "Weingarten-Ravensburg II");
 		addTeam(t, "Weingarten-Ravensburg");
 		addTeam(t, "Hohenheim"); // 10
 		
@@ -107,56 +94,6 @@ public class Schwabencup2 {
 		return t;
 	}
 
-//	private static void Version1(Tournament t) {
-//		t.addPlayTime(new Date(2014, 4, 26, 9, 00), new Date(2014, 4, 26, 13,
-//				00));
-//		t.addPlayTime(new Date(2014, 4, 26, 14, 00), new Date(2014, 4, 26, 17,
-//				30));
-//		t.addPlayTime(new Date(2014, 4, 27, 9, 00), new Date(2014, 4, 27, 14,
-//				00));
-//
-//		t.getRoundSettings()
-//				.add(new RoundSetting("Positionierungsrunde",
-//						RoundType.GruppenRunde, 4, 0, new StartoffTransition()));
-//		RoundSetting rs = new RoundSetting("Zwischenrunde",
-//				RoundType.GruppenRunde, 2, 0, new Transition(4,
-//						ScoreTransfer.AllScores, Mapping.CombineMapper, 0));
-//		rs.setPairwiseMatching(true);
-//		t.getRoundSettings().add(rs);
-//		t.getRoundSettings().add(
-//				new RoundSetting("Finalrunden", RoundType.KORunde, 0, 10,
-//						new Transition(4, ScoreTransfer.NoScores,
-//								Mapping.TwoToPairwise, 20), 20));
-//	}
-//
-//	private static void Version2(Tournament t) {
-//		t.addPlayTime(new Date(2014, 4, 27, 9, 00), new Date(2014, 4, 27, 13,
-//				00));
-//		t.addPlayTime(new Date(2014, 4, 27, 14, 00), new Date(2014, 4, 27, 17,
-//				30));
-//		t.addPlayTime(new Date(2014, 4, 28, 9, 00), new Date(2014, 4, 28, 14,
-//				00));
-//		t.getRoundSettings().add(
-//				new RoundSetting("Vollends durch'nand", RoundType.GruppenRunde,
-//						4, 0, new StartoffTransition()));
-//
-//		RoundSetting rs = new RoundSetting("Nu wirds gmischd",
-//				RoundType.GruppenRunde, 2, 0, new Transition(4,
-//						ScoreTransfer.AllScores, Mapping.CombineMapper, 0));
-//		rs.setPairwiseMatching(true);
-//		t.getRoundSettings().add(rs);
-//
-//		rs = new RoundSetting("Spreu vom Weiza trenna", RoundType.GruppenRunde,
-//				2, 0, new Transition(8, ScoreTransfer.AllScores,
-//						Mapping.CrossMapper, 0));
-//		rs.setPairwiseMatching(true);
-//		t.getRoundSettings().add(rs);
-//
-//		t.getRoundSettings().add(
-//				new RoundSetting("Schlachd um dr Cup", RoundType.KORunde, 0,
-//						10, new Transition(4, ScoreTransfer.NoScores,
-//								Mapping.AlternatingCrossMapper, 0), 15));
-//	}
 
 	/**
 	 * 15 teams
@@ -167,28 +104,10 @@ public class Schwabencup2 {
 	private static void Version3(Tournament t) {
 		t.addPlayTime(new Date(2015, 3, 18, 10, 00), new Date(2015, 3, 18, 17,
 				00));
-//		t.addPlayTime(new Date(2015, 3, 19, 10, 00), new Date(2015, 3, 19, 16,
-//				00));
 		t.getRoundSettings().add(
 				new RoundSetting("Vollends durch'nand", RoundType.GruppenRunde,
 						3, 0, new StartoffTransition()));
 
-//		RoundSetting rs = new RoundSetting("Nu wirds gmischd",
-//				RoundType.GruppenRunde, 2, 0, new Transition(4,
-//						ScoreTransfer.AllScores, Mapping.CombineMapper, 0));
-//		rs.setPairwiseMatching(true);
-//		t.getRoundSettings().add(rs);
-//
-//		rs = new RoundSetting("Spreu vom Weiza trenna", RoundType.GruppenRunde,
-//				2, 0, new Transition(8, ScoreTransfer.AllScores,
-//						Mapping.CrossMapper, 0));
-//		rs.setPairwiseMatching(true);
-//		t.getRoundSettings().add(rs);
-//
-//		t.getRoundSettings().add(
-//				new RoundSetting("Schlachd um dr Cup", RoundType.KORunde, 0,
-//						10, new Transition(2, ScoreTransfer.NoScores,
-//								Mapping.AlternatingCrossMapper, 0), 20));
 	}
 
 	public static void addTeam(Tournament t, String name) {
