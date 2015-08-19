@@ -31,8 +31,3 @@
         </properties>
     </persistence-unit>
 </persistence>
-<!--
-<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/sopra"/>
-<property name="hibernate.connection.url" value="jdbc:mysql://www.danielwirtz.de:3306/sopra"/>
-<property name="hibernate.connection.url" value="jdbc:mysql://www.danielwirtz.de:3306/sopra_iter2"/>
--->
