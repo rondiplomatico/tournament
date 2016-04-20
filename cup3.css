@@ -1,0 +1,63 @@
+@font-face {
+    font-family: 'bernhard_modern_romanregular';
+    src: url('bernhard_modern_roman-webfont.eot');
+    src: url('bernhard_modern_roman-webfont.eot?#iefix') format('embedded-opentype'),
+         url('bernhard_modern_roman-webfont.woff') format('woff'),
+         url('bernhard_modern_roman-webfont.ttf') format('truetype'),
+         url('bernhard_modern_roman-webfont.svg#bernhard_modern_romanregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+	font-family: Arial, sans-serif;
+	margin: 0 15mm;
+	color: #144571;
+}
+
+h1 {
+	color: #3F84C5;
+	font-size: 20pt;
+	page-break-before: always;
+	padding-top: 50mm;
+	font-family: 'bernhard_modern_romanregular';
+}
+
+h1:nth-child(1) {
+	page-break-before: avoid !important;
+}
+
+h1:before {
+	content: "";
+	display: block;
+  background: url("logo3.png") no-repeat right top;
+  position: absolute;
+  right: 15mm;
+  margin-top: -40mm;
+  width: 100mm;
+  height: 30mm;
+  background-size: contain;
+}
+
+table {
+	width: 100%;
+	font-size: 9pt;
+	border-collapse: collapse;
+}
+
+th {
+	color: #FFD517;
+	font-weight: bold;
+	text-align: left;
+	text-transform: uppercase;
+	background-color: #3F84C5;
+}
+
+th, td {
+	padding: 1.5mm;
+	border: 1px solid black;
+}
+
+td:nth-child(6) {
+	text-align: center;
+}

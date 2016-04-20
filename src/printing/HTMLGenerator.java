@@ -41,7 +41,7 @@ public class HTMLGenerator {
 	private String getHead() {
 		return "<html>"
 				+ "<meta charset=\"utf-8\" />"
-				+ "<head><link type=\"text/css\" rel=\"stylesheet\" href=\"cup2.css\"/></head>"
+				+ "<head><link type=\"text/css\" rel=\"stylesheet\" href=\"cup3.css\"/></head>"
 				+ "<body>";
 	}
 
@@ -52,7 +52,7 @@ public class HTMLGenerator {
 	private String getPlanHTML(TournamentPlan t) {
 		String res = "";
 		for (Round r : t.getRounds()) {
-			res += "<h1>Runde '" + r.getName() + "':</h1>\n";
+			res += "<h1>Runde '" + r.getName() + "': "+r.getGameTime()+" Minuten pro Spiel (inkl. 3 Min. Pause)</h1>\n";
 			res += getMatchTable(r.getMatches());
 		}
 		return res;
