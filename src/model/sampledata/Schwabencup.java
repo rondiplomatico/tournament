@@ -188,9 +188,9 @@ public class Schwabencup {
 
 		t.setFields(new String[] { "Allmandring" });
 
-		t.addPlayTime(new Date(2016, 4, 21, 9, 30), new Date(2016, 4, 21, 17,
+		t.addPlayTime(new Date(2016, 4, 23, 9, 30), new Date(2016, 4, 23, 17,
 				31));
-		t.addPlayTime(new Date(2016, 4, 22, 10, 00), new Date(2016, 4, 22, 17,
+		t.addPlayTime(new Date(2016, 4, 24, 10, 00), new Date(2016, 4, 24, 17,
 				00));
 		t.getRoundSettings().add(
 				new RoundSetting("Vollends durch'nand", RoundType.GruppenRunde,
@@ -212,14 +212,15 @@ public class Schwabencup {
 				new RoundSetting("Schlachd um dr Cup", RoundType.KORunde, 0,
 						10, new Transition(2, ScoreTransfer.NoScores,
 								Mapping.AlternatingCrossMapper, 0), 20));
+		
 //		t.getRoundSettings().add(
 //				new RoundSetting("Vollends durch'nand", RoundType.GruppenRunde,
-//						4, 0, new StartoffTransition()));
+//						3, 0, new StartoffTransition()));
 //
 //		RoundSetting rs = new RoundSetting("Nu wirds gmischd",
-//				RoundType.GruppenRunde, 2, 0, new Transition(4,
+//				RoundType.GruppenRunde, 2, 0, new Transition(5,
 //						ScoreTransfer.AllScores, Mapping.CombineMapper, 0));
-//		rs.setPairwiseMatching(true);
+//		//rs.setPairwiseMatching(true);
 //		t.getRoundSettings().add(rs);
 //
 //		rs = new RoundSetting("Spreu vom Weiza trenna", RoundType.GruppenRunde,
@@ -236,22 +237,22 @@ public class Schwabencup {
 		addTeam(t, "Essen-Duisburg");
 		addTeam(t, "Dortmund");
 		addTeam(t, "Tübingen");
-		addTeam(t, "Münster");
-		
 		addTeam(t, "Paderborn");
-		addTeam(t, "Mainz");
+		
+		addTeam(t, "Münster");
+		addTeam(t, "Leipzig");
 		addTeam(t, "Magdeburg");
 		addTeam(t, "Hamburg");
 		
 		addTeam(t, "Augsburg");
 		addTeam(t, "Weingarten-Ravensburg");
+		addTeam(t, "Mixed");
 		addTeam(t, "Marburg");
-		addTeam(t, "Potsdam");
 		
-		addTeam(t, "Leipzig");
+		addTeam(t, "Mainz");
 		addTeam(t, "Hohenheim");
 		addTeam(t, "Stuttgart I");
-		addTeam(t, "Nordsüdachse");
+		addTeam(t, "Stuttgart & Friends");
 		
 		return t;
 	}

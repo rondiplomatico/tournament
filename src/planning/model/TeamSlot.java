@@ -178,11 +178,13 @@ public class TeamSlot implements Comparable<TeamSlot>, Serializable {
 			 * Kann auch mit der Tordifferenz keine Entscheidung herbeigeführt
 			 * werden, so entscheidet der (Pseudo-) Zufall.
 			 */
-			if (Score.goals_plus == o.Score.goals_plus) {
+			int diff = Score.goals_plus-Score.goals_minus;
+			int diff_o = o.Score.goals_plus-o.Score.goals_minus;
+			if (diff == diff_o) {
 				// Ansonsten: Wer hat weniger gegentore
-				return o.Score.goals_minus - Score.goals_minus; //;(Math.random() > .5) ? -1 : 1;
-			} else
 				return Score.goals_plus > o.Score.goals_plus ? -1 : 1;
+			} else
+				return diff > diff_o ? -1 : 1; 
 		} else
 			return Score.points_plus > o.Score.points_plus ? -1 : 1;
 	}
