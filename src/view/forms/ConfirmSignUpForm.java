@@ -66,7 +66,7 @@ public class ConfirmSignUpForm extends ContentPanel {
 	 */
 	public ConfirmSignUpForm() {
 
-		t = new Tournament("name", 1, 10, "hallo", 10, new Date());
+		t = new Tournament("name", 1, 10, "hallo", 10, 1, new Date());
 
 		// this.t=t;
 
@@ -107,9 +107,11 @@ public class ConfirmSignUpForm extends ContentPanel {
 		myTree1.setCellRenderer(new MyTreeCellRenderer());
 
 		selectedReferees = new ArrayList<User>();
-		refereeList = ObservableCollections.observableList(new ArrayList<User>());
+		refereeList = ObservableCollections
+				.observableList(new ArrayList<User>());
 		refereeList.addAll(UserManager.getInstance().getReferees());
-		assignedRefereeList = ObservableCollections.observableList(new ArrayList<User>());
+		assignedRefereeList = ObservableCollections
+				.observableList(new ArrayList<User>());
 		assignedRefereeList.addAll(t.getReferees());
 
 		// Referee, die schon als Spieler vorangemeldet sind, entfernen.
@@ -303,35 +305,99 @@ public class ConfirmSignUpForm extends ContentPanel {
 		jScrollPane1.setName("jScrollPane1"); // NOI18N
 
 		treeTeamsPlayers.setName("treeTeamsPlayers"); // NOI18N
-		treeTeamsPlayers.addMouseListener(new java.awt.event.MouseAdapter(){
+		treeTeamsPlayers.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
 				treeTeamsPlayersMouseClicked(evt);
 			}
 		});
-		treeTeamsPlayers.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener(){
-			public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
-				treeTeamsPlayersValueChanged(evt);
-			}
-		});
+		treeTeamsPlayers
+				.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
+					public void valueChanged(
+							javax.swing.event.TreeSelectionEvent evt) {
+						treeTeamsPlayersValueChanged(evt);
+					}
+				});
 		jScrollPane1.setViewportView(treeTeamsPlayers);
 
-		org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(control.MainApplication.class).getContext().getResourceMap(ConfirmSignUpForm.class);
+		org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application
+				.getInstance(control.MainApplication.class).getContext()
+				.getResourceMap(ConfirmSignUpForm.class);
 		jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
 		jLabel1.setName("jLabel1"); // NOI18N
 
-		javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(control.MainApplication.class).getContext().getActionMap(ConfirmSignUpForm.class, this);
+		javax.swing.ActionMap actionMap = org.jdesktop.application.Application
+				.getInstance(control.MainApplication.class).getContext()
+				.getActionMap(ConfirmSignUpForm.class, this);
 		btnConfirm.setAction(actionMap.get("confirmSignUpAction")); // NOI18N
 		btnConfirm.setText(resourceMap.getString("btnConfirm.text")); // NOI18N
 		btnConfirm.setName("btnConfirm"); // NOI18N
 
 		btnCancelConfirm.setAction(actionMap.get("unconfirmSignUpAction")); // NOI18N
-		btnCancelConfirm.setText(resourceMap.getString("btnCancelConfirm.text")); // NOI18N
+		btnCancelConfirm
+				.setText(resourceMap.getString("btnCancelConfirm.text")); // NOI18N
 		btnCancelConfirm.setName("btnCancelConfirm"); // NOI18N
 
-		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(
+				jPanel1);
 		jPanel1.setLayout(jPanel1Layout);
-		jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(jPanel1Layout.createSequentialGroup().addContainerGap().addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(jPanel1Layout.createSequentialGroup().addComponent(btnConfirm).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(btnCancelConfirm)).addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE).addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)).addContainerGap()));
-		jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(jPanel1Layout.createSequentialGroup().addComponent(jLabel1).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(btnConfirm).addComponent(btnCancelConfirm)).addContainerGap()));
+		jPanel1Layout
+				.setHorizontalGroup(jPanel1Layout
+						.createParallelGroup(
+								javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(
+								jPanel1Layout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												jPanel1Layout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.LEADING)
+														.addGroup(
+																jPanel1Layout
+																		.createSequentialGroup()
+																		.addComponent(
+																				btnConfirm)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
+																				btnCancelConfirm))
+														.addComponent(
+																jScrollPane1,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																274,
+																Short.MAX_VALUE)
+														.addComponent(
+																jLabel1,
+																javax.swing.GroupLayout.Alignment.TRAILING,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																274,
+																Short.MAX_VALUE))
+										.addContainerGap()));
+		jPanel1Layout
+				.setVerticalGroup(jPanel1Layout
+						.createParallelGroup(
+								javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(
+								jPanel1Layout
+										.createSequentialGroup()
+										.addComponent(jLabel1)
+										.addPreferredGap(
+												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+										.addComponent(
+												jScrollPane1,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												383, Short.MAX_VALUE)
+										.addPreferredGap(
+												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+										.addGroup(
+												jPanel1Layout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.BASELINE)
+														.addComponent(
+																btnConfirm)
+														.addComponent(
+																btnCancelConfirm))
+										.addContainerGap()));
 
 		jSplitPane1.setLeftComponent(jPanel1);
 
@@ -339,22 +405,36 @@ public class ConfirmSignUpForm extends ContentPanel {
 
 		jScrollPane2.setName("jScrollPane2"); // NOI18N
 
-		jlistReferees.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+		jlistReferees
+				.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 		jlistReferees.setDragEnabled(true);
 		jlistReferees.setName("jlistReferees"); // NOI18N
 
-		org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${refereeList}");
-		org.jdesktop.swingbinding.JListBinding jListBinding = org.jdesktop.swingbinding.SwingBindings.createJListBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jlistReferees);
-		jListBinding.setDetailBinding(org.jdesktop.beansbinding.ELProperty.create("${name}"));
+		org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty
+				.create("${refereeList}");
+		org.jdesktop.swingbinding.JListBinding jListBinding = org.jdesktop.swingbinding.SwingBindings
+				.createJListBinding(
+						org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE,
+						this, eLProperty, jlistReferees);
+		jListBinding.setDetailBinding(org.jdesktop.beansbinding.ELProperty
+				.create("${name}"));
 		bindingGroup.addBinding(jListBinding);
-		org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${selectedReferees}"), jlistReferees, org.jdesktop.beansbinding.BeanProperty.create("selectedElements"));
+		org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings
+				.createAutoBinding(
+						org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE,
+						this, org.jdesktop.beansbinding.ELProperty
+								.create("${selectedReferees}"), jlistReferees,
+						org.jdesktop.beansbinding.BeanProperty
+								.create("selectedElements"));
 		bindingGroup.addBinding(binding);
 
-		jlistReferees.addListSelectionListener(new javax.swing.event.ListSelectionListener(){
-			public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-				jlistRefereesValueChanged(evt);
-			}
-		});
+		jlistReferees
+				.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+					public void valueChanged(
+							javax.swing.event.ListSelectionEvent evt) {
+						jlistRefereesValueChanged(evt);
+					}
+				});
 		jScrollPane2.setViewportView(jlistReferees);
 
 		jScrollPane3.setName("jScrollPane3"); // NOI18N
@@ -362,18 +442,32 @@ public class ConfirmSignUpForm extends ContentPanel {
 		jlistConfirmedReferees.setDragEnabled(true);
 		jlistConfirmedReferees.setName("jlistConfirmedReferees"); // NOI18N
 
-		eLProperty = org.jdesktop.beansbinding.ELProperty.create("${assignedRefereeList}");
-		jListBinding = org.jdesktop.swingbinding.SwingBindings.createJListBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jlistConfirmedReferees);
-		jListBinding.setDetailBinding(org.jdesktop.beansbinding.ELProperty.create("${name}"));
+		eLProperty = org.jdesktop.beansbinding.ELProperty
+				.create("${assignedRefereeList}");
+		jListBinding = org.jdesktop.swingbinding.SwingBindings
+				.createJListBinding(
+						org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE,
+						this, eLProperty, jlistConfirmedReferees);
+		jListBinding.setDetailBinding(org.jdesktop.beansbinding.ELProperty
+				.create("${name}"));
 		bindingGroup.addBinding(jListBinding);
-		binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${selectedAssignedReferees}"), jlistConfirmedReferees, org.jdesktop.beansbinding.BeanProperty.create("selectedElements"));
+		binding = org.jdesktop.beansbinding.Bindings
+				.createAutoBinding(
+						org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE,
+						this, org.jdesktop.beansbinding.ELProperty
+								.create("${selectedAssignedReferees}"),
+						jlistConfirmedReferees,
+						org.jdesktop.beansbinding.BeanProperty
+								.create("selectedElements"));
 		bindingGroup.addBinding(binding);
 
-		jlistConfirmedReferees.addListSelectionListener(new javax.swing.event.ListSelectionListener(){
-			public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-				jlistConfirmedRefereesValueChanged(evt);
-			}
-		});
+		jlistConfirmedReferees
+				.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+					public void valueChanged(
+							javax.swing.event.ListSelectionEvent evt) {
+						jlistConfirmedRefereesValueChanged(evt);
+					}
+				});
 		jScrollPane3.setViewportView(jlistConfirmedReferees);
 
 		jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
@@ -393,10 +487,110 @@ public class ConfirmSignUpForm extends ContentPanel {
 		btnDown.setText(resourceMap.getString("btnDown.text")); // NOI18N
 		btnDown.setName("btnDown"); // NOI18N
 
-		javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+		javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(
+				jPanel2);
 		jPanel2.setLayout(jPanel2Layout);
-		jPanel2Layout.setHorizontalGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(jPanel2Layout.createSequentialGroup().addContainerGap().addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(jPanel2Layout.createSequentialGroup().addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING).addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup().addComponent(jLabel3).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(btnUp).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(btnDown)).addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)).addGap(17, 17, 17)).addGroup(jPanel2Layout.createSequentialGroup().addComponent(jLabel2).addContainerGap(284, Short.MAX_VALUE)).addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup().addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING).addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE).addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)).addContainerGap()))));
-		jPanel2Layout.setVerticalGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(jPanel2Layout.createSequentialGroup().addContainerGap().addComponent(jLabel4).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED).addComponent(jLabel2).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED).addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(btnUp).addComponent(btnDown).addComponent(jLabel3)).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE).addContainerGap()));
+		jPanel2Layout
+				.setHorizontalGroup(jPanel2Layout
+						.createParallelGroup(
+								javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(
+								jPanel2Layout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												jPanel2Layout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.LEADING)
+														.addGroup(
+																jPanel2Layout
+																		.createSequentialGroup()
+																		.addGroup(
+																				jPanel2Layout
+																						.createParallelGroup(
+																								javax.swing.GroupLayout.Alignment.TRAILING)
+																						.addGroup(
+																								javax.swing.GroupLayout.Alignment.LEADING,
+																								jPanel2Layout
+																										.createSequentialGroup()
+																										.addComponent(
+																												jLabel3)
+																										.addPreferredGap(
+																												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																										.addComponent(
+																												btnUp)
+																										.addPreferredGap(
+																												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																										.addComponent(
+																												btnDown))
+																						.addComponent(
+																								jLabel4,
+																								javax.swing.GroupLayout.Alignment.LEADING))
+																		.addGap(17,
+																				17,
+																				17))
+														.addGroup(
+																jPanel2Layout
+																		.createSequentialGroup()
+																		.addComponent(
+																				jLabel2)
+																		.addContainerGap(
+																				284,
+																				Short.MAX_VALUE))
+														.addGroup(
+																javax.swing.GroupLayout.Alignment.TRAILING,
+																jPanel2Layout
+																		.createSequentialGroup()
+																		.addGroup(
+																				jPanel2Layout
+																						.createParallelGroup(
+																								javax.swing.GroupLayout.Alignment.TRAILING)
+																						.addComponent(
+																								jScrollPane3,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								389,
+																								Short.MAX_VALUE)
+																						.addComponent(
+																								jScrollPane2,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								389,
+																								Short.MAX_VALUE))
+																		.addContainerGap()))));
+		jPanel2Layout
+				.setVerticalGroup(jPanel2Layout
+						.createParallelGroup(
+								javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(
+								jPanel2Layout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addComponent(jLabel4)
+										.addPreferredGap(
+												javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+										.addComponent(jLabel2)
+										.addPreferredGap(
+												javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+										.addComponent(
+												jScrollPane2,
+												javax.swing.GroupLayout.PREFERRED_SIZE,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(
+												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+										.addGroup(
+												jPanel2Layout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.BASELINE)
+														.addComponent(btnUp)
+														.addComponent(btnDown)
+														.addComponent(jLabel3))
+										.addPreferredGap(
+												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+										.addComponent(
+												jScrollPane3,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												248, Short.MAX_VALUE)
+										.addContainerGap()));
 
 		jSplitPane1.setRightComponent(jPanel2);
 
@@ -406,15 +600,69 @@ public class ConfirmSignUpForm extends ContentPanel {
 		jButton2.setAction(actionMap.get("cancelAction")); // NOI18N
 		jButton2.setName("jButton2"); // NOI18N
 
-		jLabel5.setFont(jLabel5.getFont().deriveFont(jLabel5.getFont().getStyle()
-				| java.awt.Font.BOLD, jLabel5.getFont().getSize() + 3));
+		jLabel5.setFont(jLabel5.getFont().deriveFont(
+				jLabel5.getFont().getStyle() | java.awt.Font.BOLD,
+				jLabel5.getFont().getSize() + 3));
 		jLabel5.setText(resourceMap.getString("jLabel5.text")); // NOI18N
 		jLabel5.setName("jLabel5"); // NOI18N
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
 		this.setLayout(layout);
-		layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addContainerGap().addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(jSplitPane1, javax.swing.GroupLayout.Alignment.TRAILING).addGroup(layout.createSequentialGroup().addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING).addGroup(layout.createSequentialGroup().addComponent(jLabel5).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 234, Short.MAX_VALUE)).addGroup(layout.createSequentialGroup().addComponent(jButton1).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))).addComponent(jButton2))).addContainerGap()));
-		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addGap(9, 9, 9).addComponent(jLabel5).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED).addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(jButton2).addComponent(jButton1)).addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+		layout.setHorizontalGroup(layout
+				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(
+						layout.createSequentialGroup()
+								.addContainerGap()
+								.addGroup(
+										layout.createParallelGroup(
+												javax.swing.GroupLayout.Alignment.LEADING)
+												.addComponent(
+														jSplitPane1,
+														javax.swing.GroupLayout.Alignment.TRAILING)
+												.addGroup(
+														layout.createSequentialGroup()
+																.addGroup(
+																		layout.createParallelGroup(
+																				javax.swing.GroupLayout.Alignment.TRAILING)
+																				.addGroup(
+																						layout.createSequentialGroup()
+																								.addComponent(
+																										jLabel5)
+																								.addPreferredGap(
+																										javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+																										234,
+																										Short.MAX_VALUE))
+																				.addGroup(
+																						layout.createSequentialGroup()
+																								.addComponent(
+																										jButton1)
+																								.addPreferredGap(
+																										javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+																.addComponent(
+																		jButton2)))
+								.addContainerGap()));
+		layout.setVerticalGroup(layout
+				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(
+						layout.createSequentialGroup()
+								.addGap(9, 9, 9)
+								.addComponent(jLabel5)
+								.addPreferredGap(
+										javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+								.addComponent(jSplitPane1,
+										javax.swing.GroupLayout.PREFERRED_SIZE,
+										501,
+										javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(
+										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+								.addGroup(
+										layout.createParallelGroup(
+												javax.swing.GroupLayout.Alignment.BASELINE)
+												.addComponent(jButton2)
+												.addComponent(jButton1))
+								.addContainerGap(
+										javax.swing.GroupLayout.DEFAULT_SIZE,
+										Short.MAX_VALUE)));
 
 		bindingGroup.bind();
 	}// </editor-fold>//GEN-END:initComponents
@@ -423,7 +671,8 @@ public class ConfirmSignUpForm extends ContentPanel {
 	 * Methode die prüft ob die selection im tree sich geändert hat.
 	 * 
 	 */
-	private void treeTeamsPlayersValueChanged(javax.swing.event.TreeSelectionEvent evt) {// GEN-FIRST:event_treeTeamsPlayersValueChanged
+	private void treeTeamsPlayersValueChanged(
+			javax.swing.event.TreeSelectionEvent evt) {// GEN-FIRST:event_treeTeamsPlayersValueChanged
 		Object o = treeTeamsPlayers.getSelectionPath().getLastPathComponent();
 
 		if (o != null && o instanceof User) {
@@ -457,11 +706,13 @@ public class ConfirmSignUpForm extends ContentPanel {
 		}
 	}// GEN-LAST:event_treeTeamsPlayersMouseClicked
 
-	private void jlistConfirmedRefereesValueChanged(javax.swing.event.ListSelectionEvent evt) {// GEN-FIRST:event_jlistConfirmedRefereesValueChanged
+	private void jlistConfirmedRefereesValueChanged(
+			javax.swing.event.ListSelectionEvent evt) {// GEN-FIRST:event_jlistConfirmedRefereesValueChanged
 		setMoveUpActionEnabled(jlistConfirmedReferees.getSelectedValue() != null);
 	}// GEN-LAST:event_jlistConfirmedRefereesValueChanged
 
-	private void jlistRefereesValueChanged(javax.swing.event.ListSelectionEvent evt) {// GEN-FIRST:event_jlistRefereesValueChanged
+	private void jlistRefereesValueChanged(
+			javax.swing.event.ListSelectionEvent evt) {// GEN-FIRST:event_jlistRefereesValueChanged
 		setMoveDownActionEnabled(jlistReferees.getSelectedValue() != null);
 	}// GEN-LAST:event_jlistRefereesValueChanged
 
@@ -518,7 +769,8 @@ public class ConfirmSignUpForm extends ContentPanel {
 		 * @return the <code>String</code> representation of the node's value
 		 */
 		@Override
-		public String convertValueToText(Object value, boolean selected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
+		public String convertValueToText(Object value, boolean selected,
+				boolean expanded, boolean leaf, int row, boolean hasFocus) {
 			String ret = "";
 			if (value instanceof User) {
 
@@ -526,7 +778,8 @@ public class ConfirmSignUpForm extends ContentPanel {
 			} else if (value instanceof Team) {
 				ret = ((Team) value).getName();
 			} else {
-				ret = t.getName();;
+				ret = t.getName();
+				;
 			}
 			return ret;
 
@@ -547,13 +800,15 @@ public class ConfirmSignUpForm extends ContentPanel {
 		}
 		jlistReferees.setModel(listModel);
 
-		jlistReferees.setCellRenderer(new DefaultListCellRenderer(){
+		jlistReferees.setCellRenderer(new DefaultListCellRenderer() {
 
 			/**
 			 * Methode die der Liste sagt wie man ein objekt darstellt
 			 */
 			@Override
-			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+			public Component getListCellRendererComponent(JList list,
+					Object value, int index, boolean isSelected,
+					boolean cellHasFocus) {
 
 				if (value instanceof User) {
 					setText(((User) value).getName());
@@ -580,18 +835,20 @@ public class ConfirmSignUpForm extends ContentPanel {
 		});
 		jlistReferees.revalidate();
 		// Mehrere Elemente gleichzeitig selektierbar
-		jlistReferees.getSelectionModel().setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		jlistReferees.getSelectionModel().setSelectionMode(
+				ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		// Drag&Drop Aktivieren
 		jlistReferees.setDragEnabled(true);
 		jlistReferees.setDropMode(DropMode.ON_OR_INSERT);
-		jlistReferees.setTransferHandler(new TransferHandler(){
+		jlistReferees.setTransferHandler(new TransferHandler() {
 
 			/**
 			 * Datentypen die Importiert werden können
 			 */
 			@Override
 			public boolean canImport(TransferHandler.TransferSupport info) {
-				JList.DropLocation dl = (JList.DropLocation) info.getDropLocation();
+				JList.DropLocation dl = (JList.DropLocation) info
+						.getDropLocation();
 				if (dl.getIndex() == -1) {
 					return false;
 				}
@@ -604,8 +861,10 @@ public class ConfirmSignUpForm extends ContentPanel {
 					transUser = null;
 					return false;
 				}
-				JList.DropLocation dl = (JList.DropLocation) info.getDropLocation();
-				DefaultListModel listModel = (DefaultListModel) jlistReferees.getModel();
+				JList.DropLocation dl = (JList.DropLocation) info
+						.getDropLocation();
+				DefaultListModel listModel = (DefaultListModel) jlistReferees
+						.getModel();
 				int index = dl.getIndex();
 				boolean insert = dl.isInsert();
 				// An richtigen stelle einfügen
@@ -637,13 +896,15 @@ public class ConfirmSignUpForm extends ContentPanel {
 			listModelC.addElement(u);
 		}
 		jlistConfirmedReferees.setModel(listModelC);
-		jlistConfirmedReferees.setCellRenderer(new DefaultListCellRenderer(){
+		jlistConfirmedReferees.setCellRenderer(new DefaultListCellRenderer() {
 
 			/**
 			 * Methode die der Liste sagt wie man ein objekt darstellt
 			 */
 			@Override
-			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+			public Component getListCellRendererComponent(JList list,
+					Object value, int index, boolean isSelected,
+					boolean cellHasFocus) {
 
 				if (value instanceof User) {
 					setText(((User) value).getName());
@@ -670,18 +931,20 @@ public class ConfirmSignUpForm extends ContentPanel {
 		});
 		jlistConfirmedReferees.revalidate();
 		// Mehrere Elemente gleichzeitig selektierbar
-		jlistConfirmedReferees.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		jlistConfirmedReferees.getSelectionModel().setSelectionMode(
+				ListSelectionModel.SINGLE_SELECTION);
 		// Drag&Drop Aktivieren
 		jlistConfirmedReferees.setDragEnabled(true);
 		jlistConfirmedReferees.setDropMode(DropMode.ON_OR_INSERT);
-		jlistConfirmedReferees.setTransferHandler(new TransferHandler(){
+		jlistConfirmedReferees.setTransferHandler(new TransferHandler() {
 
 			/**
 			 * Datentypen die Importiert werden können
 			 */
 			@Override
 			public boolean canImport(TransferHandler.TransferSupport info) {
-				JList.DropLocation dl = (JList.DropLocation) info.getDropLocation();
+				JList.DropLocation dl = (JList.DropLocation) info
+						.getDropLocation();
 				if (dl.getIndex() == -1) {
 					return false;
 				}
@@ -694,8 +957,10 @@ public class ConfirmSignUpForm extends ContentPanel {
 					transUser = null;
 					return false;
 				}
-				JList.DropLocation dl = (JList.DropLocation) info.getDropLocation();
-				DefaultListModel listModel = (DefaultListModel) jlistConfirmedReferees.getModel();
+				JList.DropLocation dl = (JList.DropLocation) info
+						.getDropLocation();
+				DefaultListModel listModel = (DefaultListModel) jlistConfirmedReferees
+						.getModel();
 				int index = dl.getIndex();
 				boolean insert = dl.isInsert();
 				// An richtigen stelle einfügen
@@ -745,7 +1010,8 @@ public class ConfirmSignUpForm extends ContentPanel {
 	public void setConfirmSignUpActionEnabled(boolean b) {
 		boolean old = isConfirmSignUpActionEnabled();
 		this.confirmSignUpActionEnabled = b;
-		firePropertyChange("confirmSignUpActionEnabled", old, isConfirmSignUpActionEnabled());
+		firePropertyChange("confirmSignUpActionEnabled", old,
+				isConfirmSignUpActionEnabled());
 	}
 
 	private boolean unconfirmSignUpActionEnabled = false;
@@ -768,7 +1034,8 @@ public class ConfirmSignUpForm extends ContentPanel {
 	public void setUnconfirmSignUpActionEnabled(boolean b) {
 		boolean old = isUnconfirmSignUpActionEnabled();
 		this.unconfirmSignUpActionEnabled = b;
-		firePropertyChange("unconfirmSignUpActionEnabled", old, isUnconfirmSignUpActionEnabled());
+		firePropertyChange("unconfirmSignUpActionEnabled", old,
+				isUnconfirmSignUpActionEnabled());
 	}
 
 	private boolean moveDownActionEnabled = false;
@@ -791,7 +1058,8 @@ public class ConfirmSignUpForm extends ContentPanel {
 	public void setMoveDownActionEnabled(boolean b) {
 		boolean old = isMoveDownActionEnabled();
 		this.moveDownActionEnabled = b;
-		firePropertyChange("moveDownActionEnabled", old, isMoveDownActionEnabled());
+		firePropertyChange("moveDownActionEnabled", old,
+				isMoveDownActionEnabled());
 	}
 
 	private boolean moveUpActionEnabled = false;
@@ -864,15 +1132,19 @@ public class ConfirmSignUpForm extends ContentPanel {
 		 *            is item expanded
 		 * @param leaf
 		 *            is item a leaf
-		 * @param row of the item
+		 * @param row
+		 *            of the item
 		 * @param hasFocus
 		 *            does item have focus
 		 * @return This renderer.
 		 * 
 		 */
-		public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded, boolean leaf, int row, boolean hasFocus) {
+		public Component getTreeCellRendererComponent(JTree tree, Object value,
+				boolean sel, boolean expanded, boolean leaf, int row,
+				boolean hasFocus) {
 
-			super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
+			super.getTreeCellRendererComponent(tree, value, sel, expanded,
+					leaf, row, hasFocus);
 			if (leaf && value instanceof User) {
 				Team t = getTeamUserIsIn((User) value);
 				if (t != null && isUserConfirmed((User) value, t)) {
@@ -926,10 +1198,12 @@ public class ConfirmSignUpForm extends ContentPanel {
 		if (treeTeamsPlayers.getSelectionPath() == null) {
 			// wird nichts gemacht
 		} else if (treeTeamsPlayers.getSelectionPath().getLastPathComponent() instanceof User) {
-			User u = (User) treeTeamsPlayers.getSelectionPath().getLastPathComponent();
+			User u = (User) treeTeamsPlayers.getSelectionPath()
+					.getLastPathComponent();
 			confirmedPlayers.add(u);
 		} else if (treeTeamsPlayers.getSelectionPath().getLastPathComponent() instanceof Team) {
-			Team team = (Team) treeTeamsPlayers.getSelectionPath().getLastPathComponent();
+			Team team = (Team) treeTeamsPlayers.getSelectionPath()
+					.getLastPathComponent();
 			confirmedPlayers.addAll(team.getPlayers());
 		}
 		treeTeamsPlayers.repaint();
@@ -1052,11 +1326,14 @@ public class ConfirmSignUpForm extends ContentPanel {
 	@Action(enabledProperty = "unconfirmSignUpActionEnabled")
 	public void unconfirmSignUpAction() {
 
-		if (treeTeamsPlayers.getSelectionPath() == null) {} else if (treeTeamsPlayers.getSelectionPath().getLastPathComponent() instanceof User) {
-			User u = (User) treeTeamsPlayers.getSelectionPath().getLastPathComponent();
+		if (treeTeamsPlayers.getSelectionPath() == null) {
+		} else if (treeTeamsPlayers.getSelectionPath().getLastPathComponent() instanceof User) {
+			User u = (User) treeTeamsPlayers.getSelectionPath()
+					.getLastPathComponent();
 			confirmedPlayers.remove(u);
 		} else if (treeTeamsPlayers.getSelectionPath().getLastPathComponent() instanceof Team) {
-			Team team = (Team) treeTeamsPlayers.getSelectionPath().getLastPathComponent();
+			Team team = (Team) treeTeamsPlayers.getSelectionPath()
+					.getLastPathComponent();
 			confirmedPlayers.removeAll(team.getPlayers());
 		}
 		treeTeamsPlayers.repaint();

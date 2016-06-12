@@ -36,7 +36,12 @@ public enum Mapping {
 	 * Works the same as the cross mapper, but changes mapping/distribution
 	 * direction every two source groups
 	 */
-	AlternatingCrossMapper;
+	AlternatingCrossMapper,
+
+	/**
+	 * A custom mapping instance.
+	 */
+	Custom;
 
 	/**
 	 * Gibt eine kurze Beschreibung des Mapping-Typs aus.
@@ -83,7 +88,11 @@ public enum Mapping {
 			res += "Arbeitet wie der CrossMapper.<br>"
 					+ "Als Erweiterung wird die Durchlaufrichtung innerhalb jeder weiteren Quellgruppe umgedreht.";
 			break;
+		case Custom:
+			res += "A custom mapping.<br>";
+			break;
 		}
+
 		return res + "</html>";
 	}
 
@@ -104,6 +113,8 @@ public enum Mapping {
 			return "Kombination";
 		case TwoToPairwise:
 			return "2 zu paarweise";
+		case Custom:
+			return "Custom";
 		}
 		return null;
 	}
@@ -129,6 +140,7 @@ public enum Mapping {
 
 		case TwoToPairwise:
 			return new TwoToPairwiseMapper();
+
 		case AlternatingCrossMapper:
 			return new AlternatingCrossMapper();
 		}

@@ -58,7 +58,7 @@ public class SampleData {
 				ts = lts;
 				Tournament t = new Tournament(tt + " - " + ts + " Nr."
 						+ (nr + 1), rnd(500), rnd(20) + 6, "Jeder kann was",
-						30, new Date());
+						30, 0, new Date());
 				t.setType(tt);
 				t.setState(ts);
 				t.setRequiredPlayersPerTeam(rnd(5) + 2);
@@ -170,7 +170,7 @@ public class SampleData {
 	 */
 	public static Tournament Weltraum() {
 		Tournament t = new Tournament("SV Adler Weltraumliga", (float) 49.99,
-				50, "Spiel mit! Da ist jeder gut.", 30, new Date());
+				50, "Spiel mit! Da ist jeder gut.", 25, 5, new Date());
 		t.setType(TournamentType.MultiPlayer);
 		t.setState(TournamentState.signupClosed);
 		t.setSportKind("Handball");

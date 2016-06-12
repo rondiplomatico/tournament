@@ -75,7 +75,7 @@ public class Testing {
      *
      */
     public static void testMultigroup() throws NoPlayTimeException, PlanningException {
-		t = new Tournament("SV Adler Weltraumliga", 0, 100, "Alle können mitmachen! :-)", 15, new Date());
+		t = new Tournament("SV Adler Weltraumliga", 0, 100, "Alle können mitmachen! :-)", 15, 0, new Date());
 		t.setFields(5);
 		t.setFields(new String[] { "Haupthalle", "Leichtbauh.", "LeoCampus 1", "HBS", "Sentr. Höhe" });
 		t.setSportKind("Handball");
@@ -102,7 +102,7 @@ public class Testing {
      *
      */
     public static void testLiga() throws NoPlayTimeException, PlanningException {
-		t = new Tournament("SV Adler Weltraumliga", 0, 100, "Alle können mitmachen! :-)", 15, new Date());
+		t = new Tournament("SV Adler Weltraumliga", 0, 100, "Alle können mitmachen! :-)", 15, 5, new Date());
 		t.setFields(new String[] { "Haupth.", "Leichtbauh.", "Leo 1" });
 
 		t.getRoundSettings().add(new RoundSetting("Liga", RoundType.LigaGruppenRunde, 2, 0, new StartoffTransition()));

@@ -44,6 +44,7 @@ public class Transition implements Serializable, IGroupMapper, IScoreCalculator 
 
 	private int numProc;
 	private Mapping map;
+	private IGroupMapper customMapping;
 	private ScoreTransfer scoretrans;
 	private int pauseMinutes;
 
@@ -55,18 +56,24 @@ public class Transition implements Serializable, IGroupMapper, IScoreCalculator 
 	}
 
 	/**
-	 * Bequemlichkeitskonstruktor, für Verwendung z.B. in Test-Cases und in 
+	 * Bequemlichkeitskonstruktor, für Verwendung z.B. in Test-Cases und in
 	 *
-	 * @see Round#build(planning.control.PlanningManager, planning.model.rounds.IGroupRound)
+	 * @see Round#build(planning.control.PlanningManager,
+	 *      planning.model.rounds.IGroupRound)
 	 * 
 	 * @pre numProceedants > 0
 	 * 
-	 * @param numProceedants Weiterkommende Teams pro Gruppe 
-	 * @param st ScoreTransfer-Strategie
-	 * @param map Mapping
-	 * @param pauseMinutesBetween Pause 
+	 * @param numProceedants
+	 *            Weiterkommende Teams pro Gruppe
+	 * @param st
+	 *            ScoreTransfer-Strategie
+	 * @param map
+	 *            Mapping
+	 * @param pauseMinutesBetween
+	 *            Pause
 	 */
-	public Transition(int numProceedants, ScoreTransfer st, Mapping map, int pauseMinutesBetween) {
+	public Transition(int numProceedants, ScoreTransfer st, Mapping map,
+			int pauseMinutesBetween) {
 		assert (numProceedants > 0);
 		this.numProc = numProceedants;
 		this.scoretrans = st;
@@ -103,6 +110,14 @@ public class Transition implements Serializable, IGroupMapper, IScoreCalculator 
 	 */
 	public Mapping getMappingStrategy() {
 		return map;
+	}
+
+	/**
+	 * 
+	 * @param mapping
+	 */
+	public void setCustomMapping(IGroupMapper mapping) {
+		customMapping = mapping;
 	}
 
 	/**
@@ -151,23 +166,32 @@ public class Transition implements Serializable, IGroupMapper, IScoreCalculator 
 	 * Benutzt die interne Strategie fürs Mapping. Wird an dieser Stelle
 	 * zentralisiert, damit z.B. die StartoffTransition die Methode selber
 	 * überschreiben kann.
-	 * @throws PlanningException 
+	 * 
+	 * @throws PlanningException
 	 * 
 	 * @see planning.control.mapping.IGroupMapper#map(java.util.List,
 	 *      java.util.List)
 	 */
 	@Override
-	public void map(List<IMappingGroup> source, List<IMappingGroup> target) throws PlanningException {
-		map.getInstance().map(source, target);
+	public void map(List<IMappingGroup> source, List<IMappingGroup> target)
+			throws PlanningException {
+		if (map == Mapping.Custom) {
+			customMapping.map(source, target);
+		} else {
+			map.getInstance().map(source, target);
+		}
 	}
 
 	/**
 	 * 
-	 * @see planning.control.score.IScoreCalculator#getScores(planning.model.TeamSlot, java.util.List, java.util.List)
+	 * @see planning.control.score.IScoreCalculator#getScores(planning.model.TeamSlot,
+	 *      java.util.List, java.util.List)
 	 */
 	@Override
-	public Score getScores(TeamSlot forTeamSlot, List<Match> groupMatches, List<TeamSlot> ranking) {
-		return scoretrans.getInstance().getScores(forTeamSlot, groupMatches, ranking);
+	public Score getScores(TeamSlot forTeamSlot, List<Match> groupMatches,
+			List<TeamSlot> ranking) {
+		return scoretrans.getInstance().getScores(forTeamSlot, groupMatches,
+				ranking);
 	}
 
 }

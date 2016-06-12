@@ -41,7 +41,7 @@ import control.TournamentManager;
  * 
  */
 public class PlanningManager {
-	
+
 	private char curGroup = 'A';
 
 	/**
@@ -216,8 +216,7 @@ public class PlanningManager {
 			r.setPairwiseMatching(rs.getPairwiseMatching());
 			// Use game duration from round, if set, otherwise the default from
 			// the tournament
-			int gt = rs.getGameTime();
-			r.setGameTime(gt == Integer.MIN_VALUE ? t.getGameDuration() : gt);
+			r.setGameTime(rs.getGameTime() + t.getGamePause());
 
 			// Evtl. voriger Runde die OutTransition setzen.
 			if (prev != null && prev instanceof IGroupRound) {
@@ -442,11 +441,12 @@ public class PlanningManager {
 				schedule(t, p, tm, totalUseFields);
 			}
 		}
-		
+
 		// Schiedsrichter für die erste Runde festlegen; der rest wird
 		// "on the fly" berechnet
 		RefereeManager rm = new RefereeManager();
-		rm.assignRefereesLinear(t.getRounds().get(0).getPhases().get(0));
+//		rm.assignRefereesLinear(t.getRounds().get(0).getPhases().get(0));
+		rm.assignReferees(t.getRounds().get(0).getPhases().get(0));
 	}
 
 	/**
@@ -551,8 +551,6 @@ public class PlanningManager {
 		// gerechnet wurde
 		// p.setScheduledEndDateTime(tm.getCurrentTime());
 	}
-
-	
 
 	/**
 	 * Gibt true zurück, gdw. alle Einträge true sind.

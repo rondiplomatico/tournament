@@ -33,7 +33,7 @@ public class HTMLGenerator {
 	public String getPlan(TournamentPlan t) {
 		return getHead() + getPlanHTML(t) + getFoot();
 	}
-	
+
 	public String getRanking(TournamentPlan t) {
 		return getHead() + getRankingHTML(t) + getFoot();
 	}
@@ -52,7 +52,12 @@ public class HTMLGenerator {
 	private String getPlanHTML(TournamentPlan t) {
 		String res = "";
 		for (Round r : t.getRounds()) {
-			res += "<h1>Runde '" + r.getName() + "': "+r.getGameTime()+" Minuten pro Spiel (inkl. 3 Min. Pause)</h1>\n";
+			res += "<h1>" + r.getName() + ": " + r.getGameTime()
+					+ " Minuten pro Spiel";
+			if (r.getGamePauseTime() > 0) {
+				res += "(inkl. " + r.getGamePauseTime() + " Min. Pause)";
+			}
+			res += "</h1>\n";
 			res += getMatchTable(r.getMatches());
 		}
 		return res;
@@ -84,15 +89,19 @@ public class HTMLGenerator {
 	private String getRankingHTML(TournamentPlan t) {
 		Round r = t.getRounds().get(2);
 		List<TeamSlot> all = new ArrayList<TeamSlot>();
-		
-		List<TeamSlot> hlp = new ArrayList<TeamSlot>(r.getPhases().get(0).getGroups().get(0).getSlots());
-		hlp.remove(0); hlp.remove(0);
+
+		List<TeamSlot> hlp = new ArrayList<TeamSlot>(r.getPhases().get(0)
+				.getGroups().get(0).getSlots());
+		hlp.remove(0);
+		hlp.remove(0);
 		all.addAll(hlp);
-		hlp = new ArrayList<TeamSlot>(r.getPhases().get(0).getGroups().get(1).getSlots());
-		hlp.remove(0); hlp.remove(0);
+		hlp = new ArrayList<TeamSlot>(r.getPhases().get(0).getGroups().get(1)
+				.getSlots());
+		hlp.remove(0);
+		hlp.remove(0);
 		all.addAll(hlp);
 		Collections.sort(all);
-		
+
 		// Finalrunde
 		List<Match> m = t.getRounds().get(3).getMatches();
 		all.add(0, m.get(2).getLoser()); // vierter
@@ -100,12 +109,14 @@ public class HTMLGenerator {
 		all.add(0, m.get(3).getLoser()); // zweiter
 		all.add(0, m.get(3).getWinner()); // gewinner
 
-		String res = "<h1>Finale Platzierung Schwabencup</h1><table><tr>"
+		String res = "<h1>Finale Platzierung "
+				+ t.getTournament().getName()
+				+ "</h1><table><tr>"
 				+ "<th>Platz</th><th>Mannschaft</th><th>Punkte</th><th>Tore</th></tr>\n";
 		for (int k = 0; k < all.size(); k++) {
 			TeamSlot s = all.get(k);
-			res += "<tr><td>" + (k + 1) + "</td><td>" + s.getName() + "</td><td>"
-					+ s.Score.getPointsStr() + "</td><td>"
+			res += "<tr><td>" + (k + 1) + "</td><td>" + s.getName()
+					+ "</td><td>" + s.Score.getPointsStr() + "</td><td>"
 					+ s.Score.getGoalStr() + "</td></tr>";
 		}
 		return res + "</table>";

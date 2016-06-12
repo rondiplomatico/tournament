@@ -94,6 +94,8 @@ public class Tournament implements Serializable {
 	private float lateRegFee;
 	// Standard-Spieldauer
 	private int stdGameDuration;
+	// Standard-Pause zwischen den Spielen
+	private int stdPauseDuration;
 
 	/*
 	 * @@@@@@@@@@@@@@@@@@@ Variablen mit Standardwerten @@@@@@@@@@@@@@@@@@@@@
@@ -162,7 +164,7 @@ public class Tournament implements Serializable {
 	 */
 	public Tournament(String name, float fee, int maxParticipants,
 			String participationConditions, int standardGameDuration,
-			Date startDate) {
+			int standardPauseDuration, Date startDate) {
 		this();
 		this.name = name;
 		this.fee = fee;
@@ -499,13 +501,19 @@ public class Tournament implements Serializable {
 	/**
 	 * Gibt die geplante Standard-Begegnungsdauer in Minuten zurück.
 	 * 
-	 * Dabei wird vorausgesetzt, das diese Spielzeit schon alle Halbzeiten und
-	 * Pausen dazwischen enthält.
-	 * 
 	 * @return Die Zeit die ein Spiel braucht
 	 */
 	public int getGameDuration() {
 		return stdGameDuration;
+	}
+
+	/**
+	 * Gibt die geplante Standard-Begegnungspause in Minuten zurück.
+	 * 
+	 * @return Die Pause zwischen zwei Spielen
+	 */
+	public int getGamePause() {
+		return stdPauseDuration;
 	}
 
 	/**

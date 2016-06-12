@@ -132,7 +132,7 @@ public class MatchPanel extends JPanel {
 		add(new JLabel("Uhrzeit"), gbLayout);
 
 		gbLayout.gridx = 6;
-		add(new JLabel("Feld"), gbLayout);
+		add(new JLabel("Halle"), gbLayout);
 
 		gbLayout.gridx = 7;
 		add(new JLabel("Schiedsrichter"), gbLayout);

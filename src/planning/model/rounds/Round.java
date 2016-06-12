@@ -172,7 +172,12 @@ public abstract class Round implements Serializable {
 	}
 
 	public int getGameTime() {
-		return gameTime;
+		return gameTime == Integer.MIN_VALUE ? tournament.getGameDuration()
+				: gameTime;
+	}
+
+	public int getGamePauseTime() {
+		return tournament.getGamePause();
 	}
 
 	public void setGameTime(int value) {

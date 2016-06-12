@@ -14,6 +14,11 @@ import planning.model.TeamSlot;
  */
 public class CombineMapper implements IGroupMapper {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1887512588298153157L;
+	
 	int numComb = 2;
 
 	public CombineMapper() {
