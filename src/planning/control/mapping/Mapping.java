@@ -91,6 +91,8 @@ public enum Mapping {
 		case Custom:
 			res += "A custom mapping.<br>";
 			break;
+		default:
+			res += "No description for " + this.name();
 		}
 
 		return res + "</html>";
@@ -115,8 +117,9 @@ public enum Mapping {
 			return "2 zu paarweise";
 		case Custom:
 			return "Custom";
+		default:
+			return this.name();
 		}
-		return null;
 	}
 
 	/**

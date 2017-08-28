@@ -60,19 +60,6 @@ public class TeamSlot implements Comparable<TeamSlot>, Serializable {
 	/**
 	 * Erzeugt einen neuen TeamSlot mit vorläufigem Namen.
 	 * 
-	 * a)
-	 * anzahl 0,1,1+3,1+3+9 => d_n = \sum k=0 n k^3 		(n=0..)
-	 * seitenlänge: s_n = (1/2)^n 		(n=1..)
-	 * h_0 = sqrt(3/4) = sqrt(1^2 - (1/2)^2)
-	 * höhe: h_n = h_0 * (1/2)^n = h_0 * s_n		(n=1..)
-	 * flächeninhalt: a_n = .5 s_n * h_n = .5 * h_0 * s_n^2 = .5 * h_0 * (1/2)^2n
-	 * 
-	 * b) 
-	 * \sum k=0 n k^3 * 3 * s_k = \sum_k=0^n k^3 * 3 * (1/2)^k
-	 * 
-	 * c)
-	 * \sum k=0 n k^3 * a_n = \sum k=0 n k^3 * .5 * h_0 * (1/2)^2k
-	 * 
 	 * @param preliminaryName
 	 * @param color
 	 */

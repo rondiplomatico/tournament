@@ -119,26 +119,27 @@ public class ErnaFeinauerTurnier {
 								Mapping.CrossMapper, 0), 20));
 
 		addTeam(t, "HSG Leinfelden-Echterdingen");
-		addTeam(t, "SC Korb");
-		addTeam(t, "HC Erlangen");
-		addTeam(t, "SB BBM Bietigheim"); // 15
-		addTeam(t, "HSG St. Leon/Reilingen");
-
-		addTeam(t, "HSG Mannheim");
-		addTeam(t, "TV Möglingen");
-		addTeam(t, "HSG Freiburg 1");
 		addTeam(t, "HSG Freiburg 2");
-		addTeam(t, "SF Schwaikheim");
-
 		addTeam(t, "HSG Strohgäu");
-		addTeam(t, "Tus Ottenheim");
-		addTeam(t, "Haspo Bayreuth");
-		addTeam(t, "TSG Ketsch 2");
+		
+		addTeam(t, "HSG St. Leon/Reilingen");
 		addTeam(t, "FSG Donzdorf / Geislingen");
+		addTeam(t, "SC Korb");
+		
+		addTeam(t, "SF Schwaikheim");
+		addTeam(t, "Haspo Bayreuth");
+		addTeam(t, "Tus Ottenheim");
+		
+		addTeam(t, "HSG Freiburg 1");
+		addTeam(t, "TV Möglingen");
+		addTeam(t, "SB BBM Bietigheim"); // 15
+		
+		addTeam(t, "HC Erlangen");
+		addTeam(t, "TSG Ketsch 2");
+		addTeam(t, "HSG Mannheim");
 
 		addSchiri(t, "Benni/Nico");
-		addSchiri(t, "Karl/Heinz");
-		addSchiri(t, "Kurt/Kowalski");
+		addSchiri(t, "Benni/Nico");
 		t.setReferees(refs);
 
 		return t;

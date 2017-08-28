@@ -65,35 +65,62 @@ public class TurnierLE {
 		t.setFields(new String[] { "Sportpark Goldäcker", "PMH" });
 
 		t.addPlayTime(new Date(2016, 9, 3, 10, 00),
-				new Date(2016, 9, 3, 18, 00));
+				new Date(2016, 9, 3, 19, 00));
 		t.getRoundSettings().add(
 				new RoundSetting("Vollends durch'nand", RoundType.GruppenRunde,
 						2, 0, new StartoffTransition()));
 
 		RoundSetting rs = new RoundSetting("Nu wirds gmischd",
-				RoundType.GruppenRunde, 2, 0, new Transition(6,
-						ScoreTransfer.AllScores, Mapping.CombineMapper, 0));
-		rs.setPairwiseMatching(true);
+				RoundType.GruppenRunde, 2, 0, new Transition(5,
+						ScoreTransfer.AllScores, Mapping.CrossMapper, 0));
+//		rs.setPairwiseMatching(true);
 		t.getRoundSettings().add(rs);
 
-		// t.getRoundSettings().add(
-		// new RoundSetting("Schlachd um dr Cup", RoundType.KORunde, 0,
-		// 10, new Transition(2, ScoreTransfer.NoScores,
-		// Mapping.AlternatingCrossMapper, 0), 20));
-
-		addTeam(t, "HSG L-E M1");
-		addTeam(t, "HSG L-E M2");
-		addTeam(t, "TG Nürtingen 2");
-		addTeam(t, "TSV Denkendorf 2"); // 15
-		addTeam(t, "Neckartenzlingen");
-		addTeam(t, "SSV Hohenacker 2");
-
-		addTeam(t, "TSV Owen/Teck");
-		addTeam(t, "Plochingen 2");
-		addTeam(t, "Unterensingen 2");
-		addTeam(t, "Uhingen-Holzhausen 2");
-		addTeam(t, "HSG Oberer Neckar");
-		addTeam(t, "SV Remshalden 2");
+		/*
+		 * A1 - B1, B2, B5
+		 * A2 - B1, B3, B2
+		 * A3 - B2, B4, B3
+		 * A4 - B3, B5, B4
+		 * A5 - B4, B5, B1
+		 * 
+		 * A1 - B1 | A5 - B5	14:10
+		 * A2 - B2 | A4 - B4	14:35
+		 * A3 - B3 				15:00
+		 * 	       | A1 - B2
+		 * A2 - B3 | A3 - B4 	15:25
+		 * A4 - B5 | A5 - B1 	15:50
+		 * 
+		 * A3 - B2 | A5 - B4    16:15
+		 * A1 - B5 | A2 - B1    16:40
+		 * A4 - B3	  	        17:05
+		 * 
+		 * 17:30 Ende
+		 * 
+		 * 
+		 * A5 - B4 | A4 - B3
+		 * A3 - B2 | A2 - B1
+		 * A1 - B5 | A5 - B1
+		 * A3 - B4 | A2 - B3
+		 * A4 - B5 | A1 - B2
+		 * A5 - B5 | A4 - B4
+		 * A2 - B2 | A3 - B3
+		 * A1 - B1  
+		 * 
+		 */
+		addTeam(t, "HSG L-E M1"); // BK
+		addTeam(t, "HSG L-E M2"); // KL-A
+		
+		addTeam(t, "HSG Schönaich 2"); // BL
+		addTeam(t, "HSG Ostfildern A-Jgd"); // BUL
+		
+		addTeam(t, "TV Bittenfeld 3"); // BK
+		addTeam(t, "SV Fellbach 2"); // BK
+		
+		addTeam(t, "HSG Ostfildern 2"); // KL-A
+		addTeam(t, "SV Vaihingen 2"); // KL-A
+		
+		addTeam(t, "HB Filderstadt"); // KL-B
+		addTeam(t, "TSV Deizisau 2"); // KL-B
 
 		return t;
 	}
