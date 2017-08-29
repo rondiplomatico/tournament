@@ -2251,7 +2251,7 @@ public class MainView extends FrameView {
 		HTMLGenerator g = new HTMLGenerator();
 		Tournament t = getSelectedTournament();
 		if (t != null && t.getTournamentPlan() != null) {
-			g.writeAndOpen(g.getPlan(t.getTournamentPlan()), "groups.html");
+			g.writeAndOpen(g.getGroups(t.getTournamentPlan()), "groups.html");
 		}
 	}
 

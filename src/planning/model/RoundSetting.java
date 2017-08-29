@@ -30,6 +30,7 @@ public class RoundSetting implements Serializable {
 
 	private RoundType type;
 	private String name;
+	private String hint;
 
 	// Aus IGroupRound
 	private int numGroups = 1;
@@ -110,17 +111,25 @@ public class RoundSetting implements Serializable {
 		return name;
 	}
 
+	public String getHint() {
+		return hint;
+	}
+
+	public void setHint(String value) {
+		hint = value;
+	}
+
 	/**
 	 * @return the numGroups
 	 */
 	public int getNumGroups() {
 		return numGroups;
 	}
-	
+
 	public int getGameTime() {
 		return gameTime;
 	}
-	
+
 	public boolean getPairwiseMatching() {
 		return pairwiseMatching;
 	}

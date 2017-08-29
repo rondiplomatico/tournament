@@ -93,6 +93,7 @@ public abstract class Round implements Serializable {
 
 	/** Der Name der Runde */
 	protected String name;
+	protected String hint;
 
 	protected int gameTime = Integer.MIN_VALUE;
 	protected boolean pairwiseMatching = false;
@@ -172,12 +173,11 @@ public abstract class Round implements Serializable {
 	}
 
 	public int getGameTime() {
-		return gameTime == Integer.MIN_VALUE ? tournament.getGameDuration()
-				: gameTime;
+		return gameTime < 0 ? tournament.getGameDuration() : gameTime;
 	}
 
-	public int getGamePauseTime() {
-		return tournament.getGamePause();
+	public int getGameTimeInclPause() {
+		return getGameTime() + tournament.getGamePause();
 	}
 
 	public void setGameTime(int value) {
@@ -243,5 +243,13 @@ public abstract class Round implements Serializable {
 	@Override
 	public String toString() {
 		return name;
+	}
+
+	public String getHint() {
+		return hint;
+	}
+
+	public void setHint(String hint) {
+		this.hint = hint;
 	}
 }

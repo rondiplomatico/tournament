@@ -38,6 +38,8 @@ public enum Mapping {
 	 */
 	AlternatingCrossMapper,
 
+	EqualMapping,
+
 	/**
 	 * A custom mapping instance.
 	 */
@@ -91,6 +93,9 @@ public enum Mapping {
 		case Custom:
 			res += "A custom mapping.<br>";
 			break;
+		case EqualMapping:
+			res += "Foo!";
+			break;
 		default:
 			res += "No description for " + this.name();
 		}
@@ -115,6 +120,8 @@ public enum Mapping {
 			return "Kombination";
 		case TwoToPairwise:
 			return "2 zu paarweise";
+		case EqualMapping:
+			return "Gleichmäßig aufteilen";
 		case Custom:
 			return "Custom";
 		default:
@@ -146,6 +153,8 @@ public enum Mapping {
 
 		case AlternatingCrossMapper:
 			return new AlternatingCrossMapper();
+		case EqualMapping:
+			return new HalfMapper();
 		}
 		return null;
 	}

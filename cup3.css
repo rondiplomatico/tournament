@@ -30,7 +30,7 @@ h1:nth-child(1) {
 h1:before {
 	content: "";
 	display: block;
-  background: url("logo3.png") no-repeat right top;
+  background: url("logo4.png") no-repeat right top;
   position: absolute;
   right: 15mm;
   margin-top: -40mm;

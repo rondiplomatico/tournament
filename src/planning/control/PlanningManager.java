@@ -214,6 +214,7 @@ public class PlanningManager {
 			}
 			r.setInTransition(rs.getInTransition());
 			r.setPairwiseMatching(rs.getPairwiseMatching());
+			r.setHint(rs.getHint());
 			// Use game duration from round, if set, otherwise the default from
 			// the tournament
 			r.setGameTime(rs.getGameTime() + t.getGamePause());
@@ -445,7 +446,7 @@ public class PlanningManager {
 		// Schiedsrichter für die erste Runde festlegen; der rest wird
 		// "on the fly" berechnet
 		RefereeManager rm = new RefereeManager();
-//		rm.assignRefereesLinear(t.getRounds().get(0).getPhases().get(0));
+		// rm.assignRefereesLinear(t.getRounds().get(0).getPhases().get(0));
 		rm.assignReferees(t.getRounds().get(0).getPhases().get(0));
 	}
 
@@ -520,7 +521,7 @@ public class PlanningManager {
 				 * werden.
 				 */
 				if (fieldIdx == 0) {
-					tm.consumeTime(p.getRound().getGameTime());
+					tm.consumeTime(p.getRound().getGameTimeInclPause());
 				}
 
 				// Merken, das das Match aus der Gruppe schon verplant

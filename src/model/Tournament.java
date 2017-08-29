@@ -172,6 +172,7 @@ public class Tournament implements Serializable {
 		this.maxPart = maxParticipants;
 		this.participationCond = participationConditions;
 		this.stdGameDuration = standardGameDuration;
+		this.stdPauseDuration = standardPauseDuration;
 		this.startDate = startDate;
 	}
 

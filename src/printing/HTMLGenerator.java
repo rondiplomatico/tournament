@@ -10,7 +10,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import planning.model.Group;
 import planning.model.Match;
+import planning.model.Phase;
 import planning.model.TeamSlot;
 import planning.model.TournamentPlan;
 import planning.model.rounds.Round;
@@ -34,14 +36,18 @@ public class HTMLGenerator {
 		return getHead() + getPlanHTML(t) + getFoot();
 	}
 
+	public String getGroups(TournamentPlan t) {
+		return getHead() + getGroupsHTML(t) + getFoot();
+	}
+
 	public String getRanking(TournamentPlan t) {
 		return getHead() + getRankingHTML(t) + getFoot();
 	}
 
 	private String getHead() {
-		return "<html>"
-				+ "<meta charset=\"utf-8\" />"
-				+ "<head><link type=\"text/css\" rel=\"stylesheet\" href=\"cup3.css\"/></head>"
+		return "<!DOCTYPE html><html>"
+				+ "<head><meta charset=\"utf-8\" />"
+				+ "<link type=\"text/css\" rel=\"stylesheet\" href=\"cup3.css\"/></head>"
 				+ "<body>";
 	}
 
@@ -49,15 +55,52 @@ public class HTMLGenerator {
 		return "<br><br><br></body></html>";
 	}
 
+	private String getGroupsHTML(TournamentPlan t) {
+		String res = "";
+		for (Round r : t.getRounds()) {
+			res += "<h1>" + r.getName() + "</h1>\n";
+			for (Phase p : r.getPhases()) {
+				if (r.getPhases().size() > 1) {
+					res += "<h2>" + p.getName() + "</h2>\n";
+				}
+				res += "<table><tr>\n";
+				int maxsize = 0;
+				for (Group g : p.getGroups()) {
+					String field = t.getTournament().getFieldNames()[g
+							.getMatches().get(0).getField()];
+					res += "<th>" + g.getLongName() + "  (Halle: " + field
+							+ ")</th>\n";
+					maxsize = Math.max(g.getSlots().size(), maxsize);
+				}
+				res += "</tr>\n";
+				for (int pos = 0; pos < maxsize; pos++) {
+					res += "<tr>\n";
+					for (Group g : p.getGroups()) {
+						String name = g.getSlots().size() > pos ? g.getSlots()
+								.get(pos).getName() : "";
+						res += "<td>" + name + "</td>\n";
+					}
+					res += "</tr>\n";
+				}
+
+				res += "</table>";
+			}
+		}
+		return res;
+	}
+
 	private String getPlanHTML(TournamentPlan t) {
 		String res = "";
 		for (Round r : t.getRounds()) {
-			res += "<h1>" + r.getName() + ": " + r.getGameTime()
-					+ " Minuten pro Spiel";
-			if (r.getGamePauseTime() > 0) {
-				res += "(inkl. " + r.getGamePauseTime() + " Min. Pause)";
+			String label = r.getHint();
+			if (label == null) {
+				label = r.getGameTime() + " Minuten pro Spiel";
+				if (r.getTournament().getGamePause() > 0) {
+					label += "(je " + r.getTournament().getGamePause()
+							+ " Min. Pause)";
+				}
 			}
-			res += "</h1>\n";
+			res += "<h1>" + r.getName() + ": " + label + "</h1>\n";
 			res += getMatchTable(r.getMatches());
 		}
 		return res;

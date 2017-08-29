@@ -50,11 +50,11 @@ public class TournamentPlanViewPanel extends JLayeredPane {
 	// Abstand zwischen einzelnen Gruppe
 	private static int GROUPSPACE = 40;
 	// Farben der Ebenen
-//	private static Color backFirst = new Color(255, 204, 0); 
-//	private static Color backSecound = new Color(148, 193, 28);
-	private static Color backFirst = new Color(63, 132, 197); 
+	// private static Color backFirst = new Color(255, 204, 0);
+	// private static Color backSecound = new Color(148, 193, 28);
+	private static Color backFirst = new Color(63, 132, 197);
 	private static Color backSecound = new Color(255, 213, 23);
-																
+
 	// eingeloggter User
 	private User actUser;
 	// Panels in Ebenen -> Zwischenspeichern zur späteren Position setzen
@@ -103,12 +103,17 @@ public class TournamentPlanViewPanel extends JLayeredPane {
 		// Iteration über die Runden des Turniers
 		for (Round actRound : t.getRounds()) {
 			// Rundenlabel erstellen
-			createRoundLabel(actRound.getName() + " (" + actRound.getGameTime()
-					+ "min pro Spiel)");
+			String hint = actRound.getHint();
+			if (hint == null) {
+				hint = actRound.getGameTime() + "min pro Spiel, je "
+						+ t.getTournament().getGamePause() + "min Pause";
+			}
+			createRoundLabel(actRound.getName() + " (" + hint + ")");
 			// Iteration über die Phasen
 			for (Phase actPhase : actRound.getPhases()) {
 				String name = actPhase.getName() + " ("
-						+ actRound.getGameTime() + "min pro Spiel)";
+						+ actRound.getGameTime() + "min pro Spiel, je "
+						+ t.getTournament().getGamePause() + "min Pause)";
 				// Phasenlabels erstellen
 				// Letzte runde
 				if (actPhase.getOutTransition() != null) {
@@ -116,8 +121,8 @@ public class TournamentPlanViewPanel extends JLayeredPane {
 							.getPauseMinutes());
 				} // Sonstige Runden
 				else {
-					createPhaseLabel(name, actPhase
-							.getInTransition().getPauseMinutes());
+					createPhaseLabel(name, actPhase.getInTransition()
+							.getPauseMinutes());
 				}
 				// Panels erstellen
 				createPanel(match, actPhase, phaseStat);
