@@ -1,7 +1,5 @@
 package model.sampledata;
 
-import java.text.DateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -29,7 +27,8 @@ public class TurnierLE {
 	public static void main(String[] args) {
 		SampleData.clearDB();
 
-		Tournament t = TurnierLE2017();
+//		Tournament t = TurnierLE2017();
+		Tournament t = TurnierLE2018();
 
 		User manager = new User("manager", "test");
 		manager.isManager(true);
@@ -45,6 +44,8 @@ public class TurnierLE {
 		}
 		em.persist(t);
 		em.getTransaction().commit();
+		
+		MainApplication.main(args);
 	}
 
 	@SuppressWarnings("deprecation")
@@ -90,6 +91,53 @@ public class TurnierLE {
 		addTeam(t, "SV Fellbach 2", "A. Stammhammer"); // BK
 		addTeam(t, "SV Vaihingen 2", "B. Schwarz"); // KL-A
 		addTeam(t, "HSG Ostfildern 2", "R. Fink"); // KL-A
+		return t;
+	}
+	
+	@SuppressWarnings("deprecation")
+	public static Tournament TurnierLE2018() {
+		Calendar c = Calendar.getInstance();
+		c.set(2018, 8, 1);
+		Tournament t = new Tournament("HSG TurnierLE 2018", (float) 15.0, 200,
+				"Foll subbr!", 25, 5, c.getTime());
+		t.setRequiredPlayersPerTeam(10);
+		t.setType(TournamentType.MultiPlayer);
+		t.setState(TournamentState.signupClosed);
+		t.setSportKind("Handball");
+
+		t.setExpireDate(c.getTime());
+		t.setStartHour(9);
+		t.setEndHour(17);
+
+		t.setFields(new String[] { "Goldäcker", "PMH" });
+
+		c.set(Calendar.HOUR_OF_DAY, 11);
+		c.set(Calendar.MINUTE, 0);
+		Date start = c.getTime();
+		c.set(Calendar.HOUR_OF_DAY, 20);
+		t.addPlayTime(start, c.getTime());
+		RoundSetting rs = new RoundSetting("Gruppenrunde", RoundType.GruppenRunde, 2, 0,
+				new StartoffTransition());
+		rs.setHint("1x25 Minuten ohne Seitenwechsel");
+		t.getRoundSettings().add(rs);
+
+		rs = new RoundSetting("Platzierungsspiele",
+				RoundType.GruppenRunde, 2, 0, new Transition(4,
+						ScoreTransfer.AllScores, Mapping.EqualMapping, 15));
+		rs.setPairwiseMatching(true);
+		rs.setHint("1x25 Minuten ohne Seitenwechsel");
+		t.getRoundSettings().add(rs);
+
+		addTeam(t, "HSG L-E M1", "N. Elbert"); // BK
+		addTeam(t, "HSG L-E M2", "B. Schwarz"); // KL-B
+		addTeam(t, "HSG Schönbuch 2", "L. Wanders"); // BL
+		addTeam(t, "TSV Deizisau 2", "N. Locher"); // KL-B
+		addTeam(t, "JANO Filder", "F. Wühl"); // BUL
+		addTeam(t, "HSG Ostfildern 2", "N. Locher"); // KL-A
+		addTeam(t, "SF Schwaikheim 3", "B. Schwarz"); // KL-A
+		addTeam(t, "SV Remshalden 3", "N. Locher"); // BK
+		addTeam(t, "HSG L-E M1b", "F. Wühl"); // KL-C
+		addTeam(t, "SV Fellbach 2", "L. Wanders"); // BL
 		return t;
 	}
 

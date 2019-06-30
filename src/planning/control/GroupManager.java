@@ -78,6 +78,19 @@ public class GroupManager {
 	private void computeMatchesAllvsAll(Group g) {
 		LinkedList<TeamSlot> hlp = new LinkedList<TeamSlot>(g.getSlots());
 		int n = g.getSlots().size();
+		if (n == 5) {
+			g.getMatches().add(new Match(g, hlp.get(0), hlp.get(1)));
+			g.getMatches().add(new Match(g, hlp.get(2), hlp.get(3)));
+			g.getMatches().add(new Match(g, hlp.get(4), hlp.get(0)));
+			g.getMatches().add(new Match(g, hlp.get(1), hlp.get(2)));
+			g.getMatches().add(new Match(g, hlp.get(3), hlp.get(4)));
+			g.getMatches().add(new Match(g, hlp.get(2), hlp.get(0)));
+			g.getMatches().add(new Match(g, hlp.get(4), hlp.get(1)));
+			g.getMatches().add(new Match(g, hlp.get(0), hlp.get(3)));
+			g.getMatches().add(new Match(g, hlp.get(2), hlp.get(4)));
+			g.getMatches().add(new Match(g, hlp.get(3), hlp.get(1)));
+			return;
+		}
 		boolean even = n % 2 == 0;
 		for (int st = 0; st < (even ? n - 1 : n); st++) {
 			int left = 0;
