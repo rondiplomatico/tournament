@@ -47,10 +47,8 @@ public class PlanningManager {
 	/**
 	 * Akzeptiert einen Turnierplan und startet das Turnier
 	 * 
-	 * @param t
-	 *            Turnier
-	 * @throws
-	 * @throws NoPlayTimeException
+	 * @param t Turnier
+	 * @throws @throws NoPlayTimeException
 	 */
 	public boolean acceptPlanAndStart(Tournament t) {
 		// Plan generieren
@@ -58,8 +56,7 @@ public class PlanningManager {
 		try {
 			tp = generateTournamentPlan(t, true);
 		} catch (PlanningException pe) {
-			JOptionPane.showMessageDialog(null,
-					"Tournament cannot be planned: " + pe.getMessage());
+			JOptionPane.showMessageDialog(null, "Tournament cannot be planned: " + pe.getMessage());
 			return false;
 		}
 
@@ -67,10 +64,8 @@ public class PlanningManager {
 		try {
 			schedule(tp);
 		} catch (NoPlayTimeException e) {
-			JOptionPane
-					.showMessageDialog(
-							null,
-							"Cannot schedule this tournament plan: Too little time for all games (See PlayTimes)");
+			JOptionPane.showMessageDialog(null,
+					"Cannot schedule this tournament plan: Too little time for all games (See PlayTimes)");
 			return false;
 		}
 
@@ -83,12 +78,11 @@ public class PlanningManager {
 		// Rundeneinstellungen rausschmeissen (Platz sparen)
 		/*
 		 * EntityManager em = MainApplication.getEntityManager();
-		 * em.getTransaction().begin(); int numSettings =
-		 * t.getRoundSettings().size(); for (int dummy = 0; dummy < numSettings;
-		 * dummy++) { RoundSetting rs = t.getRoundSettings().get(0); // Die
-		 * Transitions sind aber evtl. im Turnierplan vorhanden, also // vorher
-		 * annullieren rs.setInTransition(null); // Aus Liste nehmen
-		 * t.getRoundSettings().remove(rs); // Aus DB löschen if
+		 * em.getTransaction().begin(); int numSettings = t.getRoundSettings().size();
+		 * for (int dummy = 0; dummy < numSettings; dummy++) { RoundSetting rs =
+		 * t.getRoundSettings().get(0); // Die Transitions sind aber evtl. im
+		 * Turnierplan vorhanden, also // vorher annullieren rs.setInTransition(null);
+		 * // Aus Liste nehmen t.getRoundSettings().remove(rs); // Aus DB löschen if
 		 * (em.contains(rs)) em.remove(rs); } em.getTransaction().commit();
 		 */
 		return true;
@@ -99,12 +93,9 @@ public class PlanningManager {
 	 * 
 	 * @see RoundType
 	 * 
-	 * @param t
-	 *            Turnier
-	 * @param name
-	 *            gewünschter Name
-	 * @param type
-	 *            Rundentyp
+	 * @param t    Turnier
+	 * @param name gewünschter Name
+	 * @param type Rundentyp
 	 * @return Rundeneinstellung für die neue Runde
 	 */
 	public RoundSetting addRound(Tournament t, String name, RoundType type) {
@@ -119,14 +110,12 @@ public class PlanningManager {
 	}
 
 	/**
-	 * Entfernt eine Runde aus einem Turnierplan. Muss per Manager gemacht
-	 * werden, da auch der Datenbankeintrag entfernt werden muss. (Hinzufügen
-	 * ist automatisch)
+	 * Entfernt eine Runde aus einem Turnierplan. Muss per Manager gemacht werden,
+	 * da auch der Datenbankeintrag entfernt werden muss. (Hinzufügen ist
+	 * automatisch)
 	 * 
-	 * @param t
-	 *            Turnier
-	 * @param rs
-	 *            Rundeneinstellung
+	 * @param t  Turnier
+	 * @param rs Rundeneinstellung
 	 */
 	public void removeRound(Tournament t, RoundSetting rs) {
 		// Aus Liste nehmen
@@ -140,11 +129,11 @@ public class PlanningManager {
 	}
 
 	/**
-	 * Wird im Moment nicht benutzt. Ich glaube nämlich nicht das man extra
-	 * einen Manager benötigt, um elementare Werte einer Modelklasse direkt zu
-	 * ändern. (Ich denke das ist im Rahmen dieses Projekts zu "generisch", es
-	 * wird an keiner anderen Stelle benutzt werden) Falls das doch gewünscht
-	 * ist, werden wir natürlich gerne den Code umschreiben.
+	 * Wird im Moment nicht benutzt. Ich glaube nämlich nicht das man extra einen
+	 * Manager benötigt, um elementare Werte einer Modelklasse direkt zu ändern.
+	 * (Ich denke das ist im Rahmen dieses Projekts zu "generisch", es wird an
+	 * keiner anderen Stelle benutzt werden) Falls das doch gewünscht ist, werden
+	 * wir natürlich gerne den Code umschreiben.
 	 * 
 	 * Das gleiche gilt für {@link #setPhaseBreakTime(IMultiphaseRound, int)}
 	 * 
@@ -152,8 +141,7 @@ public class PlanningManager {
 	 * @param value
 	 */
 	/*
-	 * public void setNumGroups(IGroupRound r, int value) {
-	 * r.setNumGroups(value); }
+	 * public void setNumGroups(IGroupRound r, int value) { r.setNumGroups(value); }
 	 */
 
 	/**
@@ -174,8 +162,8 @@ public class PlanningManager {
 	 * 
 	 * Mannschaften ja nach onlyConfirmed:<br>
 	 * <b>true</b><br>
-	 * Alle Mannschaften, in denen mindestens so viele Spieler bestätigt wurden
-	 * wie die im Turnier eingestellte Mindestspieleranzahl pro Team.<br>
+	 * Alle Mannschaften, in denen mindestens so viele Spieler bestätigt wurden wie
+	 * die im Turnier eingestellte Mindestspieleranzahl pro Team.<br>
 	 * <br>
 	 * <b>false</b><br>
 	 * Alle vorangemeldeten Mannschaften werden verwendet
@@ -183,19 +171,16 @@ public class PlanningManager {
 	 * @pre Es gibt mindestens eine Rundeneinstellung
 	 * @pre Es gibt mindestens ein bestätigtes Team
 	 * 
-	 * @post Der Vollständige Turnierplan mit allen Begegnungen ist erstellt.
-	 *       (OHNE Zeitplanung.)
+	 * @post Der Vollständige Turnierplan mit allen Begegnungen ist erstellt. (OHNE
+	 *       Zeitplanung.)
 	 * 
-	 * @param t
-	 *            Das Turnier
-	 * @param onlyConfirmed
-	 *            Nur schon bestätigte Teams werden bei der Generierung
-	 *            berücksichtigt.
+	 * @param t             Das Turnier
+	 * @param onlyConfirmed Nur schon bestätigte Teams werden bei der Generierung
+	 *                      berücksichtigt.
 	 * @return Generierten Turnierplan
 	 * @throws PlanningException
 	 */
-	public TournamentPlan generateTournamentPlan(Tournament t,
-			boolean onlyConfirmed) throws PlanningException {
+	public TournamentPlan generateTournamentPlan(Tournament t, boolean onlyConfirmed) throws PlanningException {
 		assert (t.getRoundSettings().size() > 0);
 
 		TournamentPlan plan = new TournamentPlan(t);
@@ -209,11 +194,12 @@ public class PlanningManager {
 				((IGroupRound) r).setNumGroups(rs.getNumGroups());
 			}
 			if (r instanceof IMultiphaseRound) {
-				((IMultiphaseRound) r).setPauseMinutes(rs
-						.getPauseBetweenPhases());
+				((IMultiphaseRound) r).setPauseMinutes(rs.getPauseBetweenPhases());
 			}
 			r.setInTransition(rs.getInTransition());
 			r.setPairwiseMatching(rs.getPairwiseMatching());
+			r.setFields(rs.getUsableFields());
+
 			r.setHint(rs.getHint());
 			// Use game duration from round, if set, otherwise the default from
 			// the tournament
@@ -228,18 +214,17 @@ public class PlanningManager {
 			prev = r;
 		}
 		/*
-		 * Ist die tatsächliche Transition der ersten Runde keine
-		 * Startoff-Transition (z.B. durch Löschen von runden entstanden), so
-		 * muss hier eine StartoffTransition gesetzt werden.
+		 * Ist die tatsächliche Transition der ersten Runde keine Startoff-Transition
+		 * (z.B. durch Löschen von runden entstanden), so muss hier eine
+		 * StartoffTransition gesetzt werden.
 		 */
 		if (!(t.getRoundSettings().get(0).getInTransition() instanceof StartoffTransition)) {
-			t.getRoundSettings().get(0)
-					.setInTransition(new StartoffTransition());
+			t.getRoundSettings().get(0).setInTransition(new StartoffTransition());
 		}
 
 		/*
-		 * Die erste Runde mit den Teams initialisieren, also Slots für jedes
-		 * Team erstellen, die schon mit Teams gefüllt sind
+		 * Die erste Runde mit den Teams initialisieren, also Slots für jedes Team
+		 * erstellen, die schon mit Teams gefüllt sind
 		 */
 		final List<Group> initialGroup = new ArrayList<Group>(1);
 		// Eine Gruppe für alle Teams
@@ -255,9 +240,7 @@ public class PlanningManager {
 		};
 		for (Team team : t.getTeams()) {
 			// Nur hinzufügen, falls genug Spieler bestätigt
-			if (!onlyConfirmed
-					|| team.getConfirmedPlayers().size() >= t
-							.getRequiredPlayersPerTeam()) {
+			if (!onlyConfirmed || team.getConfirmedPlayers().size() >= t.getRequiredPlayersPerTeam()) {
 
 				// Slot erzeugen, Team rein
 				TeamSlot ts = new TeamSlot(null, Color.BLACK);
@@ -265,14 +248,11 @@ public class PlanningManager {
 				init.addTeamSlot(ts);
 				ts.setTeam(team, new Score());
 			} else {
-				String msg = team.getPlayers().size() == 1 ? team.getName()
-						+ " wurde nicht bestätigt und nimmt nicht am Turnier teil."
-						: "Team '"
-								+ team.getName()
+				String msg = team.getPlayers().size() == 1
+						? team.getName() + " wurde nicht bestätigt und nimmt nicht am Turnier teil."
+						: "Team '" + team.getName()
 								+ "' wird wegen zu wenig bestätigten Spielern nicht teilnehmen. Benötigt: "
-								+ t.getRequiredPlayersPerTeam()
-								+ ", bestätigt:"
-								+ team.getConfirmedPlayers().size();
+								+ t.getRequiredPlayersPerTeam() + ", bestätigt:" + team.getConfirmedPlayers().size();
 				ProgressLogger.getInstance().log(msg);
 			}
 		}
@@ -311,8 +291,7 @@ public class PlanningManager {
 		 * Die restlichen Runden mit den Slots generieren
 		 */
 		for (int idx = 1; idx < plan.getRounds().size(); idx++) {
-			plan.getRounds().get(idx)
-					.build(this, ((IGroupRound) plan.getRounds().get(idx - 1)));
+			plan.getRounds().get(idx).build(this, ((IGroupRound) plan.getRounds().get(idx - 1)));
 		}
 
 		return plan;
@@ -320,27 +299,23 @@ public class PlanningManager {
 
 	/**
 	 * 
-	 * Ruft den internen Mapper der Phase auf, um die in dieser Phase
-	 * enthaltenen Gruppen mit neu generieten Slots aus einer vorigen Phase zu
-	 * füllen.<br>
+	 * Ruft den internen Mapper der Phase auf, um die in dieser Phase enthaltenen
+	 * Gruppen mit neu generieten Slots aus einer vorigen Phase zu füllen.<br>
 	 * <br>
 	 * <b>WICHTIG</b>:<br>
-	 * Man könnte sich fragen, warum die neuen Slots von den in der VORIGEN
-	 * Phase liegenden Gruppen erzeugt werden; dies liegt daran, das nur die
-	 * dortigen Gruppen wirklich wissen wie viele Mannschaften darin enthalten
-	 * sind!! Sollte also eine Gruppe weniger Slots enthalten, als die Anzahl
-	 * der weiterkommenden Teams aus der Gruppe, so wird natürlich nur eine
-	 * Liste mit so viele Slots erzeugt wie auch tatsächlich Teams vorhanden
-	 * sind. Sonst könnte man Slots im Turnier erhalten, in denen nie Teams
-	 * vorkommen.<br>
+	 * Man könnte sich fragen, warum die neuen Slots von den in der VORIGEN Phase
+	 * liegenden Gruppen erzeugt werden; dies liegt daran, das nur die dortigen
+	 * Gruppen wirklich wissen wie viele Mannschaften darin enthalten sind!! Sollte
+	 * also eine Gruppe weniger Slots enthalten, als die Anzahl der weiterkommenden
+	 * Teams aus der Gruppe, so wird natürlich nur eine Liste mit so viele Slots
+	 * erzeugt wie auch tatsächlich Teams vorhanden sind. Sonst könnte man Slots
+	 * im Turnier erhalten, in denen nie Teams vorkommen.<br>
 	 * 
-	 * @param p
-	 *            Phase
+	 * @param p            Phase
 	 * @param sourceGroups
 	 * @throws PlanningException
 	 */
-	public void buildPhase(Phase p, List<Group> sourceGroups)
-			throws PlanningException {
+	public void buildPhase(Phase p, List<Group> sourceGroups) throws PlanningException {
 		GroupManager gm = new GroupManager();
 
 		// Gruppen erstellen und hinzufügen
@@ -353,12 +328,11 @@ public class PlanningManager {
 		/**
 		 * Füllt die Gruppen mit dem Mapper.
 		 * 
-		 * Um Missbrauch zu verhindern, wurden die fürs Mapping relevanten
-		 * Methoden in ein Interface IMappingGroup ausgelagert. Leider kann Java
-		 * im Bezug auf Generics in Listen aber keine Vererbung detektieren,
-		 * daher muss hier jeweils eine eigene Liste von IMappingGroup-Elementen
-		 * erstellt werden, obwohl alle Group-Elemente ja eigentlich
-		 * IMappingGroup implementieren.
+		 * Um Missbrauch zu verhindern, wurden die fürs Mapping relevanten Methoden in
+		 * ein Interface IMappingGroup ausgelagert. Leider kann Java im Bezug auf
+		 * Generics in Listen aber keine Vererbung detektieren, daher muss hier jeweils
+		 * eine eigene Liste von IMappingGroup-Elementen erstellt werden, obwohl alle
+		 * Group-Elemente ja eigentlich IMappingGroup implementieren.
 		 * 
 		 * @see IMappingGroup
 		 */
@@ -381,10 +355,8 @@ public class PlanningManager {
 	/**
 	 * Gibt die Liste aller Spiele für einen bestimmten Schiedsrichter aus.
 	 * 
-	 * @param tp
-	 *            Turnierplan
-	 * @param u
-	 *            Schiedsrichter
+	 * @param tp Turnierplan
+	 * @param u  Schiedsrichter
 	 * @return Spielplan
 	 */
 	public List<Match> getScheduleForReferee(TournamentPlan tp, User u) {
@@ -403,10 +375,8 @@ public class PlanningManager {
 	 * 
 	 * Bei erneutem Aufruf wird der alte Plan überschrieben.
 	 * 
-	 * @param t
-	 *            Turnier
-	 * @param startDateTime
-	 *            Startzeitpunkt
+	 * @param t             Turnier
+	 * @param startDateTime Startzeitpunkt
 	 * @throws NoPlayTimeException
 	 * 
 	 * @pre Es gibt mindestens ein Spielfeld
@@ -421,15 +391,15 @@ public class PlanningManager {
 		TimeManager tm = new TimeManager(t.getTournament());
 
 		/*
-		 * Bestimmen der Anzahl der wirklich benutzbaren Felder. Hängt ab von
-		 * der maximalen Anzahl an gleichzeitig durchführbaren Spielen ohne
-		 * doppelten Teameinsatz und der Anzahl der Schiedsrichter
+		 * Bestimmen der Anzahl der wirklich benutzbaren Felder. Hängt ab von der
+		 * maximalen Anzahl an gleichzeitig durchführbaren Spielen ohne doppelten
+		 * Teameinsatz und der Anzahl der Schiedsrichter
 		 */
-		int totalUseFields = t.getTournament().getNumFields();
+		String[] fields = t.getTournament().getFieldNames();
+		int totalUseFields = fields.length;
 		if (totalUseFields > t.getTournament().getReferees().size()) {
 			totalUseFields = t.getTournament().getReferees().size();
-			ProgressLogger.getInstance().log(
-					"Weniger Schiedsrichter als Spielfelder!");
+			ProgressLogger.getInstance().log("Weniger Schiedsrichter als Spielfelder!");
 		}
 		assert (totalUseFields > 0);
 
@@ -439,7 +409,7 @@ public class PlanningManager {
 
 			// Alle Phasen durchgehen
 			for (Phase p : r.getPhases()) {
-				schedule(t, p, tm, totalUseFields);
+				schedule(t, p, tm, r.getFields() == null ? fields : r.getFields());
 			}
 		}
 
@@ -456,15 +426,14 @@ public class PlanningManager {
 	 * Wählt nacheinander aus jeder Gruppe eine Begegnung und platziert sie auf
 	 * einem Spielfeld. Dadurch werden alle Gruppenbegegnungen gleichmäßig
 	 * verteilt. Allerdings wird an dieser Stelle erwartet, das die Begegnungen
-	 * innerhalb einer Gruppe schon möglichst gerecht verteilt sind, das nicht
-	 * z.B. Match 1 Team1 vs. Team2 ist und dann Match 2 Team1 vs. Team3 usw.
+	 * innerhalb einer Gruppe schon möglichst gerecht verteilt sind, das nicht z.B.
+	 * Match 1 Team1 vs. Team2 ist und dann Match 2 Team1 vs. Team3 usw.
 	 * 
 	 * @throws NoPlayTimeException
 	 * 
 	 * 
 	 */
-	private void schedule(TournamentPlan t, Phase p, TimeManager tm,
-			int totalUseFields) throws NoPlayTimeException {
+	private void schedule(TournamentPlan t, Phase p, TimeManager tm, String[] fields) throws NoPlayTimeException {
 		// Hält den aktuellen Index des grade verplanten Matches pro Gruppe
 		int[] gmidx = new int[p.getGroups().size()];
 		// Zeigt an, ob alle Matches einer Gruppe verplant wurden.
@@ -485,11 +454,11 @@ public class PlanningManager {
 			maxSimultaneousMatches += p.getGroups().get(x).getSlots().size() / 2;
 		}
 
+		// TODO: No re-mapping of field indices to actual fields implemented yet.
+		int totalUseFields = fields.length;
 		if (totalUseFields > maxSimultaneousMatches) {
 			totalUseFields = maxSimultaneousMatches;
-			ProgressLogger.getInstance()
-					.log(p.getName()
-							+ ": Es werden nicht alle Spielfelder genutzt.");
+			ProgressLogger.getInstance().log(p.getName() + ": Es werden nicht alle Spielfelder genutzt.");
 		}
 
 		// Wartezeit zwischen den Phasen berücksichtigen
@@ -516,9 +485,8 @@ public class PlanningManager {
 				fieldIdx %= totalUseFields;
 
 				/*
-				 * Ist der fieldIdx wieder auf 0, so sind alle Felder mit der
-				 * Zeit belegt, und es muss der nächste Zeitslot angefangen
-				 * werden.
+				 * Ist der fieldIdx wieder auf 0, so sind alle Felder mit der Zeit belegt, und
+				 * es muss der nächste Zeitslot angefangen werden.
 				 */
 				if (fieldIdx == 0) {
 					tm.consumeTime(p.getRound().getGameTimeInclPause());
@@ -586,8 +554,7 @@ public class PlanningManager {
 	/**
 	 * Debug-Funktion
 	 * 
-	 * @param t
-	 *            Turnierplan
+	 * @param t Turnierplan
 	 */
 	public void printSchedule(TournamentPlan t) {
 		System.out.println(t.toString());

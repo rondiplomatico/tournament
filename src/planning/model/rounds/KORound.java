@@ -30,8 +30,8 @@ public class KORound extends Round implements IFinalRound, IMultiphaseRound {
 	private static final long serialVersionUID = 8371403514469549854L;
 
 	/**
-	 * Standardwert für die Pausendauer zwischen den Finalrunden. Einstellbar
-	 * über {@link KORound#setPauseMinutes(int)}
+	 * Standardwert für die Pausendauer zwischen den Finalrunden. Einstellbar über
+	 * {@link KORound#setPauseMinutes(int)}
 	 */
 	private int pauseMinutes = 30;
 
@@ -70,23 +70,22 @@ public class KORound extends Round implements IFinalRound, IMultiphaseRound {
 	}
 
 	/**
-	 * Die Phasen werden erst gebastelt, wenn die Anzahl der Teams aus der
-	 * vorigen Runde feststehen, also build aufgerufen wird.
+	 * Die Phasen werden erst gebastelt, wenn die Anzahl der Teams aus der vorigen
+	 * Runde feststehen, also build aufgerufen wird.
 	 * 
 	 * Die KO-Runde erzeugt auch ein Spiel um Platz 3.
 	 * 
-	 * Ist die Anzahl der Teams keine glatte zweierpotenz, wird die nächst
-	 * höhere erforderliche Phase erzeugt (5,6,7 Teams -> Viertelfinale) und
-	 * evtl. übrig bleibende Teams werden in einer Gruppe "geparkt" und kommen
-	 * automatisch weiter.
+	 * Ist die Anzahl der Teams keine glatte zweierpotenz, wird die nächst höhere
+	 * erforderliche Phase erzeugt (5,6,7 Teams -> Viertelfinale) und evtl. übrig
+	 * bleibende Teams werden in einer Gruppe "geparkt" und kommen automatisch
+	 * weiter.
 	 * 
 	 * @param groupSource
 	 * @throws PlanningException
 	 * @see Round#build(PlanningManager, IGroupRound)
 	 */
 	@Override
-	public void build(PlanningManager pm, IGroupRound groupSource)
-			throws PlanningException {
+	public void build(PlanningManager pm, IGroupRound groupSource) throws PlanningException {
 		phases.clear();
 		// Anzahl der Teams bestimmen
 		int totalTeams = 0;
@@ -100,19 +99,23 @@ public class KORound extends Round implements IFinalRound, IMultiphaseRound {
 		int totalPhases = (int) Math.ceil(Math.log(totalTeams) / Math.log(2));
 
 		// Gleiche Transition für alle
-		Transition t = new Transition(1, ScoreTransfer.NoScores,
-				Mapping.CrossMapper, pauseMinutes);
+		Transition t = new Transition(1, ScoreTransfer.NoScores, Mapping.CrossMapper, pauseMinutes);
 		// Für den letzten Übergang, um das Spiel um Platz 3 zu erzeugen
-		Transition last = new Transition(2, ScoreTransfer.NoScores,
-				Mapping.CrossMapper, pauseMinutes);
+		Transition last = new Transition(2, ScoreTransfer.NoScores, Mapping.CrossMapper, pauseMinutes);
 
 		// Erste Phase erhält die Gruppentransition und die sourceGroups
 		int currentNumGroups = (int) Math.ceil(totalTeams / 2.0);
-		Phase next = new Phase(this, currentNumGroups, getCaption(0,
-				totalPhases));
+
+		totalPhases -= 1;
+//		currentNumGroups -= 1;
+		
+		Phase next = new Phase(this, currentNumGroups, getCaption(0, totalPhases));
 		next.setInTransition(inTransition);
 		next.setOutTransition(totalPhases == 2 ? last : t);
 		pm.buildPhase(next, groupSource.getGroups());
+		if (totalPhases == 1) {
+			setFinalPhaseLabels(next);
+		}
 		phases.add(next);
 
 		for (int phaseIdx = 1; phaseIdx < totalPhases; phaseIdx++) {
@@ -135,8 +138,7 @@ public class KORound extends Round implements IFinalRound, IMultiphaseRound {
 			}
 			// Normalfall
 			if (!finalRoundWith3rdGame) {
-				next = new Phase(this, currentNumGroups, getCaption(phaseIdx,
-						totalPhases));
+				next = new Phase(this, currentNumGroups, getCaption(phaseIdx, totalPhases));
 				next.setInTransition(t);
 
 				// Die Finalrunde hat zwei Gruppen, Finale & Spiel um Platz 3
@@ -145,8 +147,8 @@ public class KORound extends Round implements IFinalRound, IMultiphaseRound {
 				next.setInTransition(last);
 			}
 			/*
-			 * Immer die Richtigen outTransitions setzen. Im letzten Fall gibt's
-			 * keine outTransition.
+			 * Immer die Richtigen outTransitions setzen. Im letzten Fall gibt's keine
+			 * outTransition.
 			 */
 			if (phaseIdx < totalPhases - 2) {
 				next.setOutTransition(t);
@@ -160,13 +162,7 @@ public class KORound extends Round implements IFinalRound, IMultiphaseRound {
 			 * Für die Finalphase, Schönheitsoperation
 			 */
 			if (currentNumGroups == 1) {
-				next.getGroups().get(0).setLongName("Finale");
-				if (next.getGroups().size() > 1) {
-					next.getGroups().get(1).setLongName("Spiel um Platz 3");
-				}
-				// Swap groups to have game for 3rd place scheduled first!
-				next.getGroups().add(next.getGroups().get(0));
-				next.getGroups().remove(0);
+				setFinalPhaseLabels(next);
 			}
 			phases.add(next);
 		}
@@ -183,12 +179,21 @@ public class KORound extends Round implements IFinalRound, IMultiphaseRound {
 
 	}
 
+	private void setFinalPhaseLabels(Phase next) {
+		next.getGroups().get(0).setLongName("Finale");
+		if (next.getGroups().size() > 1) {
+			next.getGroups().get(1).setLongName("Spiel um Platz 3");
+		}
+		// Swap groups to have game for 3rd place scheduled first!
+		next.getGroups().add(next.getGroups().get(0));
+		next.getGroups().remove(0);
+	}
+
 	private String getCaption(int phaseIdx, int totalPhases) {
 		if (phaseIdx == totalPhases - 1) {
 			return "Finale";
 		} else {
-			return "1/" + (int) Math.pow(2, totalPhases - phaseIdx - 1)
-					+ " Finale";
+			return "1/" + (int) Math.pow(2, totalPhases - phaseIdx - 1) + " Finale";
 		}
 	}
 

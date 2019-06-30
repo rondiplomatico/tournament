@@ -80,8 +80,8 @@ public abstract class Round implements Serializable {
 	private long id;
 
 	/**
-     *
-     */
+	 *
+	 */
 	@JoinColumn(name = "round_id")
 	@IndexColumn(name = "phaseOrder")
 	@OneToMany(cascade = CascadeType.ALL)
@@ -97,10 +97,11 @@ public abstract class Round implements Serializable {
 
 	protected int gameTime = Integer.MIN_VALUE;
 	protected boolean pairwiseMatching = false;
+	protected String[] fields = null;
 
 	/**
-     *
-     */
+	 *
+	 */
 	@OneToOne(cascade = CascadeType.ALL)
 	protected Transition inTransition;
 
@@ -192,28 +193,32 @@ public abstract class Round implements Serializable {
 		pairwiseMatching = value;
 	}
 
+	public void setFields(String[] fields) {
+		this.fields = fields;
+	}
+
+	public String[] getFields() {
+		return fields;
+	}
+
 	/**
 	 * Erstellt eine Runde mit allen inneren Phasen.<br>
 	 * <br>
 	 * Hinweis für <b>eigene Implementierungen</b>:
-	 * {@link PlanningManager#buildPhase(Phase, List)} darf erst aufgerufen
-	 * werden, wenn {@link Phase#setOutTransition(Transition)} aufgerufen wurde.<br>
+	 * {@link PlanningManager#buildPhase(Phase, List)} darf erst aufgerufen werden,
+	 * wenn {@link Phase#setOutTransition(Transition)} aufgerufen wurde.<br>
 	 * Dies liegt daran, das beim erstellen einer Phase die TeamSlots der
 	 * weiterkommenden Teams generiert werden. Die Anzahl wird aber aus der
 	 * outTransition der Phase (falls gesetzt) festgestellt.
 	 * 
-	 * @param pm
-	 *            PlanningManager
-	 * @param round
-	 *            Quellrunde
+	 * @param pm    PlanningManager
+	 * @param round Quellrunde
 	 */
-	public abstract void build(PlanningManager pm, IGroupRound round)
-			throws PlanningException;
+	public abstract void build(PlanningManager pm, IGroupRound round) throws PlanningException;
 
 	/**
 	 * 
-	 * @param value
-	 *            Der Übergang aus der vorigen Runde
+	 * @param value Der Übergang aus der vorigen Runde
 	 */
 	public void setInTransition(Transition value) {
 		// inTransition = value != null ? value.clone():null;

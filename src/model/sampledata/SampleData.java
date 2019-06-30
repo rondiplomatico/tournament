@@ -56,9 +56,8 @@ public class SampleData {
 			for (TournamentState lts : TournamentState.values()) {
 				tt = ltt;
 				ts = lts;
-				Tournament t = new Tournament(tt + " - " + ts + " Nr."
-						+ (nr + 1), rnd(500), rnd(20) + 6, "Jeder kann was",
-						30, 0, new Date());
+				Tournament t = new Tournament(tt + " - " + ts + " Nr." + (nr + 1), rnd(500), rnd(20) + 6,
+						"Jeder kann was", 30, 0, new Date());
 				t.setType(tt);
 				t.setState(ts);
 				t.setRequiredPlayersPerTeam(rnd(5) + 2);
@@ -69,37 +68,25 @@ public class SampleData {
 				t.addReferee(referee);
 
 				if (ts == TournamentState.signupClosed) {
-					t.getRoundSettings().add(
-							new RoundSetting("Vorrunde",
-									RoundType.GruppenRunde, rnd(4) + 2,
-									rnd(30), new StartoffTransition()));
-					t.getRoundSettings().add(
-							new RoundSetting("Finale", RoundType.KORunde, 0,
-									rnd(60), new Transition(rnd(3) + 2,
-											rndST(), rndM(), rnd(60))));
+					t.getRoundSettings().add(new RoundSetting("Vorrunde", RoundType.GruppenRunde, rnd(4) + 2, rnd(30),
+							new StartoffTransition()));
+					t.getRoundSettings().add(new RoundSetting("Finale", RoundType.KORunde, 0, rnd(60),
+							new Transition(rnd(3) + 2, rndST(), rndM(), rnd(60))));
 				}
 				if (ts == TournamentState.running) {
 					t.setState(TournamentState.signupClosed);
 
-					t.getRoundSettings().add(
-							new RoundSetting("Vorrunde",
-									RoundType.GruppenRunde, rnd(4) + 2, 0,
-									new StartoffTransition()));
-					t.getRoundSettings().add(
-							new RoundSetting("Hauptrunde",
-									RoundType.GruppenRunde, rnd(3) + 2, 0,
-									new Transition(rnd(3) + 3, rndST(), rndM(),
-											30)));
-					t.getRoundSettings().add(
-							new RoundSetting("Finale", RoundType.KORunde, 0,
-									rnd(60), new Transition(rnd(3) + 2,
-											rndST(), rndM(), rnd(60))));
+					t.getRoundSettings().add(new RoundSetting("Vorrunde", RoundType.GruppenRunde, rnd(4) + 2, 0,
+							new StartoffTransition()));
+					t.getRoundSettings().add(new RoundSetting("Hauptrunde", RoundType.GruppenRunde, rnd(3) + 2, 0,
+							new Transition(rnd(3) + 3, rndST(), rndM(), 30)));
+					t.getRoundSettings().add(new RoundSetting("Finale", RoundType.KORunde, 0, rnd(60),
+							new Transition(rnd(3) + 2, rndST(), rndM(), rnd(60))));
 
 					PlanningManager pm = new PlanningManager();
 					if (pm.acceptPlanAndStart(t)) {
 						ResultManager rm = new ResultManager(null);
-						List<Match> matches = pm.getSchedule(t
-								.getTournamentPlan());
+						List<Match> matches = pm.getSchedule(t.getTournamentPlan());
 						for (int x = 0; x < matches.size() / 2; x++) {
 							rm.setResult(matches.get(x), rnd(10), rnd(10));
 						}
@@ -108,25 +95,17 @@ public class SampleData {
 				if (ts == TournamentState.finished) {
 					t.setState(TournamentState.signupClosed);
 
-					t.getRoundSettings().add(
-							new RoundSetting("Vorrunde",
-									RoundType.GruppenRunde, rnd(4) + 2, 0,
-									new StartoffTransition()));
-					t.getRoundSettings().add(
-							new RoundSetting("Hauptrunde",
-									RoundType.GruppenRunde, rnd(3) + 2, 0,
-									new Transition(rnd(3) + 3, rndST(), rndM(),
-											30)));
-					t.getRoundSettings().add(
-							new RoundSetting("Finale", RoundType.KORunde, 0,
-									rnd(60), new Transition(rnd(3) + 2,
-											rndST(), rndM(), rnd(60))));
+					t.getRoundSettings().add(new RoundSetting("Vorrunde", RoundType.GruppenRunde, rnd(4) + 2, 0,
+							new StartoffTransition()));
+					t.getRoundSettings().add(new RoundSetting("Hauptrunde", RoundType.GruppenRunde, rnd(3) + 2, 0,
+							new Transition(rnd(3) + 3, rndST(), rndM(), 30)));
+					t.getRoundSettings().add(new RoundSetting("Finale", RoundType.KORunde, 0, rnd(60),
+							new Transition(rnd(3) + 2, rndST(), rndM(), rnd(60))));
 
 					PlanningManager pm = new PlanningManager();
 					if (pm.acceptPlanAndStart(t)) {
 						ResultManager rm = new ResultManager(null);
-						List<Match> matches = pm.getSchedule(t
-								.getTournamentPlan());
+						List<Match> matches = pm.getSchedule(t.getTournamentPlan());
 						for (int x = 0; x < matches.size(); x++) {
 							rm.setResult(matches.get(x), rnd(10), rnd(10));
 						}
@@ -169,24 +148,18 @@ public class SampleData {
 	 * @return Weltraumliga
 	 */
 	public static Tournament Weltraum() {
-		Tournament t = new Tournament("SV Adler Weltraumliga", (float) 49.99,
-				50, "Spiel mit! Da ist jeder gut.", 25, 5, new Date());
+		Tournament t = new Tournament("SV Adler Weltraumliga", (float) 49.99, 50, "Spiel mit! Da ist jeder gut.", 25, 5,
+				new Date());
 		t.setType(TournamentType.MultiPlayer);
 		t.setState(TournamentState.signupClosed);
 		t.setSportKind("Handball");
 		t.setExpireDate(new Date());
 
-		t.getRoundSettings().add(
-				new RoundSetting("Vorrunde", RoundType.GruppenRunde, 4, 0,
-						new StartoffTransition()));
-		t.getRoundSettings().add(
-				new RoundSetting("Hauptrunde", RoundType.GruppenRunde, 2, 0,
-						new Transition(4, ScoreTransfer.Special1,
-								Mapping.CrossMapper, 30)));
-		t.getRoundSettings().add(
-				new RoundSetting("Finale", RoundType.KORunde, 0, 60,
-						new Transition(4, ScoreTransfer.NoScores,
-								Mapping.CrossMapper, 60)));
+		t.getRoundSettings().add(new RoundSetting("Vorrunde", RoundType.GruppenRunde, 4, 0, new StartoffTransition()));
+		t.getRoundSettings().add(new RoundSetting("Hauptrunde", RoundType.GruppenRunde, 2, 0,
+				new Transition(4, ScoreTransfer.Special1, Mapping.CrossMapper, 30)));
+		t.getRoundSettings().add(new RoundSetting("Finale", RoundType.KORunde, 0, 60,
+				new Transition(4, ScoreTransfer.NoScores, Mapping.CrossMapper, 60)));
 
 		fill(t);
 
@@ -230,15 +203,13 @@ public class SampleData {
 
 				Team team = new Team("RandomTeam " + (x + 1));
 
-				int players = tt == TournamentType.SinglePlayer ? 1 : rnd(5)
-						+ t.getRequiredPlayersPerTeam();
+				int players = tt == TournamentType.SinglePlayer ? 1 : rnd(5) + t.getRequiredPlayersPerTeam();
 				for (int uidx = 0; uidx < players; uidx++) {
 					team.addPlayer(users.get(idx++));
 					/*
 					 * Die meisten Spieler voranmelden, aber nicht alle
 					 */
-					if (t.getState() != TournamentState.published
-							&& Math.random() > .2) {
+					if (t.getState() != TournamentState.published && Math.random() > .2) {
 						team.getConfirmedPlayers().add(users.get(uidx));
 					}
 					idx %= users.size();
@@ -273,6 +244,28 @@ public class SampleData {
 	 * 
 	 * @return erfolgreiches Leeren
 	 */
+	public static boolean createDB() {
+		if (!persist)
+			return true;
+		try {
+			// Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+			Connection conn = DriverManager.getConnection(
+					"jdbc:mysql://localhost?user=root&password=Kolten&serverTimezone=UTC");
+			Statement s = conn.createStatement();
+			s.execute("DROP DATABASE tournament");
+			s.execute("CREATE DATABASE tournament");
+			s.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * 
+	 * @return erfolgreiches Leeren
+	 */
 	public static boolean clearDB() {
 		if (!persist)
 			return true;
@@ -280,12 +273,13 @@ public class SampleData {
 			// The newInstance() call is a work around for some
 			// broken Java implementations
 			Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-			Connection conn = DriverManager
-					.getConnection("jdbc:mysql://localhost/tournament?user=root&password=Kolten&serverTimezone=UTC");
-			// Connection conn =
-			// DriverManager.getConnection("jdbc:mysql://www.danielwirtz.de/sopra?user=sopra_usr&password=sopra0809");
+			Connection conn = DriverManager.getConnection(
+					"jdbc:mysql://localhost/tournament?user=root&password=Kolten&serverTimezone=UTC");
+
 			Statement s = conn.createStatement();
 			s.execute("SET foreign_key_checks = 0");
+
+			// s.execute("CREATE DATABASE tournament");
 			ResultSet rs = s.executeQuery("show tables");
 			while (rs.next()) {
 				System.out.println("Leere Tabelle '" + rs.getString(1) + "'");
@@ -304,12 +298,12 @@ public class SampleData {
 	/**
 	 * Füllt die Datenbank mit Beispieldaten.
 	 * 
-	 * Erstellt drei Benutzer: sportler, referee und manager mit dem Passwort
-	 * 'test' jeweils und den Rechten, die dem Namen entsprechen, sowie 6
-	 * Turniere die alle 6 unterschiedliche Zustände eines Turniers abdecken.
+	 * Erstellt drei Benutzer: sportler, referee und manager mit dem Passwort 'test'
+	 * jeweils und den Rechten, die dem Namen entsprechen, sowie 6 Turniere die alle
+	 * 6 unterschiedliche Zustände eines Turniers abdecken.
 	 * 
 	 * @param args
-	 * @throws PlanningException 
+	 * @throws PlanningException
 	 * @throws NoPlayTimeException
 	 */
 	public static void main(String[] args) throws PlanningException {

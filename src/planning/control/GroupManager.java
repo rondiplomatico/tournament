@@ -63,11 +63,11 @@ public class GroupManager {
 		}
 		TeamSlot tmp;
 		int half = g.getSlots().size() / 2;
-		for (int k = half; k < g.getSlots().size(); k += 2) {
-			tmp = g.getSlots().get(k);
-			g.getSlots().remove(k);
-			g.getSlots().add(k + 1, tmp);
-		}
+//		for (int k = half; k < g.getSlots().size(); k += 2) {
+//			tmp = g.getSlots().get(k);
+//			g.getSlots().remove(k);
+//			g.getSlots().add(k + 1, tmp);
+//		}
 		for (int k = 0; k < half; k++) {
 			g.getMatches().add(
 					new Match(g, g.getSlots().get(k), g.getSlots()
@@ -78,6 +78,10 @@ public class GroupManager {
 	private void computeMatchesAllvsAll(Group g) {
 		LinkedList<TeamSlot> hlp = new LinkedList<TeamSlot>(g.getSlots());
 		int n = g.getSlots().size();
+		if (n == 2) {
+			g.getMatches().add(new Match(g, hlp.get(1), hlp.get(0)));
+			return;
+		}
 		if (n == 5) {
 			g.getMatches().add(new Match(g, hlp.get(0), hlp.get(1)));
 			g.getMatches().add(new Match(g, hlp.get(2), hlp.get(3)));

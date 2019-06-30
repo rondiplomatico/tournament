@@ -121,7 +121,7 @@ public enum Mapping {
 		case TwoToPairwise:
 			return "2 zu paarweise";
 		case EqualMapping:
-			return "Gleichm√§√üig aufteilen";
+			return "Gleichm‰ﬂig aufteilen";
 		case Custom:
 			return "Custom";
 		default:

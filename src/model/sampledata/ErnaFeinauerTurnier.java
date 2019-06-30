@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import control.MainApplication;
 import model.Team;
 import model.Tournament;
 import model.User;
@@ -19,15 +20,12 @@ import planning.control.mapping.Mapping;
 import planning.control.score.ScoreTransfer;
 import planning.model.RoundSetting;
 import planning.model.StartoffTransition;
-import planning.model.TeamSlot;
 import planning.model.Transition;
 import planning.model.rounds.RoundType;
-import control.MainApplication;
 
 public class ErnaFeinauerTurnier {
 
-	static List<User> users = new ArrayList<User>(),
-			refs = new ArrayList<User>();
+	static List<User> users = new ArrayList<User>(), refs = new ArrayList<User>();
 
 	private static class EFMapping implements IGroupMapper {
 
@@ -37,11 +35,9 @@ public class ErnaFeinauerTurnier {
 		private static final long serialVersionUID = -1829874400050571129L;
 
 		@Override
-		public void map(List<IMappingGroup> source, List<IMappingGroup> target)
-				throws PlanningException {
+		public void map(List<IMappingGroup> source, List<IMappingGroup> target) throws PlanningException {
 			if (source.size() != 3 || target.size() != 2) {
-				throw new PlanningException(
-						"Need 3 source groups and two target groups!");
+				throw new PlanningException("Need 3 source groups and two target groups!");
 			}
 			int sel = 0;
 			for (IMappingGroup tgt : target) {
@@ -55,9 +51,12 @@ public class ErnaFeinauerTurnier {
 	}
 
 	public static void main(String[] args) {
+//		SampleData.createDB();
+//		System.exit(0);
+
 		SampleData.clearDB();
 
-		Tournament t = EF2016();
+		Tournament t = EF2019();
 
 		User manager = new User("manager", "test");
 		manager.isManager(true);
@@ -76,70 +75,69 @@ public class ErnaFeinauerTurnier {
 	}
 
 	@SuppressWarnings("deprecation")
-	public static Tournament EF2016() {
-		int gameTime = 25;
+	public static Tournament EF2019() {
+		int gameTime = 20;
 		int pauseBetweenGames = 5;
 
 		Calendar c = Calendar.getInstance();
-		c.set(2016, 7, 24);
-		Tournament t = new Tournament("Erna Feinauer Turnier 2016",
-				(float) 30.0, 200, "Foll subbr!", gameTime, pauseBetweenGames,
-				c.getTime());
+		c.set(2019, 7, 21);
+		Tournament t = new Tournament("Erna Feinauer Turnier 2019", (float) 30.0, 200, "42. Auflage", gameTime,
+				pauseBetweenGames, c.getTime());
 		t.setRequiredPlayersPerTeam(10);
 		t.setType(TournamentType.MultiPlayer);
 		t.setState(TournamentState.signupClosed);
 		t.setSportKind("Handball");
 
-		c.set(2016, 7, 24);
+		c.set(2019, 7, 21);
 		t.setExpireDate(c.getTime());
 
 		t.setStartHour(9);
-		t.setEndHour(17);
+		t.setEndHour(19);
 
-		t.setFields(new String[] { "Sportpark Goldäcker", "PMH",
-				"Sportzentrum Leinfelden" });
+		t.setFields(new String[] { "Goldäcker", "PMH", "Sportzentrum" });
 
-		t.addPlayTime(new Date(2016, 7, 24, 9, 00), new Date(2016, 7, 24, 18,
-				00));
-		t.getRoundSettings().add(
-				new RoundSetting("Vorrunde", RoundType.GruppenRunde, 3, 0,
-						new StartoffTransition()));
+		t.addPlayTime(new Date(2019, 7, 21, 9, 00), new Date(2019, 7, 21, 19, 00));
+		t.getRoundSettings().add(new RoundSetting("Vorrunde", RoundType.GruppenRunde, 3, 0, new StartoffTransition()));
 
-		Transition tr = new Transition(2, ScoreTransfer.AllScores,
-				Mapping.Custom, 0);
-		tr.setCustomMapping(new EFMapping());
-		RoundSetting rs = new RoundSetting("Zwischenrunde",
-				RoundType.GruppenRunde, 2, 0, tr);
-		// rs.setPairwiseMatching(true);
+		Transition tr = new Transition(2, ScoreTransfer.AllScores, Mapping.CombineMapper, 15);
+		RoundSetting rs = new RoundSetting("Zwischenrunde", RoundType.GruppenRunde, 1, 0, tr);
+		rs.setPairwiseMatching(true);
+		rs.setUsableFields(new String[] { "Goldäcker" });
 		t.getRoundSettings().add(rs);
 
-		t.getRoundSettings().add(
-				new RoundSetting("Finale", RoundType.KORunde, 0, 10,
-						new Transition(2, ScoreTransfer.NoScores,
-								Mapping.CrossMapper, 0), 20));
+		RoundSetting rsf = new RoundSetting("Finale", RoundType.KORunde, 0, 10,
+				new Transition(4, ScoreTransfer.AllScores, Mapping.EqualMapping, 10), 15);
+		rsf.setUsableFields(new String[] { "Goldäcker" });
+		t.getRoundSettings().add(rsf);
 
 		addTeam(t, "HSG Leinfelden-Echterdingen");
-		addTeam(t, "HSG Freiburg 2");
-		addTeam(t, "HSG Strohgäu");
-		
-		addTeam(t, "HSG St. Leon/Reilingen");
-		addTeam(t, "FSG Donzdorf / Geislingen");
-		addTeam(t, "SC Korb");
-		
-		addTeam(t, "SF Schwaikheim");
-		addTeam(t, "Haspo Bayreuth");
-		addTeam(t, "Tus Ottenheim");
-		
 		addTeam(t, "HSG Freiburg 1");
-		addTeam(t, "TV Möglingen");
-		addTeam(t, "SB BBM Bietigheim"); // 15
-		
-		addTeam(t, "HC Erlangen");
-		addTeam(t, "TSG Ketsch 2");
-		addTeam(t, "HSG Mannheim");
+		addTeam(t, "TV Nellingen 1");
 
-		addSchiri(t, "Benni/Nico");
-		addSchiri(t, "Benni/Nico");
+		addTeam(t, "Kurpfalz Bären 1");
+		addTeam(t, "TSV Wolfschlugen");
+		addTeam(t, "TV Möglingen");
+
+		addTeam(t, "TSV Haunstetten 2");
+		addTeam(t, "Kurpfalz Bären 2");
+		addTeam(t, "TSV Haunstetten 1");
+
+		addTeam(t, "SV Allensbach");
+		addTeam(t, "TSV Heiningen");
+		addTeam(t, "SG Nussloch");
+
+		addTeam(t, "HSG Freiburg 2");
+		addTeam(t, "HB Ludwigsburg");
+		addTeam(t, "SF Schweikheim");
+
+		addTeam(t, "ESV Regensburg");
+		addTeam(t, "TG Nürtingen 2");
+		addTeam(t, "FA Göppingen");
+
+		addSchiri(t, "S1");
+		addSchiri(t, "S2");
+		addSchiri(t, "S3");
+		addSchiri(t, "S4");
 		t.setReferees(refs);
 
 		return t;

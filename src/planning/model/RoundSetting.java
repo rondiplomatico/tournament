@@ -40,6 +40,7 @@ public class RoundSetting implements Serializable {
 
 	private int gameTime = Integer.MIN_VALUE;
 	protected boolean pairwiseMatching = false;
+	protected String[] fields = null;
 
 	// Übergang aus voriger Runde
 	@OneToOne(cascade = CascadeType.ALL)
@@ -73,8 +74,7 @@ public class RoundSetting implements Serializable {
 	 * @param phasePause
 	 * @param inTransition
 	 */
-	public RoundSetting(String name, RoundType type, int numGroups,
-			int phasePause, Transition inTransition) {
+	public RoundSetting(String name, RoundType type, int numGroups, int phasePause, Transition inTransition) {
 		this(name, type, numGroups, phasePause, inTransition, Integer.MIN_VALUE);
 	}
 
@@ -88,8 +88,8 @@ public class RoundSetting implements Serializable {
 	 * @param inTransition
 	 * @param gameTime
 	 */
-	public RoundSetting(String name, RoundType type, int numGroups,
-			int phasePause, Transition inTransition, int gameTime) {
+	public RoundSetting(String name, RoundType type, int numGroups, int phasePause, Transition inTransition,
+			int gameTime) {
 		this(name, type);
 		this.numGroups = numGroups;
 		this.pauseBetweenPhases = phasePause;
@@ -138,6 +138,14 @@ public class RoundSetting implements Serializable {
 		pairwiseMatching = value;
 	}
 
+	public void setUsableFields(String[] fields) {
+		this.fields = fields;
+	}
+
+	public String[] getUsableFields() {
+		return fields;
+	}
+
 	/**
 	 * @return the pauseBetweenPhases
 	 */
@@ -161,32 +169,28 @@ public class RoundSetting implements Serializable {
 	}
 
 	/**
-	 * @param type
-	 *            the type to set
+	 * @param type the type to set
 	 */
 	public void setType(RoundType type) {
 		this.type = type;
 	}
 
 	/**
-	 * @param name
-	 *            the name to set
+	 * @param name the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
 	/**
-	 * @param numGroups
-	 *            the numGroups to set
+	 * @param numGroups the numGroups to set
 	 */
 	public void setNumGroups(int numGroups) {
 		this.numGroups = numGroups;
 	}
 
 	/**
-	 * @param pauseBetweenPhases
-	 *            the pauseBetweenPhases to set
+	 * @param pauseBetweenPhases the pauseBetweenPhases to set
 	 */
 	public void setPauseBetweenPhases(int pauseBetweenPhases) {
 		this.pauseBetweenPhases = pauseBetweenPhases;

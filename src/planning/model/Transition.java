@@ -14,6 +14,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
 import planning.control.PlanningException;
+import planning.control.mapping.CombineMapper;
 import planning.control.mapping.IGroupMapper;
 import planning.control.mapping.IMappingGroup;
 import planning.control.mapping.Mapping;
@@ -63,17 +64,12 @@ public class Transition implements Serializable, IGroupMapper, IScoreCalculator 
 	 * 
 	 * @pre numProceedants > 0
 	 * 
-	 * @param numProceedants
-	 *            Weiterkommende Teams pro Gruppe
-	 * @param st
-	 *            ScoreTransfer-Strategie
-	 * @param map
-	 *            Mapping
-	 * @param pauseMinutesBetween
-	 *            Pause
+	 * @param numProceedants      Weiterkommende Teams pro Gruppe
+	 * @param st                  ScoreTransfer-Strategie
+	 * @param map                 Mapping
+	 * @param pauseMinutesBetween Pause
 	 */
-	public Transition(int numProceedants, ScoreTransfer st, Mapping map,
-			int pauseMinutesBetween) {
+	public Transition(int numProceedants, ScoreTransfer st, Mapping map, int pauseMinutesBetween) {
 		assert (numProceedants > 0);
 		this.numProc = numProceedants;
 		this.scoretrans = st;
@@ -126,8 +122,7 @@ public class Transition implements Serializable, IGroupMapper, IScoreCalculator 
 	 */
 	@Override
 	public String toString() {
-		return "Transition: " + numProc + " Teams, Mapper:" + map
-				+ ", ScoreCalc:" + scoretrans;
+		return "Transition: " + numProc + " Teams, Mapper:" + map + ", ScoreCalc:" + scoretrans;
 	}
 
 	/**
@@ -173,8 +168,7 @@ public class Transition implements Serializable, IGroupMapper, IScoreCalculator 
 	 *      java.util.List)
 	 */
 	@Override
-	public void map(List<IMappingGroup> source, List<IMappingGroup> target)
-			throws PlanningException {
+	public void map(List<IMappingGroup> source, List<IMappingGroup> target) throws PlanningException {
 		if (map == Mapping.Custom) {
 			customMapping.map(source, target);
 		} else {
@@ -188,10 +182,8 @@ public class Transition implements Serializable, IGroupMapper, IScoreCalculator 
 	 *      java.util.List, java.util.List)
 	 */
 	@Override
-	public Score getScores(TeamSlot forTeamSlot, List<Match> groupMatches,
-			List<TeamSlot> ranking) {
-		return scoretrans.getInstance().getScores(forTeamSlot, groupMatches,
-				ranking);
+	public Score getScores(TeamSlot forTeamSlot, List<Match> groupMatches, List<TeamSlot> ranking) {
+		return scoretrans.getInstance().getScores(forTeamSlot, groupMatches, ranking);
 	}
 
 }
