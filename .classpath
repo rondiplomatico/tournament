@@ -22,10 +22,10 @@
 	<classpathentry kind="lib" path="lib/jdbc2_0-stdext.jar"/>
 	<classpathentry kind="lib" path="lib/jta.jar"/>
 	<classpathentry kind="lib" path="lib/microba-0.4.4.3.jar"/>
-	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.6-bin.jar"/>
 	<classpathentry kind="lib" path="lib/org-netbeans-modules-java-j2seproject-copylibstask.jar"/>
 	<classpathentry kind="lib" path="lib/swing-layout-1.0.3.jar"/>
 	<classpathentry kind="lib" path="lib/swing-worker-1.1.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/mysql-connector-java-8.0.16.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

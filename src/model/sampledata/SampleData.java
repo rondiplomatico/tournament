@@ -279,9 +279,9 @@ public class SampleData {
 		try {
 			// The newInstance() call is a work around for some
 			// broken Java implementations
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
 			Connection conn = DriverManager
-					.getConnection("jdbc:mysql://localhost/tournament?user=tournament_usr&password=schwabencup");
+					.getConnection("jdbc:mysql://localhost/tournament?user=root&password=Kolten&serverTimezone=UTC");
 			// Connection conn =
 			// DriverManager.getConnection("jdbc:mysql://www.danielwirtz.de/sopra?user=sopra_usr&password=sopra0809");
 			Statement s = conn.createStatement();

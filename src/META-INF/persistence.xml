@@ -21,10 +21,10 @@
         <class>planning.model.RoundSetting</class>
         <class>planning.model.TournamentPlan</class>
         <properties>
-            <property name="hibernate.connection.username" value="tournament_usr"/>
-            <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
-            <property name="hibernate.connection.password" value="schwabencup"/>
-            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/tournament"/>
+            <property name="hibernate.connection.username" value="root"/>
+            <property name="hibernate.connection.driver_class" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="hibernate.connection.password" value="Kolten"/>
+            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/tournament?serverTimezone=UTC"/>
             <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
             <property name="hibernate.show_sql" value="false"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
